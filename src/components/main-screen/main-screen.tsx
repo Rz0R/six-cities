@@ -1,13 +1,12 @@
 import OfferCard from '../offer-card/offer-card';
 
 type MainScreenProps = {
-  offercCardsCount: number
+  offerCardsCount: number
 }
 
-function MainScreen({ offercCardsCount }: MainScreenProps): JSX.Element {
+function MainScreen({ offerCardsCount }: MainScreenProps): JSX.Element {
 
-
-  const offerComponents = Array.from({ length: offercCardsCount }, () => <OfferCard />);
+  const offerComponents = Array.from({ length: offerCardsCount }, () => <OfferCard />);
 
   return (
     <div className="page page--gray page--main">
