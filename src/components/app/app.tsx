@@ -1,8 +1,12 @@
 import MainScreen from '../main-screen/main-screen';
 
-function App(): JSX.Element {
+type AppScreenProps = {
+  offercCardsCount: number
+}
+
+function App({ offercCardsCount }: AppScreenProps): JSX.Element {
   return (
-    <MainScreen />
+    <MainScreen offercCardsCount={offercCardsCount} />
   );
 }
 
