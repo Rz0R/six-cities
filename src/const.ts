@@ -11,3 +11,8 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum Container {
+  Main = 'Main',
+  Favorites = 'Favorites',
+}

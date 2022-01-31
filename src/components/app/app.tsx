@@ -25,9 +25,9 @@ function App({ offerCardsCount, offers }: AppScreenProps): JSX.Element {
           path={RoutePaths.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
               authenticationPath={RoutePaths.SignIn}
-              element={<FavoriteScreen />}
+              element={<FavoriteScreen offers={offers} />}
             />
           }
         />
@@ -36,7 +36,6 @@ function App({ offerCardsCount, offers }: AppScreenProps): JSX.Element {
         <Route path={RoutePaths.NotFound} element={<NotFoundScreen />} />
       </Routes>
     </BrowserRouter>
-
   );
 }
 

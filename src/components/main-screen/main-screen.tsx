@@ -1,5 +1,6 @@
 import OfferCardList from '../offer-card-list/offer-card-list';
 import { Offers } from '../../types/offer';
+import { Container } from '../../const';
 
 type MainScreenProps = {
   offerCardsCount: number,
@@ -95,7 +96,7 @@ function MainScreen({ offerCardsCount, offers }: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferCardList offers={offers} />
+              <OfferCardList container={Container.Main} offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />

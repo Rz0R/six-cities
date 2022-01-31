@@ -1,11 +1,13 @@
 import { Offer } from '../../types/offer';
+import { Container } from '../../const';
 
 type OfferCardType = {
   offer: Offer,
+  container: Container,
   setAciveCard: (id: string | null) => void,
 };
 
-function OfferCard({ offer, setAciveCard }: OfferCardType): JSX.Element {
+function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Element {
 
   const { title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
   const bookMarkClasses = isFavorite ?
@@ -15,17 +17,23 @@ function OfferCard({ offer, setAciveCard }: OfferCardType): JSX.Element {
 
   return (
     <article
-      className="cities__place-card place-card"
+      className={`place-card ${container === Container.Main ? 'cities__place-card' : 'favorites__card'}`}
       onMouseOver={() => setAciveCard(offer.id)}
       onMouseLeave={() => setAciveCard(null)}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`place-card__image-wrapper ${container === Container.Main ? 'cities__image-wrapper' : 'favorites__image-wrapper'}`}>
         <a href="/">
-          <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place" />
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={container === Container.Main ? 260 : 150}
+            height={container === Container.Main ? 200 : 110}
+            alt={title}
+          />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`place-card__info ${container === Container.Favorites ? 'favorites__card-info' : ''}`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">€{price}</b>
