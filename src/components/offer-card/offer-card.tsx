@@ -2,9 +2,10 @@ import { Offer } from '../../types/offer';
 
 type OfferCardType = {
   offer: Offer,
+  setAciveCard: (id: string | null) => void,
 };
 
-function OfferCard({ offer }: OfferCardType): JSX.Element {
+function OfferCard({ offer, setAciveCard }: OfferCardType): JSX.Element {
 
   const { title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
   const bookMarkClasses = isFavorite ?
@@ -13,8 +14,12 @@ function OfferCard({ offer }: OfferCardType): JSX.Element {
   const raitingStyle = { width: `${100 / 5 * rating}%` };
 
   return (
-    <article className="cities__place-card place-card">
-      {isPremium && <div className="place-card__mark"><span>Premium</span> </div>}
+    <article
+      className="cities__place-card place-card"
+      onMouseOver={() => setAciveCard(offer.id)}
+      onMouseLeave={() => setAciveCard(null)}
+    >
+      {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/">
           <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place" />

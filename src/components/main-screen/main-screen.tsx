@@ -1,15 +1,12 @@
-import OfferCard from '../offer-card/offer-card';
-import { Offers, Offer } from '../../types/offer';
+import OfferCardList from '../offer-card-list/offer-card-list';
+import { Offers } from '../../types/offer';
 
 type MainScreenProps = {
   offerCardsCount: number,
   offers: Offers,
-
 }
 
 function MainScreen({ offerCardsCount, offers }: MainScreenProps): JSX.Element {
-
-  const offerComponents = offers.map((offer: Offer) => <OfferCard key={offer.id} offer={offer} />);
 
   return (
     <div className="page page--gray page--main">
@@ -98,9 +95,7 @@ function MainScreen({ offerCardsCount, offers }: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {offerComponents}
-              </div>
+              <OfferCardList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />
