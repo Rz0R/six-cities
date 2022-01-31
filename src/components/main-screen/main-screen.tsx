@@ -1,12 +1,15 @@
 import OfferCard from '../offer-card/offer-card';
+import { Offers, Offer } from '../../types/offer';
 
 type MainScreenProps = {
-  offerCardsCount: number
+  offerCardsCount: number,
+  offers: Offers,
+
 }
 
-function MainScreen({ offerCardsCount }: MainScreenProps): JSX.Element {
+function MainScreen({ offerCardsCount, offers }: MainScreenProps): JSX.Element {
 
-  const offerComponents = Array.from({ length: offerCardsCount }, () => <OfferCard />);
+  const offerComponents = offers.map((offer: Offer) => <OfferCard key={offer.id} offer={offer} />);
 
   return (
     <div className="page page--gray page--main">

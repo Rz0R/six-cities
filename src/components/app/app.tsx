@@ -8,16 +8,19 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { RoutePaths, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 
+import { Offers } from '../../types/offer';
+
 type AppScreenProps = {
-  offerCardsCount: number
+  offerCardsCount: number,
+  offers: Offers,
 }
 
-function App({ offerCardsCount }: AppScreenProps): JSX.Element {
+function App({ offerCardsCount, offers }: AppScreenProps): JSX.Element {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={RoutePaths.Root} element={<MainScreen offerCardsCount={offerCardsCount} />} />
+        <Route path={RoutePaths.Root} element={<MainScreen offerCardsCount={offerCardsCount} offers={offers} />} />
         <Route
           path={RoutePaths.Favorites}
           element={
