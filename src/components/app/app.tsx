@@ -9,13 +9,15 @@ import { RoutePaths, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 
 import { Offers } from '../../types/offer';
+import { Comments } from '../../types/comments';
 
 type AppScreenProps = {
   offerCardsCount: number,
   offers: Offers,
+  comments: Comments,
 }
 
-function App({ offerCardsCount, offers }: AppScreenProps): JSX.Element {
+function App({ offerCardsCount, offers, comments }: AppScreenProps): JSX.Element {
 
   return (
     <BrowserRouter>
