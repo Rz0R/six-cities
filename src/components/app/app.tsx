@@ -31,7 +31,7 @@ function App({ offerCardsCount, offers }: AppScreenProps): JSX.Element {
             />
           }
         />
-        <Route path={RoutePaths.Room} element={<PropertyScreen />} />
+        <Route path={`${RoutePaths.Room}/:id`} element={<PropertyScreen offers={offers} />} />
         <Route path={RoutePaths.SignIn} element={<LoginScreen />} />
         <Route path={RoutePaths.NotFound} element={<NotFoundScreen />} />
       </Routes>

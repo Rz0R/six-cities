@@ -1,5 +1,9 @@
 import { Offer } from '../../types/offer';
 import { Container } from '../../const';
+import { Link } from 'react-router-dom';
+import { RoutePaths } from '../../const';
+
+import { getRatingStyle } from '../../utils/common';
 
 type OfferCardType = {
   offer: Offer,
@@ -13,7 +17,7 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
   const bookMarkClasses = isFavorite ?
     'place-card__bookmark-button place-card__bookmark-button--active button' :
     'place-card__bookmark-button button';
-  const raitingStyle = { width: `${100 / 5 * rating}%` };
+  const raitingStyle = getRatingStyle(rating);
 
   return (
     <article
@@ -23,7 +27,7 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className={`place-card__image-wrapper ${container === Container.Main ? 'cities__image-wrapper' : 'favorites__image-wrapper'}`}>
-        <a href="/">
+        <Link to={`${RoutePaths.Room}/${offer.id}`}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -31,7 +35,7 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
             height={container === Container.Main ? 200 : 110}
             alt={title}
           />
-        </a>
+        </Link>
       </div>
       <div className={`place-card__info ${container === Container.Favorites ? 'favorites__card-info' : ''}`}>
         <div className="place-card__price-wrapper">
