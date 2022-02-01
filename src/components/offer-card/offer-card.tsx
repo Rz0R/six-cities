@@ -21,18 +21,20 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
 
   return (
     <article
-      className={`place-card ${container === Container.Main ? 'cities__place-card' : 'favorites__card'}`}
+      className={`place-card ${container === Container.Main ? 'cities__place-card' : container === Container.Favorites ? 'favorites__card' : 'near-places__card'}`}
       onMouseOver={() => setAciveCard(offer.id)}
       onMouseLeave={() => setAciveCard(null)}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className={`place-card__image-wrapper ${container === Container.Main ? 'cities__image-wrapper' : 'favorites__image-wrapper'}`}>
+      <div
+        className={`place-card__image-wrapper ${container === Container.Main ? 'cities__image-wrapper' : Container.Favorites ? 'favorites__image-wrapper' : 'near-places__image-wrapper'}`}
+      >
         <Link to={`${RoutePaths.Room}/${offer.id}`}>
           <img
             className="place-card__image"
             src={previewImage}
-            width={container === Container.Main ? 260 : 150}
-            height={container === Container.Main ? 200 : 110}
+            width={container === Container.Favorites ? 150 : 260}
+            height={container === Container.Favorites ? 100 : 200}
             alt={title}
           />
         </Link>

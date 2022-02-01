@@ -15,4 +15,5 @@ export enum AuthorizationStatus {
 export enum Container {
   Main = 'Main',
   Favorites = 'Favorites',
+  Properties = 'Properties',
 }
