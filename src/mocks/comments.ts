@@ -9,7 +9,7 @@ export const comments: Comments = [
       name: 'Kendall',
       avatarUrl: 'https://8.react.pages.academy/static/avatar/6.jpg',
     },
-    rating: 3,
+    rating: 5,
     comment: 'What an amazing view! The house is stunning and in an amazing location. The large glass wall had an amazing view of the river!',
     date: '2021-12-30T15:51:12.099Z',
   },
@@ -28,13 +28,13 @@ export const comments: Comments = [
   {
     id: '3',
     user: {
-      id: '15',
+      id: '13',
       isPro: false,
-      name: 'Kendall',
-      avatarUrl: 'https://8.react.pages.academy/static/avatar/6.jpg',
+      name: 'Zak',
+      avatarUrl: 'https://8.react.pages.academy/static/avatar/4.jpg',
     },
     rating: 3,
-    comment: 'The deluxe room was a quite comfortable one with all the adequate facilities. The only thing that made me feel uncomfortable was the rude behavior of an impolite staff at the reception desk.',
-    date: '2021-12-30T15:51:12.099Z',
+    comment: 'Home is amazing. It\'s like staying in a museum. The rooms, furnishings and artworks are incredible. The views of My Vesuvius',
+    date: '2022-01-15T15:51:12.099Z',
   },
 ];
