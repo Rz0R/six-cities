@@ -9,7 +9,7 @@ type ReviewListPops = {
 function ReviewList({ comments }: ReviewListPops): JSX.Element {
 
   return (
-    <section className="property__reviews reviews">
+    <>
       <h2 className="reviews__title">
         Reviews · <span className="reviews__amount">{comments.length}</span>
       </h2>
@@ -48,7 +48,7 @@ function ReviewList({ comments }: ReviewListPops): JSX.Element {
             </li>);
         })}
       </ul>
-    </section>
+    </>
   );
 }
 

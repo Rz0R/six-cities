@@ -1,3 +1,5 @@
+export const STARS_NUMBER = 5;
+
 export enum RoutePaths {
   Root = '/',
   SignIn = '/login',
@@ -16,4 +18,12 @@ export enum Container {
   Main = 'Main',
   Favorites = 'Favorites',
   Properties = 'Properties',
+}
+
+export enum RatingNames {
+  terribly,
+  badly,
+  notBad,
+  good,
+  perfect,
 }

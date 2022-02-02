@@ -3,6 +3,7 @@ import { Comments } from '../../types/comments';
 import { Link, useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
+import ReviewForm from './review-form/review-form';
 import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import { Container } from '../../const';
@@ -144,7 +145,10 @@ function PropertyScreen({ offers, comments }: PropertyScreenProps): JSX.Element 
                   </p>
                 </div>
               </div>
-              <ReviewList comments={comments} />
+              <section className="property__reviews reviews">
+                <ReviewList comments={comments} />
+                <ReviewForm />
+              </section>
             </div>
           </div>
           <section className="property__map map" />
