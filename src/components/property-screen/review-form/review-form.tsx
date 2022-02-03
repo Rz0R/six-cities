@@ -1,21 +1,14 @@
-import { ChangeEvent, useState } from 'react';
-import ReviewRaitingStars from './review-rating-stars/review-rating-stars';
+import { ChangeEvent,  useState } from 'react';
+import ReviewRatingStars from './review-rating-stars/review-rating-stars';
 
 function ReviewForm(): JSX.Element {
 
-  const [review, setReview] = useState({ rating: 0, message: '' });
+  const [userReview, setUserReview] = useState({ rating: '0', review: '' });
 
-  const onRatingChange = (rating: number) => {
-    setReview((prevReview) => ({
-      ...prevReview,
-      rating,
-    }));
-  };
-
-  const onMessageChange = (message: string) => {
-    setReview((prevReview) => ({
-      ...prevReview,
-      message,
+  const onUserReviewChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setUserReview((prevUserReview) => ({
+      ...prevUserReview,
+      [evt.target.name]: evt.target.value,
     }));
   };
 
@@ -25,15 +18,15 @@ function ReviewForm(): JSX.Element {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        <ReviewRaitingStars rating={review.rating} onRatingChange={onRatingChange} />
+        <ReviewRatingStars rating={userReview.rating} onRatingChange={onUserReviewChange} />
       </div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        defaultValue={review.message}
-        onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => onMessageChange(evt.target.value)}
+        defaultValue={userReview.review}
+        onChange={(evt) => onUserReviewChange(evt)}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

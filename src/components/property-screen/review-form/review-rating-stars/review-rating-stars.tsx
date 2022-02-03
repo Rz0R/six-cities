@@ -1,27 +1,27 @@
 import { Fragment, ChangeEvent } from 'react';
 import { RatingNames } from '../../../../const';
-import { raitingValues } from '../../../../utils/common';
+import { ratingValues } from '../../../../utils/common';
 
-type ReviewRaitingStarsProps = {
-  rating: number
-  onRatingChange: (value: number) => void
+type ReviewRatingStarsProps = {
+  rating: string,
+  onRatingChange: (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
 }
 
-function ReviewRaitingStars({ rating, onRatingChange }: ReviewRaitingStarsProps): JSX.Element {
+function ReviewRatingStars({ rating, onRatingChange }: ReviewRatingStarsProps): JSX.Element {
 
   return (
     <Fragment>
       {
-        raitingValues.map((rank) => (
-          <>
+        ratingValues.map((rank) => (
+          <Fragment key={rank}>
             <input
               className="form__rating-input visually-hidden"
               name="rating"
               defaultValue={rank}
               id={`${rank}-stars`}
               type="radio"
-              checked={rank === rating}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => onRatingChange(Number(evt.target.value))}
+              checked={rank === Number(rating)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => onRatingChange(evt)}
             />
             <label
               htmlFor={`${rank}-stars`}
@@ -32,11 +32,11 @@ function ReviewRaitingStars({ rating, onRatingChange }: ReviewRaitingStarsProps)
                 <use xlinkHref="#icon-star" />
               </svg>
             </label>
-          </>
+          </Fragment>
         ))
       }
     </Fragment>
   );
 }
 
-export default ReviewRaitingStars;
+export default ReviewRatingStars;
