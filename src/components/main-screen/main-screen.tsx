@@ -1,4 +1,5 @@
 import OfferCardList from '../offer-card-list/offer-card-list';
+import Map from '../map/map';
 import { Offers } from '../../types/offer';
 import { Container } from '../../const';
 
@@ -99,7 +100,7 @@ function MainScreen({ offerCardsCount, offers }: MainScreenProps): JSX.Element {
               <OfferCardList container={Container.Main} offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <Map offers={offers} />
             </div>
           </div>
         </div>

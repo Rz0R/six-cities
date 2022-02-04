@@ -1,4 +1,4 @@
-type Location = {
+export type Location = {
   latitude: number,
   longitude: number,
   zoom: number,
@@ -11,7 +11,7 @@ type Host = {
   avatarUrl: string,
 }
 
-type City = {
+export type City = {
   name: string
   location: Location
 }
