@@ -100,7 +100,9 @@ function MainScreen({ offerCardsCount, offers }: MainScreenProps): JSX.Element {
               <OfferCardList container={Container.Main} offers={offers} />
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} />
+              <section className='map cities__map'>
+                <Map offers={offers} />
+              </section>
             </div>
           </div>
         </div>

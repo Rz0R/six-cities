@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
 import ReviewForm from './review-form/review-form';
+import Map from '../map/map';
 import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import { Container } from '../../const';
@@ -151,7 +152,9 @@ function PropertyScreen({ offers, comments }: PropertyScreenProps): JSX.Element 
               </section>
             </div>
           </div>
-          <section className="property__map map" />
+          <section className="property__map map" >
+            <Map offers={offers} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
