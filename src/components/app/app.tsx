@@ -22,7 +22,7 @@ function App({ offerCardsCount, offers, comments }: AppScreenProps): JSX.Element
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={RoutePaths.Root} element={<MainScreen offerCardsCount={offerCardsCount} offers={offers} />} />
+        <Route path={RoutePaths.Root} element={<MainScreen offerCardsCount={offerCardsCount} />} />
         <Route
           path={RoutePaths.Favorites}
           element={

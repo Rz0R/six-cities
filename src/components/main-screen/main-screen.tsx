@@ -1,14 +1,24 @@
+import { connect, ConnectedProps } from 'react-redux';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import Map from '../map/map';
-import { Offers } from '../../types/offer';
 import { Container } from '../../const';
+import { State } from '../../types/state';
+import { getSelectedCityOffers } from '../../utils/common';
 
 type MainScreenProps = {
   offerCardsCount: number,
-  offers: Offers,
 }
 
-function MainScreen({ offerCardsCount, offers }: MainScreenProps): JSX.Element {
+const mapStateToProps = ({ offers, selectedCity }: State) => ({
+  offers: getSelectedCityOffers(offers, selectedCity),
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
+
+function MainScreen({ offerCardsCount, offers }: ConnectedComponentProps): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
@@ -111,4 +121,5 @@ function MainScreen({ offerCardsCount, offers }: MainScreenProps): JSX.Element {
   );
 }
 
-export default MainScreen;
+export { MainScreen };
+export default connector(MainScreen);

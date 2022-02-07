@@ -3,7 +3,7 @@ import { Actions, ActionType } from '../types/actions';
 import { State } from '../types/state';
 
 const initialState = {
-  selectetCity: 'Amsterdam',
+  selectedCity: 'Amsterdam',
   offers: offers,
 };
 
