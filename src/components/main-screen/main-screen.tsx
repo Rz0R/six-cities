@@ -1,6 +1,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import Map from '../map/map';
+import Locations from './locations/locations';
 import { Container } from '../../const';
 import { State } from '../../types/state';
 import { getSelectedCityOffers } from '../../utils/common';
@@ -11,6 +12,7 @@ type MainScreenProps = {
 
 const mapStateToProps = ({ offers, selectedCity }: State) => ({
   offers: getSelectedCityOffers(offers, selectedCity),
+  selectedCity: selectedCity,
 });
 
 const connector = connect(mapStateToProps);
@@ -18,7 +20,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
-function MainScreen({ offerCardsCount, offers }: ConnectedComponentProps): JSX.Element {
+function MainScreen({ offerCardsCount, offers, selectedCity }: ConnectedComponentProps): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
@@ -51,42 +53,7 @@ function MainScreen({ offerCardsCount, offers }: ConnectedComponentProps): JSX.E
       </header>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <Locations selectedCity={selectedCity} />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
