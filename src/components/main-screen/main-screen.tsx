@@ -1,9 +1,12 @@
+import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import Map from '../map/map';
 import Locations from './locations/locations';
 import { Container } from '../../const';
 import { State } from '../../types/state';
+import { selectCity } from '../../store/actions';
+import { Actions } from '../../types/actions';
 import { getSelectedCityOffers } from '../../utils/common';
 
 type MainScreenProps = {
@@ -15,12 +18,18 @@ const mapStateToProps = ({ offers, selectedCity }: State) => ({
   selectedCity: selectedCity,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onCityChange(city: string) {
+    dispatch(selectCity(city));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
-function MainScreen({ offerCardsCount, offers, selectedCity }: ConnectedComponentProps): JSX.Element {
+function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: ConnectedComponentProps): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
@@ -53,7 +62,7 @@ function MainScreen({ offerCardsCount, offers, selectedCity }: ConnectedComponen
       </header>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <Locations selectedCity={selectedCity} />
+        <Locations selectedCity={selectedCity} onCiyChange={onCityChange} />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">

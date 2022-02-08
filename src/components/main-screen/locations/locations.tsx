@@ -1,18 +1,22 @@
+import LocationItem from './location-item';
 import { citiesList } from '../../../utils/common';
 
 type LocationsProps = {
   selectedCity: string,
+  onCiyChange: (city: string) => void,
 }
 
-function Locations({ selectedCity }: LocationsProps): JSX.Element {
-  const classes = (value: string) => `${value === selectedCity ? 'tabs__item--active' : ''} locations__item-link tabs__item tabs`;
+function Locations({ selectedCity, onCiyChange }: LocationsProps): JSX.Element {
 
-  const locationItems = citiesList.map((city) => (
-    <li key={city} className="locations__item">
-      <a className={classes(city)} href="/">
-        <span>{city}</span>
-      </a>
-    </li>));
+  const locationItems = citiesList
+    .map((city) => (
+      <LocationItem
+        key={city}
+        city={city}
+        selectedCity={selectedCity}
+        onCiyChange={onCiyChange}
+      />
+    ));
 
   return (
     <div className="tabs">
