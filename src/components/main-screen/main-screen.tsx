@@ -3,11 +3,13 @@ import { connect, ConnectedProps } from 'react-redux';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import Map from '../map/map';
 import Locations from './locations/locations';
-import { Container } from '../../const';
+import PlacesSort from './places-sort/places-sort';
+import { Container, SortTypes } from '../../const';
 import { State } from '../../types/state';
 import { selectCity } from '../../store/actions';
 import { Actions } from '../../types/actions';
-import { getSelectedCityOffers } from '../../utils/common';
+import { getSelectedCityOffers, sortTypesList } from '../../utils/common';
+import { useState } from 'react';
 
 type MainScreenProps = {
   offerCardsCount: number,
@@ -31,8 +33,18 @@ type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
 
 function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: ConnectedComponentProps): JSX.Element {
 
+  const [sortMenuActive, setSortMenuActive] = useState(false);
+  const [currentSortType, setCurrentSortType] = useState<SortTypes>(SortTypes.POPULAR);
+
+  const placeCounter = offers.length;
+
+  const hideSortMenu = () => setSortMenuActive(false);
+
   return (
-    <div className="page page--gray page--main">
+    <div
+      className="page page--gray page--main"
+      onClick={hideSortMenu}
+    >
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -67,23 +79,18 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width={7} height={4}>
-                    <use xlinkHref="#icon-arrow-select" />
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
-              <OfferCardList container={Container.Main} offers={offers} />
+              <b className="places__found">{placeCounter} places to stay in {selectedCity}</b>
+              <PlacesSort
+                isMenuActive={sortMenuActive}
+                currentSortType={currentSortType}
+                sortTypesList={sortTypesList}
+                onSortMenuClick={setSortMenuActive}
+                onSortMenuItemClick={setCurrentSortType}
+              />
+              <OfferCardList
+                container={Container.Main}
+                offers={offers}
+              />
             </section>
             <div className="cities__right-section">
               <section className='map cities__map'>
