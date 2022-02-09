@@ -8,7 +8,7 @@ import { Container, SortTypes } from '../../const';
 import { State } from '../../types/state';
 import { selectCity } from '../../store/actions';
 import { Actions } from '../../types/actions';
-import { getSelectedCityOffers, sortTypesList } from '../../utils/common';
+import { getSelectedCityOffers, sortTypesList, getSortedOffers } from '../../utils/common';
 import { useState } from 'react';
 
 type MainScreenProps = {
@@ -35,6 +35,8 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
 
   const [sortMenuActive, setSortMenuActive] = useState(false);
   const [currentSortType, setCurrentSortType] = useState<SortTypes>(SortTypes.POPULAR);
+
+  const sortedOffers = getSortedOffers[currentSortType]([...offers]);
 
   const placeCounter = offers.length;
 
@@ -89,7 +91,7 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
               />
               <OfferCardList
                 container={Container.Main}
-                offers={offers}
+                offers={sortedOffers}
               />
             </section>
             <div className="cities__right-section">
