@@ -1,3 +1,4 @@
+import { Cities } from '../const';
 import { Offers } from './offer';
 
 export enum ActionType {
@@ -7,7 +8,7 @@ export enum ActionType {
 
 export type SelectCityAction = {
   type: ActionType.SelectCity,
-  payload: string,
+  payload: Cities,
 }
 
 export type LoadOffersAction = {

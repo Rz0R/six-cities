@@ -1,4 +1,4 @@
-import { Offer } from '../../types/offer';
+import { Offer, Id } from '../../types/offer';
 import { Container } from '../../const';
 import { Link } from 'react-router-dom';
 import { RoutePaths } from '../../const';
@@ -8,7 +8,7 @@ import { getRatingStyle } from '../../utils/common';
 type OfferCardType = {
   offer: Offer,
   container: Container,
-  setAciveCard: (id: string | null) => void,
+  setAciveCard?: React.Dispatch<React.SetStateAction<Id>>,
 };
 
 function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Element {
@@ -22,8 +22,8 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
   return (
     <article
       className={`place-card ${container === Container.Main ? 'cities__place-card' : container === Container.Favorites ? 'favorites__card' : 'near-places__card'}`}
-      onMouseOver={() => setAciveCard(offer.id)}
-      onMouseLeave={() => setAciveCard(null)}
+      onMouseOver={() => setAciveCard && setAciveCard(offer.id)}
+      onMouseLeave={() => setAciveCard && setAciveCard(null)}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div

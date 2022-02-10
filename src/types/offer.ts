@@ -1,3 +1,5 @@
+export type Id = string | null;
+
 export type Location = {
   latitude: number,
   longitude: number,

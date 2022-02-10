@@ -4,11 +4,12 @@ import OfferCardList from '../offer-card-list/offer-card-list';
 import Map from '../map/map';
 import Locations from './locations/locations';
 import PlacesSort from './places-sort/places-sort';
-import { Container, SortTypes } from '../../const';
+import { Cities, Container, SortTypes } from '../../const';
 import { State } from '../../types/state';
 import { selectCity } from '../../store/actions';
 import { Actions } from '../../types/actions';
 import { getSelectedCityOffers, sortTypesList, getSortedOffers } from '../../utils/common';
+import { Id } from '../../types/offer';
 import { useState } from 'react';
 
 type MainScreenProps = {
@@ -21,7 +22,7 @@ const mapStateToProps = ({ offers, selectedCity }: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onCityChange(city: string) {
+  onCityChange(city: Cities) {
     dispatch(selectCity(city));
   },
 });
@@ -35,6 +36,7 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
 
   const [sortMenuActive, setSortMenuActive] = useState(false);
   const [currentSortType, setCurrentSortType] = useState<SortTypes>(SortTypes.POPULAR);
+  const [cardId, setCardId] = useState<Id>(null);
 
   const sortedOffers = getSortedOffers[currentSortType]([...offers]);
 
@@ -92,11 +94,12 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
               <OfferCardList
                 container={Container.Main}
                 offers={sortedOffers}
+                setCardId={setCardId}
               />
             </section>
             <div className="cities__right-section">
               <section className='map cities__map'>
-                <Map offers={offers} />
+                <Map offers={offers} selectedCity={selectedCity} activeOfferId={cardId} />
               </section>
             </div>
           </div>

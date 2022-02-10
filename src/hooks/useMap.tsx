@@ -10,9 +10,10 @@ type useMapProps = {
 function useMap({ mapRef, city }: useMapProps) {
 
   const [map, setMap] = useState<Map | null>(null);
+  const [currentCity, setCurrentCity] = useState<City | null>(null);
 
   useEffect(() => {
-    if (mapRef.current !== null && map === null) {
+    if (mapRef.current && map === null) {
       const { latitude: lat, longitude: lng, zoom } = city.location;
       const instance = new Map(mapRef.current, {
         center: {
@@ -33,9 +34,15 @@ function useMap({ mapRef, city }: useMapProps) {
       instance.addLayer(layer);
 
       setMap(instance);
-    }
+      setCurrentCity(city);
+    } else if (mapRef.current && map && currentCity && currentCity.name !== city.name) {
+      const { latitude: lat, longitude: lng, zoom } = city.location;
 
-  }, [mapRef, map, city]);
+      map.setView([lat, lng], zoom);
+
+      setCurrentCity(city);
+    }
+  }, [mapRef, map, city, currentCity]);
 
   return map;
 }

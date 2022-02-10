@@ -1,15 +1,17 @@
+import { Cities } from '../../../const';
+
 type LocationItemProps = {
-  city: string,
+  city: Cities,
   selectedCity: string,
-  onCiyChange: (city: string) => void,
+  onCityChange: (city: Cities) => void,
 }
 
-function LocationItem({ city, selectedCity, onCiyChange }: LocationItemProps): JSX.Element {
+function LocationItem({ city, selectedCity, onCityChange }: LocationItemProps): JSX.Element {
   const classes = `${city === selectedCity ? 'tabs__item--active' : ''} locations__item-link tabs__item tabs`;
 
   const onItemClick = (evt: React.MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
-    onCiyChange(city);
+    onCityChange(city);
   };
 
   return (

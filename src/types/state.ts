@@ -1,6 +1,7 @@
+import { Cities } from '../const';
 import { Offers } from './offer';
 
 export type State = {
-  selectedCity: string,
+  selectedCity: Cities,
   offers: Offers,
 };

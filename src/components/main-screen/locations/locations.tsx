@@ -1,9 +1,10 @@
 import LocationItem from './location-item';
 import { citiesList } from '../../../utils/common';
+import { Cities } from '../../../const';
 
 type LocationsProps = {
   selectedCity: string,
-  onCiyChange: (city: string) => void,
+  onCiyChange: (city: Cities) => void,
 }
 
 function Locations({ selectedCity, onCiyChange }: LocationsProps): JSX.Element {
@@ -14,7 +15,7 @@ function Locations({ selectedCity, onCiyChange }: LocationsProps): JSX.Element {
         key={city}
         city={city}
         selectedCity={selectedCity}
-        onCiyChange={onCiyChange}
+        onCityChange={onCiyChange}
       />
     ));
 
