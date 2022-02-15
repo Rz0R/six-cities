@@ -8,6 +8,12 @@ export enum RoutePaths {
   NotFound = '*'
 }
 
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/logins',
+  Logout = '/logout',
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
