@@ -37,5 +37,32 @@ type Offer = {
   id: string
 }
 
+type BackendHost = {
+  id: string,
+  name: string,
+  is_pro: boolean,
+  avatar_url: string,
+}
+
+type BackendOffer = {
+  city: City
+  preview_image: string,
+  images: string[],
+  title: string,
+  is_favorite: boolean,
+  is_premium: boolean,
+  rating: number,
+  type: string,
+  bedrooms: number,
+  max_adults: number,
+  price: number,
+  goods: string[],
+  host: BackendHost,
+  description: string,
+  location: Location,
+  id: string,
+}
+
 export type Offers = Offer[];
-export type { Offer };
+export type BackendOffers = BackendOffer[];
+export type { Offer, BackendOffer };

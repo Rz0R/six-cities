@@ -1,11 +1,10 @@
-import { offers } from '../mocks/offers';
 import { Actions, ActionType } from '../types/actions';
 import { State } from '../types/state';
 import { AuthorizationStatus, Cities } from '../const';
 
 const initialState: State = {
   selectedCity: Cities.Amsterdam,
-  offers: offers,
+  offers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
