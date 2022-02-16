@@ -1,22 +1,30 @@
-import { Offers } from '../../types/offer';
 import { Comments } from '../../types/comments';
 import { Link, useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
 import ReviewForm from './review-form/review-form';
 import Map from '../map/map';
-import { getRatingStyle } from '../../utils/common';
+import { getRatingStyle, getOfferById } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import { Container } from '../../const';
+import { State } from '../../types/state';
+import { connect, ConnectedProps } from 'react-redux';
 
 type PropertyScreenProps = {
-  offers: Offers,
   comments: Comments,
 }
 
-function PropertyScreen({ offers, comments }: PropertyScreenProps): JSX.Element {
-  const { id: currentId } = useParams();
-  const offer = offers.find((currentOffer) => currentOffer.id === currentId);
+const mapStateToProps = ({ offers }: State) => ({ offers: offers });
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropertyScreenProps & PropsFromRedux;
+
+function PropertyScreen({ offers, comments }: ConnectedComponentProps): JSX.Element {
+  const { id: currentId = '' } = useParams();
+
+  const offer = getOfferById(offers, currentId);
 
   if (!offer) {
     return <NotFoundScreen />;
@@ -171,4 +179,5 @@ function PropertyScreen({ offers, comments }: PropertyScreenProps): JSX.Element 
   );
 }
 
-export default PropertyScreen;
+export { PropertyScreen };
+export default connector(PropertyScreen);

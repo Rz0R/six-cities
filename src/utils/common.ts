@@ -7,6 +7,8 @@ export const ratingValues = Array.from({ length: STARS_NUMBER }, (_, i) => i + 1
 
 export const getSelectedCityOffers = (offers: Offers, selectedCity: string) => offers.filter((offer) => offer.city.name === selectedCity);
 
+export const getOfferById = (offers: Offers, id: string) => offers.find((offer) => offer.id === id);
+
 export const citiesList: Cities[] = Object.entries(Cities).map(([_, value]) => value);
 
 export const sortTypesList: SortTypes[] = Object.entries(SortTypes).map(([_, value]) => value);
