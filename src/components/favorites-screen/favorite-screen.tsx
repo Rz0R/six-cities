@@ -1,5 +1,4 @@
 import OfferCardList from '../offer-card-list/offer-card-list';
-import { Offers } from '../../types/offer';
 import { State } from '../../types/state';
 import { Container } from '../../const';
 import { connect, ConnectedProps } from 'react-redux';

@@ -7,7 +7,6 @@ import { reducer } from './store/reducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { offers } from './mocks/offers';
 import { comments } from './mocks/comments';
 import { requireAuthorization } from './store/actions';
 import { fetchOfferAction, checkAuthAction } from './store/api-actions';
@@ -26,7 +25,6 @@ ReactDOM.render(
     <Provider store={store}>
       <App
         offerCardsCount={6}
-        offers={offers}
         comments={comments}
       />
     </Provider>
