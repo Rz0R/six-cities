@@ -29,7 +29,7 @@ function App({ offerCardsCount, offers, comments }: AppScreenProps): JSX.Element
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
               authenticationPath={RoutePaths.SignIn}
-              element={<FavoriteScreen offers={offers} />}
+              element={<FavoriteScreen />}
             />
           }
         />
