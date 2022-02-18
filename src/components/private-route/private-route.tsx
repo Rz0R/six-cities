@@ -1,19 +1,31 @@
 
-import { Navigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
+import { connect, ConnectedProps } from 'react-redux';
 import { AuthorizationStatus, RoutePaths } from '../../const';
+import { State } from '../../types/state';
 
 export type PrivateRouterProps = {
-  authorizationStatus: AuthorizationStatus;
   authenticationPath: RoutePaths;
   element: JSX.Element;
 };
 
-function PrivateRoute({ authorizationStatus, authenticationPath, element }: PrivateRouterProps): JSX.Element {
+const mapStateToProps = ({ authorizationStatus }: State) => ({
+  authorizationStatus,
+});
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & PrivateRouterProps;
+
+function PrivateRoute({ authorizationStatus, authenticationPath, element }: ConnectedComponentProps): JSX.Element {
+  const location = useLocation();
+
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return element;
   } else {
-    return <Navigate to={{ pathname: authenticationPath }} />;
+    return <Navigate to={{ pathname: authenticationPath }} state={{ from: location.pathname }} />;
   }
 }
 
-export default PrivateRoute;
+export { PrivateRoute };
+export default connector(PrivateRoute);

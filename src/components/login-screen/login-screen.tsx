@@ -1,4 +1,5 @@
 import { FormEvent, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/actions';
@@ -21,6 +22,9 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function LoginScreen({ authorizationStatus, onSubmit }: PropsFromRedux): JSX.Element {
+  const location = useLocation();
+  const state = location.state as { from?: string };
+  const from = state?.from || RoutePaths.Root;
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -37,7 +41,7 @@ function LoginScreen({ authorizationStatus, onSubmit }: PropsFromRedux): JSX.Ele
   };
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
-    return <Navigate to={{ pathname: RoutePaths.Root }} />;
+    return <Navigate to={{ pathname: from }} />;
   }
 
   return (

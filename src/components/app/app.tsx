@@ -8,7 +8,7 @@ import LoginScreen from '../login-screen/login-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-import { RoutePaths, AuthorizationStatus } from '../../const';
+import { RoutePaths } from '../../const';
 import { State } from '../../types/state';
 import PrivateRoute from '../private-route/private-route';
 
@@ -40,7 +40,6 @@ function App({ offerCardsCount, comments, isDataLoaded }: ConnectedComponentProp
           path={RoutePaths.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
               authenticationPath={RoutePaths.SignIn}
               element={<FavoriteScreen />}
             />

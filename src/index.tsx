@@ -12,6 +12,9 @@ import { requireAuthorization } from './store/actions';
 import { fetchOfferAction, checkAuthAction } from './store/api-actions';
 import { AuthorizationStatus } from './const';
 import { ThunkAppDispatch } from './types/actions';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)));
 
@@ -23,6 +26,7 @@ const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.wit
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer/>
       <App
         offerCardsCount={6}
         comments={comments}

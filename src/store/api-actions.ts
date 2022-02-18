@@ -5,6 +5,9 @@ import { APIRoute, AuthorizationStatus } from '../const';
 import { BackendOffer } from '../types/offer';
 import { AuthData } from '../types/auth-data';
 import { adaptOffersToClient } from '../services/adapter';
+import { toast } from 'react-toastify';
+
+const AUTH_FAIL_MESSAGE = 'Don\'t forget to login';
 
 export const fetchOfferAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -14,10 +17,13 @@ export const fetchOfferAction = (): ThunkActionResult =>
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    await api.get(APIRoute.Login)
-      .then(() => {
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      });
+    const { data } = await api.get(APIRoute.Login);
+    if (data) {
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } else {
+      toast.info(AUTH_FAIL_MESSAGE);
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
   };
 
 export const loginAction = ({ login: email, password }: AuthData): ThunkActionResult =>
