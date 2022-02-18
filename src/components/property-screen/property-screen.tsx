@@ -1,5 +1,5 @@
 import { Comments } from '../../types/comments';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
 import ReviewForm from './review-form/review-form';
@@ -9,6 +9,7 @@ import OfferCardList from '../offer-card-list/offer-card-list';
 import { Container } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
+import Logo from '../logo/logo';
 
 type PropertyScreenProps = {
   comments: Comments,
@@ -38,15 +39,7 @@ function PropertyScreen({ offers, comments }: ConnectedComponentProps): JSX.Elem
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to="/">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width={81}
-                  height={41}
-                />
-              </Link>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">

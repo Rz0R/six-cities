@@ -6,6 +6,7 @@ import { AuthData } from '../../types/auth-data';
 import { State } from '../../types/state';
 import { AuthorizationStatus, RoutePaths } from '../../const';
 import { Navigate } from 'react-router-dom';
+import Logo from '../logo/logo';
 
 const mapStateToProps = ({ authorizationStatus }: State) => ({ authorizationStatus });
 
@@ -45,15 +46,7 @@ function LoginScreen({ authorizationStatus, onSubmit }: PropsFromRedux): JSX.Ele
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="/">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width={81}
-                  height={41}
-                />
-              </a>
+              <Logo />
             </div>
           </div>
         </div>

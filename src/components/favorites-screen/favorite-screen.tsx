@@ -2,6 +2,7 @@ import OfferCardList from '../offer-card-list/offer-card-list';
 import { State } from '../../types/state';
 import { Container } from '../../const';
 import { connect, ConnectedProps } from 'react-redux';
+import Logo from '../logo/logo';
 
 const mapStateToProps = ({ offers }: State) => ({ offers: offers });
 
@@ -20,15 +21,7 @@ function FavoriteScreen({ offers }: ConnectedComponentProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="/">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width={81}
-                  height={41}
-                />
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
