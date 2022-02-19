@@ -1,10 +1,11 @@
 import { ThunkActionResult } from '../types/actions';
-import { loadOffers, requireAuthorization, requireLogout } from './actions';
+import { loadOffers, requireAuthorization, requireLogout, loadUserData } from './actions';
 import { saveToken, dropToken, Token } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { BackendOffer } from '../types/offer';
+import { BackendUser } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
-import { adaptOffersToClient } from '../services/adapter';
+import { adaptOffersToClient, adaptUserDataToClient } from '../services/adapter';
 import { toast } from 'react-toastify';
 
 const AUTH_FAIL_MESSAGE = 'Don\'t forget to login';
@@ -17,8 +18,9 @@ export const fetchOfferAction = (): ThunkActionResult =>
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const { data } = await api.get(APIRoute.Login);
+    const { data } = await api.get<BackendUser>(APIRoute.Login);
     if (data) {
+      dispatch(loadUserData(adaptUserDataToClient(data)));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } else {
       toast.info(AUTH_FAIL_MESSAGE);

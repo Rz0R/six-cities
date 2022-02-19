@@ -1,4 +1,5 @@
 import { Offer, BackendOffer, BackendOffers, Offers } from '../types/offer';
+import { BackendUser, UserData } from '../types/user-data';
 
 const adaptOfferToClient = (backendOffer: BackendOffer): Offer => {
   const adaptedOffer = {
@@ -25,6 +26,19 @@ const adaptOfferToClient = (backendOffer: BackendOffer): Offer => {
   return adaptedOffer;
 };
 
+const adaptUserDataToClient = (backendUserData: BackendUser): UserData => {
+  const adaptedUserData = {
+    ...backendUserData,
+    avatarUrl: backendUserData.avatar_url,
+    isPro: backendUserData.is_pro,
+  };
+
+  Reflect.deleteProperty(adaptedUserData, 'avatar_url');
+  Reflect.deleteProperty(adaptedUserData, 'is_pro');
+
+  return adaptedUserData;
+};
+
 const adaptOffersToClient = (data: BackendOffers): Offers => data.map((backendOffer) => adaptOfferToClient(backendOffer));
 
-export { adaptOffersToClient };
+export { adaptOffersToClient, adaptUserDataToClient };

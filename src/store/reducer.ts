@@ -7,6 +7,7 @@ const initialState: State = {
   offers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
+  userData: null,
 };
 
 const reducer = (state: State = initialState, action: Actions) => {
@@ -20,6 +21,11 @@ const reducer = (state: State = initialState, action: Actions) => {
         ...state,
         authorizationStatus: action.payload,
         isDataLoaded: true,
+      };
+    case ActionType.LoadUserData:
+      return {
+        ...state,
+        userData: action.payload,
       };
     default:
       return state;
