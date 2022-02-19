@@ -18,11 +18,16 @@ export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   payload: authStatus,
 } as const);
 
-export const requireLogout = () => ({
+export const requireLogout = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireLogout,
+  payload: authStatus,
 } as const);
 
 export const loadUserData = (userData: UserData) => ({
   type: ActionType.LoadUserData,
   payload: userData,
+} as const);
+
+export const removeUserData = () => ({
+  type: ActionType.RemoveUserData,
 } as const);

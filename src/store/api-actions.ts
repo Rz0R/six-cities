@@ -1,6 +1,6 @@
 import { ThunkActionResult } from '../types/actions';
-import { loadOffers, requireAuthorization, requireLogout, loadUserData } from './actions';
-import { saveToken, dropToken, Token } from '../services/token';
+import { loadOffers, requireAuthorization, requireLogout, loadUserData, removeUserData } from './actions';
+import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { BackendOffer } from '../types/offer';
 import { BackendUser } from '../types/user-data';
@@ -30,8 +30,9 @@ export const checkAuthAction = (): ThunkActionResult =>
 
 export const loginAction = ({ login: email, password }: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const { data: { token } } = await api.post<{ token: Token }>(APIRoute.Login, { email, password });
-    saveToken(token);
+    const { data } = await api.post<BackendUser>(APIRoute.Login, { email, password });
+    saveToken(data.token);
+    dispatch(loadUserData(adaptUserDataToClient(data)));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   };
 
@@ -39,5 +40,6 @@ export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireLogout());
+    dispatch(removeUserData());
+    dispatch(requireLogout(AuthorizationStatus.NoAuth));
   };

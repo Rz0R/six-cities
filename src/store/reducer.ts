@@ -22,10 +22,20 @@ const reducer = (state: State = initialState, action: Actions) => {
         authorizationStatus: action.payload,
         isDataLoaded: true,
       };
+    case ActionType.RequireLogout:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
     case ActionType.LoadUserData:
       return {
         ...state,
         userData: action.payload,
+      };
+    case ActionType.RemoveUserData:
+      return {
+        ...state,
+        userData: null,
       };
     default:
       return state;

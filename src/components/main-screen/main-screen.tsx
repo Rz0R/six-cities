@@ -4,6 +4,7 @@ import OfferCardList from '../offer-card-list/offer-card-list';
 import Map from '../map/map';
 import Locations from './locations/locations';
 import PlacesSort from './places-sort/places-sort';
+import Auth from '../auth/auth';
 import { Cities, Container, SortTypes } from '../../const';
 import { State } from '../../types/state';
 import { selectCity } from '../../store/actions';
@@ -56,22 +57,7 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
             <div className="header__left">
               <Logo />
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="/">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <Auth />
           </div>
         </div>
       </header>
