@@ -84,7 +84,7 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
             </section>
             <div className="cities__right-section">
               <section className='map cities__map'>
-                <Map offers={offers} selectedCity={selectedCity} activeOfferId={cardId} />
+                <Map offers={offers} activeOfferId={cardId} />
               </section>
             </div>
           </div>

@@ -10,6 +10,7 @@ import { Container } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import Logo from '../logo/logo';
+import Auth from '../auth/auth';
 
 type PropertyScreenProps = {
   comments: Comments,
@@ -41,19 +42,7 @@ function PropertyScreen({ offers, comments }: ConnectedComponentProps): JSX.Elem
             <div className="header__left">
               <Logo />
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="/"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__login">Sign in</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <Auth />
           </div>
         </div>
       </header>
@@ -154,7 +143,7 @@ function PropertyScreen({ offers, comments }: ConnectedComponentProps): JSX.Elem
             </div>
           </div>
           <section className="property__map map" >
-            <Map offers={offers} />
+            <Map offers={offers} currentOffer={offer} activeOfferId={currentId} />
           </section>
         </section>
         <div className="container">

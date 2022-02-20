@@ -1,9 +1,10 @@
 import { Offers } from '../types/offer';
+import { Cities } from '../const';
 
 export const offers: Offers = [
   {
     city: {
-      name: 'Dusseldorf',
+      name: Cities.Dusseldorf,
       location: {
         latitude: 51.225402,
         longitude: 6.776314,
@@ -57,7 +58,7 @@ export const offers: Offers = [
   },
   {
     city: {
-      name: 'Paris',
+      name: Cities.Paris,
       location: {
         latitude: 48.85661,
         longitude: 2.351499,
@@ -117,7 +118,7 @@ export const offers: Offers = [
   },
   {
     city: {
-      name: 'Cologne',
+      name: Cities.Cologne,
       location: {
         latitude: 50.938361,
         longitude: 6.959974,
@@ -171,7 +172,7 @@ export const offers: Offers = [
   },
   {
     city: {
-      name: 'Dusseldorf',
+      name: Cities.Dusseldorf,
       location: {
         latitude: 51.225402,
         longitude: 6.776314,
@@ -224,7 +225,7 @@ export const offers: Offers = [
   },
   {
     city: {
-      name: 'Amsterdam',
+      name: Cities.Amsterdam,
       location: {
         latitude: 52.37454,
         longitude: 4.897976,
@@ -279,7 +280,7 @@ export const offers: Offers = [
   },
   {
     city: {
-      name: 'Amsterdam',
+      name: Cities.Amsterdam,
       location: {
         latitude: 52.37454,
         longitude: 4.897976,
@@ -334,7 +335,7 @@ export const offers: Offers = [
   },
   {
     city: {
-      name: 'Amsterdam',
+      name: Cities.Amsterdam,
       location: {
         latitude: 52.37454,
         longitude: 4.897976,

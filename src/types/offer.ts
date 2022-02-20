@@ -1,3 +1,5 @@
+import { Cities } from '../const';
+
 export type Id = string | null;
 
 export type Location = {
@@ -14,8 +16,8 @@ type Host = {
 }
 
 export type City = {
-  name: string
-  location: Location
+  name: Cities,
+  location: Location,
 }
 
 type Offer = {
