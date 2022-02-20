@@ -1,11 +1,11 @@
 import { ThunkActionResult } from '../types/actions';
-import { loadOffers, requireAuthorization, requireLogout, loadUserData, removeUserData } from './actions';
+import { loadOffers, requireAuthorization, requireLogout, loadUserData, removeUserData, loadOfferById } from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { BackendOffer } from '../types/offer';
 import { BackendUser } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
-import { adaptOffersToClient, adaptUserDataToClient } from '../services/adapter';
+import { adaptOffersToClient, adaptOfferToClient, adaptUserDataToClient } from '../services/adapter';
 import { toast } from 'react-toastify';
 
 const AUTH_FAIL_MESSAGE = 'Don\'t forget to login';
@@ -42,4 +42,10 @@ export const logoutAction = (): ThunkActionResult =>
     dropToken();
     dispatch(removeUserData());
     dispatch(requireLogout(AuthorizationStatus.NoAuth));
+  };
+
+export const fetchOfferByIdAction = (id: string): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const { data } = await api.get<BackendOffer>(`${APIRoute.Hotels}/${id}`);
+    dispatch(loadOfferById(adaptOfferToClient(data)));
   };

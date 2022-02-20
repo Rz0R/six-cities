@@ -4,35 +4,55 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
 import ReviewForm from './review-form/review-form';
 import Map from '../map/map';
-import { getRatingStyle, getOfferById } from '../../utils/common';
+import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import { Container } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
+import { ThunkAppDispatch } from '../../types/actions';
+import { fetchOfferByIdAction } from '../../store/api-actions';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useEffect } from 'react';
 
 type PropertyScreenProps = {
   comments: Comments,
 }
 
-const mapStateToProps = ({ offers }: State) => ({ offers: offers });
+const mapStateToProps = ({ offers, currentOfferData: { currentOffer, isCurrentOfferLoaded } }: State) => ({
+  offers,
+  currentOffer,
+  isCurrentOfferLoaded,
+});
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  fetchCurrentOfferById(id: string) {
+    dispatch(fetchOfferByIdAction(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropertyScreenProps & PropsFromRedux;
 
-function PropertyScreen({ offers, comments }: ConnectedComponentProps): JSX.Element {
-  const { id: currentId = '' } = useParams();
+function PropertyScreen({ offers, comments, currentOffer, isCurrentOfferLoaded, fetchCurrentOfferById }: ConnectedComponentProps): JSX.Element {
+  const { id: currentId = ''} = useParams();
 
-  const offer = getOfferById(offers, currentId);
+  useEffect(() => {
+    fetchCurrentOfferById(currentId);
+  }, [currentId, fetchCurrentOfferById]);
 
-  if (!offer) {
+  if (!isCurrentOfferLoaded) {
+    return <LoadingScreen />;
+  }
+
+  if (!currentOffer) {
     return <NotFoundScreen />;
   }
 
-  const { title, isFavorite, isPremium, images, type, rating, bedrooms, maxAdults, price, goods, host, description } = offer;
+  const { title, isFavorite, isPremium, images, type, rating, bedrooms, maxAdults, price, goods, host, description } = currentOffer;
 
   return (
     <div className="page">
@@ -143,7 +163,7 @@ function PropertyScreen({ offers, comments }: ConnectedComponentProps): JSX.Elem
             </div>
           </div>
           <section className="property__map map" >
-            <Map offers={offers} currentOffer={offer} activeOfferId={currentId} />
+            <Map offers={[currentOffer]} activeOfferId={currentId} />
           </section>
         </section>
         <div className="container">

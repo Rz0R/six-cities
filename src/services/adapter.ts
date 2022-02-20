@@ -1,7 +1,7 @@
 import { Offer, BackendOffer, BackendOffers, Offers } from '../types/offer';
 import { BackendUser, UserData } from '../types/user-data';
 
-const adaptOfferToClient = (backendOffer: BackendOffer): Offer => {
+export const adaptOfferToClient = (backendOffer: BackendOffer): Offer => {
   const adaptedOffer = {
     ...backendOffer,
     id: backendOffer.id.toString(),

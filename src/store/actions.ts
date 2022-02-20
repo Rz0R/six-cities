@@ -1,6 +1,6 @@
 import { Cities, AuthorizationStatus } from '../const';
 import { ActionType } from '../types/actions';
-import { Offers } from '../types/offer';
+import { Offers, Offer } from '../types/offer';
 import { UserData } from '../types/user-data';
 
 export const selectCity = (city: Cities) => ({
@@ -11,6 +11,11 @@ export const selectCity = (city: Cities) => ({
 export const loadOffers = (offers: Offers) => ({
   type: ActionType.LoadOffers,
   payload: offers,
+} as const);
+
+export const loadOfferById = (offer: Offer) => ({
+  type: ActionType.LoadOfferById,
+  payload: offer,
 } as const);
 
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({

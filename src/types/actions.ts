@@ -1,4 +1,4 @@
-import { selectCity, loadOffers, requireAuthorization, requireLogout, loadUserData, removeUserData } from '../store/actions';
+import { selectCity, loadOffers, requireAuthorization, requireLogout, loadUserData, removeUserData, loadOfferById } from '../store/actions';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { State } from './state';
@@ -6,6 +6,7 @@ import { State } from './state';
 export enum ActionType {
   SelectCity = 'main/SelectCity',
   LoadOffers = 'main/LoadOffers',
+  LoadOfferById = 'main/LoadOfferById',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   LoadUserData = 'user/LoadUserData',
@@ -15,6 +16,7 @@ export enum ActionType {
 export type Actions =
   | ReturnType<typeof selectCity>
   | ReturnType<typeof loadOffers>
+  | ReturnType<typeof loadOfferById>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof requireLogout>
   | ReturnType<typeof loadUserData>
