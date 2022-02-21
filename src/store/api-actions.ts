@@ -1,5 +1,13 @@
 import { ThunkActionResult } from '../types/actions';
-import { loadOffers, requireAuthorization, requireLogout, loadUserData, removeUserData, loadOfferById } from './actions';
+import {
+  loadOffers,
+  requireAuthorization,
+  requireLogout,
+  loadUserData,
+  removeUserData,
+  loadOfferById,
+  setCurrentOfferDataNotFoundStatus,
+} from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { BackendOffer } from '../types/offer';
@@ -46,6 +54,10 @@ export const logoutAction = (): ThunkActionResult =>
 
 export const fetchOfferByIdAction = (id: string): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const { data } = await api.get<BackendOffer>(`${APIRoute.Hotels}/${id}`);
-    dispatch(loadOfferById(adaptOfferToClient(data)));
+    try {
+      const { data } = await api.get<BackendOffer>(`${APIRoute.Hotels}/${id}`);
+      dispatch(loadOfferById(adaptOfferToClient(data)));
+    } catch {
+      dispatch(setCurrentOfferDataNotFoundStatus())
+    }
   };

@@ -1,4 +1,4 @@
-import { Cities, AuthorizationStatus } from '../const';
+import { Cities, AuthorizationStatus, LoadingStatus } from '../const';
 import { Offers, Offer } from './offer';
 import { UserData } from './user-data';
 
@@ -7,7 +7,7 @@ export type State = {
   offers: Offers,
   currentOfferData: {
     currentOffer: Offer | null,
-    isCurrentOfferLoaded: boolean,
+    isCurrentOfferLoaded: LoadingStatus,
   },
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,

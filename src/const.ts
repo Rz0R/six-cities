@@ -24,6 +24,14 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum LoadingStatus {
+  Idle = 'IDLE',
+  Loading = 'LOADING',
+  Success = 'SUCCESS',
+  Fail = 'FAIL',
+  NotFound = 'NOT_FOUND',
+}
+
 export enum Container {
   Main = 'Main',
   Favorites = 'Favorites',
@@ -119,5 +127,4 @@ export const CITY_LOCATIONS: City[] = [
       zoom: 13,
     },
   },
-
 ];

@@ -6,15 +6,16 @@ import ReviewForm from './review-form/review-form';
 import Map from '../map/map';
 import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
-import { Container } from '../../const';
+import { Container, LoadingStatus } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
-import { ThunkAppDispatch } from '../../types/actions';
+import { Actions, ThunkAppDispatch } from '../../types/actions';
 import { fetchOfferByIdAction } from '../../store/api-actions';
+import { removeCurrentOfferData } from '../../store/actions';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useEffect } from 'react';
+import { Dispatch, useEffect } from 'react';
 
 type PropertyScreenProps = {
   comments: Comments,
@@ -30,6 +31,9 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   fetchCurrentOfferById(id: string) {
     dispatch(fetchOfferByIdAction(id));
   },
+  removeCurrentOfferData() {
+    dispatch(removeCurrentOfferData());
+  }
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -37,14 +41,17 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropertyScreenProps & PropsFromRedux;
 
-function PropertyScreen({ offers, comments, currentOffer, isCurrentOfferLoaded, fetchCurrentOfferById }: ConnectedComponentProps): JSX.Element {
-  const { id: currentId = ''} = useParams();
+function PropertyScreen({ offers, comments, currentOffer, isCurrentOfferLoaded, fetchCurrentOfferById, removeCurrentOfferData }: ConnectedComponentProps): JSX.Element {
+  const { id: currentId = '' } = useParams();
 
   useEffect(() => {
     fetchCurrentOfferById(currentId);
+    return () => {
+      removeCurrentOfferData();
+    }
   }, [currentId, fetchCurrentOfferById]);
 
-  if (!isCurrentOfferLoaded) {
+  if (isCurrentOfferLoaded === LoadingStatus.Loading || isCurrentOfferLoaded === LoadingStatus.Idle) {
     return <LoadingScreen />;
   }
 

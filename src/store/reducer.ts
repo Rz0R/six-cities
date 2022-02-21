@@ -1,13 +1,13 @@
 import { Actions, ActionType } from '../types/actions';
 import { State } from '../types/state';
-import { AuthorizationStatus, Cities } from '../const';
+import { AuthorizationStatus, Cities, LoadingStatus } from '../const';
 
 const initialState: State = {
   selectedCity: Cities.Paris,
   offers: [],
   currentOfferData: {
     currentOffer: null,
-    isCurrentOfferLoaded: false,
+    isCurrentOfferLoaded: LoadingStatus.Idle,
   },
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
@@ -25,9 +25,25 @@ const reducer = (state: State = initialState, action: Actions): State => {
         ...state,
         currentOfferData: {
           currentOffer: action.payload,
-          isCurrentOfferLoaded: true,
+          isCurrentOfferLoaded: LoadingStatus.Success,
         },
       };
+    case ActionType.RemoveCurrentOfferData:
+      return {
+        ...state,
+        currentOfferData: {
+          currentOffer: null,
+          isCurrentOfferLoaded: LoadingStatus.Idle,
+        }
+      }
+    case ActionType.SetCurrentOfferDataNotFoundStatus:
+      return {
+        ...state,
+        currentOfferData: {
+          currentOffer: null,
+          isCurrentOfferLoaded: LoadingStatus.NotFound,
+        }
+      }
     case ActionType.RequireAuthorization:
       return {
         ...state,

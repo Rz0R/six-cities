@@ -18,6 +18,14 @@ export const loadOfferById = (offer: Offer) => ({
   payload: offer,
 } as const);
 
+export const removeCurrentOfferData = () => ({
+  type: ActionType.RemoveCurrentOfferData,
+} as const);
+
+export const setCurrentOfferDataNotFoundStatus = () => ({
+  type: ActionType.SetCurrentOfferDataNotFoundStatus,
+} as const);
+
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
