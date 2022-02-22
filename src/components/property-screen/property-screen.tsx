@@ -9,31 +9,42 @@ import OfferCardList from '../offer-card-list/offer-card-list';
 import { Container, LoadingStatus } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
-import { Actions, ThunkAppDispatch } from '../../types/actions';
-import { fetchOfferByIdAction } from '../../store/api-actions';
-import { removeCurrentOfferData } from '../../store/actions';
+import { ThunkAppDispatch } from '../../types/actions';
+import { fetchOfferByIdAction, fetchNearbyOffersAction } from '../../store/api-actions';
+import { removeCurrentOfferData, removeNearbyOffersData } from '../../store/actions';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { Dispatch, useEffect } from 'react';
+import { useEffect } from 'react';
 
 type PropertyScreenProps = {
   comments: Comments,
 }
 
-const mapStateToProps = ({ offers, currentOfferData: { currentOffer, isCurrentOfferLoaded } }: State) => ({
-  offers,
+const mapStateToProps = ({
+  currentOfferData: { currentOffer, isCurrentOfferLoaded },
+  nearbyOffersData: { nearbyOffers, isNearbyOffersLoaded } }: State) => ({
   currentOffer,
-  isCurrentOfferLoaded,
+  nearbyOffers,
+  isDataLoaded: (() => (isCurrentOfferLoaded === LoadingStatus.Loading
+      || isCurrentOfferLoaded === LoadingStatus.Idle
+      || isNearbyOffersLoaded === LoadingStatus.Loading
+      || isNearbyOffersLoaded === LoadingStatus.Idle))(),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   fetchCurrentOfferById(id: string) {
     dispatch(fetchOfferByIdAction(id));
   },
-  removeCurrentOfferData() {
+  deleteCurrentOfferData() {
     dispatch(removeCurrentOfferData());
-  }
+  },
+  fetchNearbyOffers(id: string) {
+    dispatch(fetchNearbyOffersAction(id));
+  },
+  deleteNearbyOffersData() {
+    dispatch(removeNearbyOffersData());
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -41,17 +52,29 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropertyScreenProps & PropsFromRedux;
 
-function PropertyScreen({ offers, comments, currentOffer, isCurrentOfferLoaded, fetchCurrentOfferById, removeCurrentOfferData }: ConnectedComponentProps): JSX.Element {
+function PropertyScreen({
+  comments,
+  currentOffer,
+  nearbyOffers,
+  isDataLoaded,
+  fetchCurrentOfferById,
+  deleteCurrentOfferData,
+  fetchNearbyOffers,
+  deleteNearbyOffersData,
+}: ConnectedComponentProps): JSX.Element {
+
   const { id: currentId = '' } = useParams();
 
   useEffect(() => {
     fetchCurrentOfferById(currentId);
+    fetchNearbyOffers(currentId);
     return () => {
-      removeCurrentOfferData();
-    }
-  }, [currentId, fetchCurrentOfferById]);
+      deleteCurrentOfferData();
+      deleteNearbyOffersData();
+    };
+  }, [currentId, fetchCurrentOfferById, deleteCurrentOfferData, fetchNearbyOffers, deleteNearbyOffersData]);
 
-  if (isCurrentOfferLoaded === LoadingStatus.Loading || isCurrentOfferLoaded === LoadingStatus.Idle) {
+  if (isDataLoaded) {
     return <LoadingScreen />;
   }
 
@@ -170,7 +193,7 @@ function PropertyScreen({ offers, comments, currentOffer, isCurrentOfferLoaded, 
             </div>
           </div>
           <section className="property__map map" >
-            <Map offers={[currentOffer]} activeOfferId={currentId} />
+            <Map offers={[currentOffer, ...nearbyOffers]} activeOfferId={currentId} />
           </section>
         </section>
         <div className="container">
@@ -179,7 +202,7 @@ function PropertyScreen({ offers, comments, currentOffer, isCurrentOfferLoaded, 
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              {<OfferCardList offers={offers.filter((it) => it.id !== currentId).slice(0, 3)} container={Container.Properties} />}
+              {<OfferCardList offers={nearbyOffers} container={Container.Properties} />}
             </div>
           </section>
         </div>

@@ -9,6 +9,10 @@ const initialState: State = {
     currentOffer: null,
     isCurrentOfferLoaded: LoadingStatus.Idle,
   },
+  nearbyOffersData: {
+    nearbyOffers: [],
+    isNearbyOffersLoaded: LoadingStatus.Idle,
+  },
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   userData: null,
@@ -34,16 +38,40 @@ const reducer = (state: State = initialState, action: Actions): State => {
         currentOfferData: {
           currentOffer: null,
           isCurrentOfferLoaded: LoadingStatus.Idle,
-        }
-      }
+        },
+      };
     case ActionType.SetCurrentOfferDataNotFoundStatus:
       return {
         ...state,
         currentOfferData: {
           currentOffer: null,
           isCurrentOfferLoaded: LoadingStatus.NotFound,
-        }
-      }
+        },
+      };
+    case ActionType.LoadNearbyOffers:
+      return {
+        ...state,
+        nearbyOffersData: {
+          nearbyOffers: action.payload,
+          isNearbyOffersLoaded: LoadingStatus.Success,
+        },
+      };
+    case ActionType.RemoveNearbyOffersData:
+      return {
+        ...state,
+        nearbyOffersData: {
+          nearbyOffers: [],
+          isNearbyOffersLoaded: LoadingStatus.Idle,
+        },
+      };
+    case ActionType.SetNearbyOffersDataNotFound:
+      return {
+        ...state,
+        nearbyOffersData: {
+          nearbyOffers: [],
+          isNearbyOffersLoaded: LoadingStatus.NotFound,
+        },
+      };
     case ActionType.RequireAuthorization:
       return {
         ...state,

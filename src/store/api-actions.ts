@@ -7,6 +7,8 @@ import {
   removeUserData,
   loadOfferById,
   setCurrentOfferDataNotFoundStatus,
+  loadNearbyOffers,
+  setNearbyOffersDataNotFound
 } from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../const';
@@ -58,6 +60,16 @@ export const fetchOfferByIdAction = (id: string): ThunkActionResult =>
       const { data } = await api.get<BackendOffer>(`${APIRoute.Hotels}/${id}`);
       dispatch(loadOfferById(adaptOfferToClient(data)));
     } catch {
-      dispatch(setCurrentOfferDataNotFoundStatus())
+      dispatch(setCurrentOfferDataNotFoundStatus());
+    }
+  };
+
+export const fetchNearbyOffersAction = (id: string): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    try {
+      const { data } = await api.get<BackendOffer[]>(`${APIRoute.Hotels}/${id}/nearby`);
+      dispatch(loadNearbyOffers(adaptOffersToClient(data)));
+    } catch {
+      dispatch(setNearbyOffersDataNotFound());
     }
   };

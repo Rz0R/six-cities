@@ -9,6 +9,10 @@ export type State = {
     currentOffer: Offer | null,
     isCurrentOfferLoaded: LoadingStatus,
   },
+  nearbyOffersData: {
+    nearbyOffers: Offers,
+    isNearbyOffersLoaded: LoadingStatus,
+  }
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
   userData: UserData,

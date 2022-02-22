@@ -26,6 +26,19 @@ export const setCurrentOfferDataNotFoundStatus = () => ({
   type: ActionType.SetCurrentOfferDataNotFoundStatus,
 } as const);
 
+export const loadNearbyOffers = (offers: Offers) => ({
+  type: ActionType.LoadNearbyOffers,
+  payload: offers,
+} as const);
+
+export const removeNearbyOffersData = () => ({
+  type: ActionType.RemoveNearbyOffersData,
+} as const);
+
+export const setNearbyOffersDataNotFound = () => ({
+  type: ActionType.SetNearbyOffersDataNotFound,
+} as const);
+
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
