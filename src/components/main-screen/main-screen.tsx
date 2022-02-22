@@ -5,7 +5,7 @@ import Map from '../map/map';
 import Locations from './locations/locations';
 import PlacesSort from './places-sort/places-sort';
 import Auth from '../auth/auth';
-import { Cities, Container, SortTypes } from '../../const';
+import { Cities, Container, SortTypes, CITY_LOCATIONS } from '../../const';
 import { State } from '../../types/state';
 import { selectCity } from '../../store/actions';
 import { Actions } from '../../types/actions';
@@ -46,6 +46,8 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
 
   const hideSortMenu = () => setSortMenuActive(false);
 
+  const currentCity = (CITY_LOCATIONS.find((city) => city.name === selectedCity)) || CITY_LOCATIONS[0];
+
   return (
     <div
       className="page page--gray page--main"
@@ -84,7 +86,7 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
             </section>
             <div className="cities__right-section">
               <section className='map cities__map'>
-                <Map offers={offers} activeOfferId={cardId} />
+                <Map offers={offers} activeOfferId={cardId} city={currentCity} />
               </section>
             </div>
           </div>

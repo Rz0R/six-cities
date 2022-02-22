@@ -26,7 +26,7 @@ const mapStateToProps = ({
   nearbyOffersData: { nearbyOffers, isNearbyOffersLoaded } }: State) => ({
   currentOffer,
   nearbyOffers,
-  isDataLoaded: (() => (isCurrentOfferLoaded === LoadingStatus.Loading
+  isDataLoading: (() => (isCurrentOfferLoaded === LoadingStatus.Loading
       || isCurrentOfferLoaded === LoadingStatus.Idle
       || isNearbyOffersLoaded === LoadingStatus.Loading
       || isNearbyOffersLoaded === LoadingStatus.Idle))(),
@@ -56,7 +56,7 @@ function PropertyScreen({
   comments,
   currentOffer,
   nearbyOffers,
-  isDataLoaded,
+  isDataLoading,
   fetchCurrentOfferById,
   deleteCurrentOfferData,
   fetchNearbyOffers,
@@ -74,7 +74,7 @@ function PropertyScreen({
     };
   }, [currentId, fetchCurrentOfferById, deleteCurrentOfferData, fetchNearbyOffers, deleteNearbyOffersData]);
 
-  if (isDataLoaded) {
+  if (isDataLoading) {
     return <LoadingScreen />;
   }
 
@@ -82,7 +82,7 @@ function PropertyScreen({
     return <NotFoundScreen />;
   }
 
-  const { title, isFavorite, isPremium, images, type, rating, bedrooms, maxAdults, price, goods, host, description } = currentOffer;
+  const { title, isFavorite, isPremium, images, type, rating, bedrooms, maxAdults, price, goods, host, description, city } = currentOffer;
 
   return (
     <div className="page">
@@ -193,7 +193,7 @@ function PropertyScreen({
             </div>
           </div>
           <section className="property__map map" >
-            <Map offers={[currentOffer, ...nearbyOffers]} activeOfferId={currentId} />
+            <Map offers={[currentOffer, ...nearbyOffers]} activeOfferId={currentId} city={city} />
           </section>
         </section>
         <div className="container">
