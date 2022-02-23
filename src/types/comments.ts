@@ -1,9 +1,4 @@
-type User = {
-  id: string,
-  isPro: boolean,
-  name: string,
-  avatarUrl: string,
-}
+import { User, BackendUser } from './offer';
 
 type Comment = {
   id: string,
@@ -13,5 +8,14 @@ type Comment = {
   date: string,
 }
 
-export type { Comment };
+type BackendComment = {
+  id: string,
+  user: BackendUser,
+  rating: number,
+  comment: string,
+  date: string,
+}
+
+export type { Comment, BackendComment };
 export type Comments = Comment[];
+export type BackendComments = BackendComment[];

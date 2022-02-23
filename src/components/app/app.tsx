@@ -12,11 +12,8 @@ import { RoutePaths } from '../../const';
 import { State } from '../../types/state';
 import PrivateRoute from '../private-route/private-route';
 
-import { Comments } from '../../types/comments';
-
 type AppScreenProps = {
   offerCardsCount: number,
-  comments: Comments,
 }
 
 const mapStateToProps = ({ isDataLoaded }: State) => ({ isDataLoaded });
@@ -26,7 +23,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = AppScreenProps & PropsFromRedux;
 
-function App({ offerCardsCount, comments, isDataLoaded }: ConnectedComponentProps): JSX.Element {
+function App({ offerCardsCount, isDataLoaded }: ConnectedComponentProps): JSX.Element {
 
   if (!isDataLoaded) {
     return <LoadingScreen />;
@@ -45,7 +42,7 @@ function App({ offerCardsCount, comments, isDataLoaded }: ConnectedComponentProp
             />
           }
         />
-        <Route path={`${RoutePaths.Room}/:id`} element={<PropertyScreen comments={comments} />} />
+        <Route path={`${RoutePaths.Room}/:id`} element={<PropertyScreen />} />
         <Route path={RoutePaths.SignIn} element={<LoginScreen />} />
         <Route path={RoutePaths.NotFound} element={<NotFoundScreen />} />
       </Routes>

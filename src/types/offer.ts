@@ -8,7 +8,7 @@ export type Location = {
   zoom: number,
 }
 
-type Host = {
+export type User = {
   id: string,
   name: string,
   isPro: boolean,
@@ -33,13 +33,13 @@ type Offer = {
   maxAdults: number,
   price: number,
   goods: string[],
-  host: Host,
+  host: User,
   description: string,
   location: Location,
   id: string
 }
 
-type BackendHost = {
+export type BackendUser = {
   id: string,
   name: string,
   is_pro: boolean,
@@ -59,7 +59,7 @@ type BackendOffer = {
   max_adults: number,
   price: number,
   goods: string[],
-  host: BackendHost,
+  host: BackendUser,
   description: string,
   location: Location,
   id: string,

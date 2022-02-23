@@ -7,7 +7,6 @@ import { reducer } from './store/reducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { comments } from './mocks/comments';
 import { requireAuthorization } from './store/actions';
 import { fetchOfferAction, checkAuthAction } from './store/api-actions';
 import { AuthorizationStatus } from './const';
@@ -29,7 +28,6 @@ ReactDOM.render(
       <ToastContainer/>
       <App
         offerCardsCount={6}
-        comments={comments}
       />
     </Provider>
   </React.StrictMode>,

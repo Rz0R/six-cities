@@ -10,7 +10,10 @@ import {
   setCurrentOfferDataNotFoundStatus,
   loadNearbyOffers,
   removeNearbyOffersData,
-  setNearbyOffersDataNotFound
+  setNearbyOffersDataNotFound,
+  loadComments,
+  removeCommentsData,
+  setCommentsDataNotFoundStatus
 } from '../store/actions';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
@@ -29,6 +32,9 @@ export enum ActionType {
   RequireLogout = 'user/requireLogout',
   LoadUserData = 'user/LoadUserData',
   RemoveUserData = 'user/RemoveUserData',
+  LoadComments = 'property/LoadComments',
+  RemoveCommentsData = 'property/RemoveCommentsData',
+  SetCommentsDataNotFoundStatus = 'property/SetCommentsDataNotFoundStatus',
 }
 
 export type Actions =
@@ -43,7 +49,10 @@ export type Actions =
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof requireLogout>
   | ReturnType<typeof loadUserData>
-  | ReturnType<typeof removeUserData>;
+  | ReturnType<typeof removeUserData>
+  | ReturnType<typeof loadComments>
+  | ReturnType<typeof removeCommentsData>
+  | ReturnType<typeof setCommentsDataNotFoundStatus>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

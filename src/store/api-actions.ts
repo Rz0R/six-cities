@@ -8,15 +8,18 @@ import {
   loadOfferById,
   setCurrentOfferDataNotFoundStatus,
   loadNearbyOffers,
-  setNearbyOffersDataNotFound
+  setNearbyOffersDataNotFound,
+  loadComments,
+  setCommentsDataNotFoundStatus
 } from './actions';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { BackendOffer } from '../types/offer';
 import { BackendUser } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
-import { adaptOffersToClient, adaptOfferToClient, adaptUserDataToClient } from '../services/adapter';
+import { adaptOffersToClient, adaptOfferToClient, adaptUserDataToClient, adaptCommentsDataToClient } from '../services/adapter';
 import { toast } from 'react-toastify';
+import { BackendComments } from '../types/comments';
 
 const AUTH_FAIL_MESSAGE = 'Don\'t forget to login';
 
@@ -71,5 +74,15 @@ export const fetchNearbyOffersAction = (id: string): ThunkActionResult =>
       dispatch(loadNearbyOffers(adaptOffersToClient(data)));
     } catch {
       dispatch(setNearbyOffersDataNotFound());
+    }
+  };
+
+export const fetchCommentsAction = (id: string): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    try {
+      const { data } = await api.get<BackendComments>(`${APIRoute.Comments}/${id}`);
+      dispatch(loadComments(adaptCommentsDataToClient(data)));
+    } catch {
+      dispatch(setCommentsDataNotFoundStatus());
     }
   };

@@ -1,4 +1,3 @@
-import { Comments } from '../../types/comments';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
@@ -10,26 +9,28 @@ import { Container, LoadingStatus } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkAppDispatch } from '../../types/actions';
-import { fetchOfferByIdAction, fetchNearbyOffersAction } from '../../store/api-actions';
-import { removeCurrentOfferData, removeNearbyOffersData } from '../../store/actions';
+import { fetchOfferByIdAction, fetchNearbyOffersAction, fetchCommentsAction } from '../../store/api-actions';
+import { removeCurrentOfferData, removeNearbyOffersData, removeCommentsData } from '../../store/actions';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
 
-type PropertyScreenProps = {
-  comments: Comments,
-}
-
 const mapStateToProps = ({
   currentOfferData: { currentOffer, isCurrentOfferLoaded },
-  nearbyOffersData: { nearbyOffers, isNearbyOffersLoaded } }: State) => ({
+  nearbyOffersData: { nearbyOffers, isNearbyOffersLoaded },
+  commentsData: { comments, isCommentsLoaded } }: State) => ({
   currentOffer,
   nearbyOffers,
-  isDataLoading: (() => (isCurrentOfferLoaded === LoadingStatus.Loading
+  comments,
+  isDataLoading: (() => (
+    isCurrentOfferLoaded === LoadingStatus.Loading
       || isCurrentOfferLoaded === LoadingStatus.Idle
       || isNearbyOffersLoaded === LoadingStatus.Loading
-      || isNearbyOffersLoaded === LoadingStatus.Idle))(),
+      || isNearbyOffersLoaded === LoadingStatus.Idle
+      || isCommentsLoaded === LoadingStatus.Idle
+      || isCommentsLoaded === LoadingStatus.Loading
+  ))(),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -45,12 +46,17 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   deleteNearbyOffersData() {
     dispatch(removeNearbyOffersData());
   },
+  fetchComments(id: string) {
+    dispatch(fetchCommentsAction(id));
+  },
+  deleteCommentsData() {
+    dispatch(removeCommentsData());
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropertyScreenProps & PropsFromRedux;
 
 function PropertyScreen({
   comments,
@@ -61,18 +67,30 @@ function PropertyScreen({
   deleteCurrentOfferData,
   fetchNearbyOffers,
   deleteNearbyOffersData,
-}: ConnectedComponentProps): JSX.Element {
+  fetchComments,
+  deleteCommentsData,
+}: PropsFromRedux): JSX.Element {
 
   const { id: currentId = '' } = useParams();
 
   useEffect(() => {
     fetchCurrentOfferById(currentId);
     fetchNearbyOffers(currentId);
+    fetchComments(currentId);
     return () => {
       deleteCurrentOfferData();
       deleteNearbyOffersData();
+      deleteCommentsData();
     };
-  }, [currentId, fetchCurrentOfferById, deleteCurrentOfferData, fetchNearbyOffers, deleteNearbyOffersData]);
+  }, [
+    currentId,
+    fetchCurrentOfferById,
+    deleteCurrentOfferData,
+    fetchNearbyOffers,
+    deleteNearbyOffersData,
+    fetchComments,
+    deleteCommentsData,
+  ]);
 
   if (isDataLoading) {
     return <LoadingScreen />;

@@ -13,6 +13,10 @@ const initialState: State = {
     nearbyOffers: [],
     isNearbyOffersLoaded: LoadingStatus.Idle,
   },
+  commentsData: {
+    comments: [],
+    isCommentsLoaded: LoadingStatus.Idle,
+  },
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   userData: null,
@@ -92,6 +96,30 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {
         ...state,
         userData: null,
+      };
+    case ActionType.LoadComments:
+      return {
+        ...state,
+        commentsData: {
+          comments: action.payload,
+          isCommentsLoaded: LoadingStatus.Success,
+        },
+      };
+    case ActionType.RemoveCommentsData:
+      return {
+        ...state,
+        commentsData: {
+          comments: [],
+          isCommentsLoaded: LoadingStatus.Idle,
+        },
+      };
+    case ActionType.SetCommentsDataNotFoundStatus:
+      return {
+        ...state,
+        commentsData: {
+          comments: [],
+          isCommentsLoaded: LoadingStatus.NotFound,
+        },
       };
     default:
       return state;

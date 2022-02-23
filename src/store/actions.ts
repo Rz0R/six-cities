@@ -1,5 +1,6 @@
 import { Cities, AuthorizationStatus } from '../const';
 import { ActionType } from '../types/actions';
+import { Comments } from '../types/comments';
 import { Offers, Offer } from '../types/offer';
 import { UserData } from '../types/user-data';
 
@@ -56,4 +57,17 @@ export const loadUserData = (userData: UserData) => ({
 
 export const removeUserData = () => ({
   type: ActionType.RemoveUserData,
+} as const);
+
+export const loadComments = (comments: Comments) => ({
+  type: ActionType.LoadComments,
+  payload: comments,
+} as const);
+
+export const removeCommentsData = () => ({
+  type: ActionType.RemoveCommentsData,
+} as const);
+
+export const setCommentsDataNotFoundStatus = () => ({
+  type: ActionType.SetCommentsDataNotFoundStatus,
 } as const);

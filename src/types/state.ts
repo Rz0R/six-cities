@@ -1,5 +1,6 @@
 import { Cities, AuthorizationStatus, LoadingStatus } from '../const';
 import { Offers, Offer } from './offer';
+import { Comments } from './comments';
 import { UserData } from './user-data';
 
 export type State = {
@@ -12,7 +13,11 @@ export type State = {
   nearbyOffersData: {
     nearbyOffers: Offers,
     isNearbyOffersLoaded: LoadingStatus,
-  }
+  },
+  commentsData: {
+    comments: Comments,
+    isCommentsLoaded: LoadingStatus,
+  },
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
   userData: UserData,

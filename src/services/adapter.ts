@@ -1,5 +1,6 @@
 import { Offer, BackendOffer, BackendOffers, Offers } from '../types/offer';
 import { BackendUser, UserData } from '../types/user-data';
+import { Comment, Comments, BackendComment, BackendComments } from '../types/comments';
 
 export const adaptOfferToClient = (backendOffer: BackendOffer): Offer => {
   const adaptedOffer = {
@@ -39,6 +40,24 @@ const adaptUserDataToClient = (backendUserData: BackendUser): UserData => {
   return adaptedUserData;
 };
 
-const adaptOffersToClient = (data: BackendOffers): Offers => data.map((backendOffer) => adaptOfferToClient(backendOffer));
+const adaptCommentDataToClient = (backendCommentData: BackendComment): Comment => {
+  const adaptedComment = {
+    ...backendCommentData,
+    id: backendCommentData.id.toString(),
+    user: {
+      ...backendCommentData.user,
+      avatarUrl: backendCommentData.user.avatar_url,
+      isPro: backendCommentData.user.is_pro,
+    },
+  };
 
-export { adaptOffersToClient, adaptUserDataToClient };
+  Reflect.deleteProperty(adaptedComment.user, 'avatar_url');
+  Reflect.deleteProperty(adaptedComment.user, 'is_pro');
+
+  return adaptedComment;
+};
+
+const adaptOffersToClient = (data: BackendOffers): Offers => data.map((backendOffer) => adaptOfferToClient(backendOffer));
+const adaptCommentsDataToClient = (data: BackendComments): Comments => data.map((backendComment) => adaptCommentDataToClient(backendComment));
+
+export { adaptOffersToClient, adaptUserDataToClient, adaptCommentsDataToClient };
