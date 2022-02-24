@@ -1,3 +1,4 @@
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
@@ -5,12 +6,17 @@ import ReviewForm from './review-form/review-form';
 import Map from '../map/map';
 import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
-import { Container, LoadingStatus } from '../../const';
+import { Container, LoadingStatus, AuthorizationStatus, PostCommentStatus } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkAppDispatch } from '../../types/actions';
-import { fetchOfferByIdAction, fetchNearbyOffersAction, fetchCommentsAction } from '../../store/api-actions';
-import { removeCurrentOfferData, removeNearbyOffersData, removeCommentsData } from '../../store/actions';
+import {
+  fetchOfferByIdAction,
+  fetchNearbyOffersAction,
+  fetchCommentsAction,
+  postCommentAction
+} from '../../store/api-actions';
+import { removeCurrentOfferData, removeNearbyOffersData, removeCommentsData, setPostCommentStatus } from '../../store/actions';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -19,10 +25,14 @@ import { useEffect } from 'react';
 const mapStateToProps = ({
   currentOfferData: { currentOffer, isCurrentOfferLoaded },
   nearbyOffersData: { nearbyOffers, isNearbyOffersLoaded },
+  authorizationStatus,
+  postCommentStatus,
   commentsData: { comments, isCommentsLoaded } }: State) => ({
   currentOffer,
   nearbyOffers,
   comments,
+  authorizationStatus,
+  postCommentStatus,
   isDataLoading: (() => (
     isCurrentOfferLoaded === LoadingStatus.Loading
       || isCurrentOfferLoaded === LoadingStatus.Idle
@@ -52,6 +62,12 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   deleteCommentsData() {
     dispatch(removeCommentsData());
   },
+  postComment(id: string, review: { comment: string, rating: string }) {
+    dispatch(postCommentAction(id, review));
+  },
+  setCommentStatus(status: PostCommentStatus) {
+    dispatch(setPostCommentStatus(status));
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -63,15 +79,38 @@ function PropertyScreen({
   currentOffer,
   nearbyOffers,
   isDataLoading,
+  authorizationStatus,
   fetchCurrentOfferById,
   deleteCurrentOfferData,
   fetchNearbyOffers,
   deleteNearbyOffersData,
   fetchComments,
   deleteCommentsData,
+  postCommentStatus,
+  postComment,
+  setCommentStatus,
 }: PropsFromRedux): JSX.Element {
 
   const { id: currentId = '' } = useParams();
+
+  const [userReview, setUserReview] = useState({ rating: '0', review: '' });
+
+  const onUserReviewChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setUserReview((prevUserReview) => ({
+      ...prevUserReview,
+      [evt.target.name]: evt.target.value,
+    }));
+  };
+
+  const onSubmitButton = (evt: FormEvent) => {
+    evt.preventDefault();
+    postComment(currentId, { comment: userReview.review, rating: userReview.rating });
+  };
+  const isSubmitButtonActive = userReview.review.length >= 50
+    && userReview.review.length <= 300
+    && Number(userReview.rating) > 0
+    && Number(userReview.rating) <= 5
+    && postCommentStatus !== PostCommentStatus.Posting;
 
   useEffect(() => {
     fetchCurrentOfferById(currentId);
@@ -92,6 +131,13 @@ function PropertyScreen({
     deleteCommentsData,
   ]);
 
+  useEffect(() => {
+    if (postCommentStatus === PostCommentStatus.Success) {
+      setUserReview({ rating: '0', review: '' });
+      setCommentStatus(PostCommentStatus.Idle);
+    }
+  }, [postCommentStatus, setCommentStatus]);
+
   if (isDataLoading) {
     return <LoadingScreen />;
   }
@@ -101,6 +147,8 @@ function PropertyScreen({
   }
 
   const { title, isFavorite, isPremium, images, type, rating, bedrooms, maxAdults, price, goods, host, description, city } = currentOffer;
+
+  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   return (
     <div className="page">
@@ -206,7 +254,7 @@ function PropertyScreen({
               </div>
               <section className="property__reviews reviews">
                 <ReviewList comments={comments} />
-                <ReviewForm />
+                {isAuthorized && <ReviewForm comment={userReview} onCommentChange={onUserReviewChange} onSubmit={onSubmitButton} isSubmitButtonActive={isSubmitButtonActive} />}
               </section>
             </div>
           </div>

@@ -1,32 +1,36 @@
-import { ChangeEvent,  useState } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import ReviewRatingStars from './review-rating-stars/review-rating-stars';
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  comment: {
+    rating: string,
+    review: string,
+  },
+  isSubmitButtonActive: boolean,
+  onCommentChange: (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
+  onSubmit: (evt: FormEvent) => void,
+};
 
-  const [userReview, setUserReview] = useState({ rating: '0', review: '' });
-
-  const onUserReviewChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setUserReview((prevUserReview) => ({
-      ...prevUserReview,
-      [evt.target.name]: evt.target.value,
-    }));
-  };
+function ReviewForm({ comment: { rating, review }, onCommentChange, onSubmit, isSubmitButtonActive }: ReviewFormProps): JSX.Element {
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      onSubmit={onSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        <ReviewRatingStars rating={userReview.rating} onRatingChange={onUserReviewChange} />
+        <ReviewRatingStars rating={rating} onRatingChange={onCommentChange} />
       </div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        defaultValue={userReview.review}
-        onChange={(evt) => onUserReviewChange(evt)}
+        defaultValue={review}
+        onChange={onCommentChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -37,7 +41,7 @@ function ReviewForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={!isSubmitButtonActive}
         >
           Submit
         </button>

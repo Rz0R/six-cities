@@ -33,6 +33,13 @@ export enum LoadingStatus {
   NotFound = 'NOT_FOUND',
 }
 
+export enum PostCommentStatus {
+  Idle = 'IDLE',
+  Posting = 'POSTING',
+  Success = 'SUCCESS',
+  Fail = 'FAIL',
+}
+
 export enum Container {
   Main = 'Main',
   Favorites = 'Favorites',

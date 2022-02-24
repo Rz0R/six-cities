@@ -13,7 +13,8 @@ import {
   setNearbyOffersDataNotFound,
   loadComments,
   removeCommentsData,
-  setCommentsDataNotFoundStatus
+  setCommentsDataNotFoundStatus,
+  setPostCommentStatus
 } from '../store/actions';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
@@ -35,6 +36,7 @@ export enum ActionType {
   LoadComments = 'property/LoadComments',
   RemoveCommentsData = 'property/RemoveCommentsData',
   SetCommentsDataNotFoundStatus = 'property/SetCommentsDataNotFoundStatus',
+  SetPostCommentStatus = 'property/SetPostCommentStatus',
 }
 
 export type Actions =
@@ -52,7 +54,8 @@ export type Actions =
   | ReturnType<typeof removeUserData>
   | ReturnType<typeof loadComments>
   | ReturnType<typeof removeCommentsData>
-  | ReturnType<typeof setCommentsDataNotFoundStatus>;
+  | ReturnType<typeof setCommentsDataNotFoundStatus>
+  | ReturnType<typeof setPostCommentStatus>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

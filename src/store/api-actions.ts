@@ -10,10 +10,11 @@ import {
   loadNearbyOffers,
   setNearbyOffersDataNotFound,
   loadComments,
-  setCommentsDataNotFoundStatus
+  setCommentsDataNotFoundStatus,
+  setPostCommentStatus
 } from './actions';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute, AuthorizationStatus } from '../const';
+import { APIRoute, AuthorizationStatus, PostCommentStatus } from '../const';
 import { BackendOffer } from '../types/offer';
 import { BackendUser } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
@@ -22,6 +23,7 @@ import { toast } from 'react-toastify';
 import { BackendComments } from '../types/comments';
 
 const AUTH_FAIL_MESSAGE = 'Don\'t forget to login';
+const POST_COMMENT_FAIL_MESSAGE = 'Fail post comment';
 
 export const fetchOfferAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -84,5 +86,18 @@ export const fetchCommentsAction = (id: string): ThunkActionResult =>
       dispatch(loadComments(adaptCommentsDataToClient(data)));
     } catch {
       dispatch(setCommentsDataNotFoundStatus());
+    }
+  };
+
+export const postCommentAction = (id: string, review: { comment: string, rating: string }): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    try {
+      dispatch(setPostCommentStatus(PostCommentStatus.Posting));
+      const res = await api.post<BackendComments>(`${APIRoute.Comments}/${id}`, review);
+      dispatch(loadComments(adaptCommentsDataToClient(res.data)));
+      dispatch(setPostCommentStatus(PostCommentStatus.Success));
+    } catch {
+      toast.info(POST_COMMENT_FAIL_MESSAGE);
+      dispatch(setPostCommentStatus(PostCommentStatus.Idle));
     }
   };

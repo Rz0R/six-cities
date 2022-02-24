@@ -1,4 +1,4 @@
-import { Cities, AuthorizationStatus } from '../const';
+import { Cities, AuthorizationStatus, PostCommentStatus } from '../const';
 import { ActionType } from '../types/actions';
 import { Comments } from '../types/comments';
 import { Offers, Offer } from '../types/offer';
@@ -70,4 +70,9 @@ export const removeCommentsData = () => ({
 
 export const setCommentsDataNotFoundStatus = () => ({
   type: ActionType.SetCommentsDataNotFoundStatus,
+} as const);
+
+export const setPostCommentStatus = (postCommentStatus: PostCommentStatus) => ({
+  type: ActionType.SetPostCommentStatus,
+  payload: postCommentStatus,
 } as const);

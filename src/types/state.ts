@@ -1,4 +1,4 @@
-import { Cities, AuthorizationStatus, LoadingStatus } from '../const';
+import { Cities, AuthorizationStatus, LoadingStatus, PostCommentStatus } from '../const';
 import { Offers, Offer } from './offer';
 import { Comments } from './comments';
 import { UserData } from './user-data';
@@ -18,6 +18,7 @@ export type State = {
     comments: Comments,
     isCommentsLoaded: LoadingStatus,
   },
+  postCommentStatus: PostCommentStatus,
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
   userData: UserData,

@@ -1,6 +1,6 @@
 import { Actions, ActionType } from '../types/actions';
 import { State } from '../types/state';
-import { AuthorizationStatus, Cities, LoadingStatus } from '../const';
+import { AuthorizationStatus, Cities, LoadingStatus, PostCommentStatus } from '../const';
 
 const initialState: State = {
   selectedCity: Cities.Paris,
@@ -17,6 +17,7 @@ const initialState: State = {
     comments: [],
     isCommentsLoaded: LoadingStatus.Idle,
   },
+  postCommentStatus: PostCommentStatus.Idle,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   userData: null,
@@ -120,6 +121,11 @@ const reducer = (state: State = initialState, action: Actions): State => {
           comments: [],
           isCommentsLoaded: LoadingStatus.NotFound,
         },
+      };
+    case ActionType.SetPostCommentStatus:
+      return {
+        ...state,
+        postCommentStatus: action.payload,
       };
     default:
       return state;
