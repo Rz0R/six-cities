@@ -1,4 +1,3 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
@@ -6,17 +5,16 @@ import ReviewForm from './review-form/review-form';
 import Map from '../map/map';
 import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
-import { Container, LoadingStatus, AuthorizationStatus, PostCommentStatus } from '../../const';
+import { Container, LoadingStatus, AuthorizationStatus } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkAppDispatch } from '../../types/actions';
 import {
   fetchOfferByIdAction,
   fetchNearbyOffersAction,
-  fetchCommentsAction,
-  postCommentAction
+  fetchCommentsAction
 } from '../../store/api-actions';
-import { removeCurrentOfferData, removeNearbyOffersData, removeCommentsData, setPostCommentStatus } from '../../store/actions';
+import { removeCurrentOfferData, removeNearbyOffersData, removeCommentsData } from '../../store/actions';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -26,13 +24,11 @@ const mapStateToProps = ({
   currentOfferData: { currentOffer, isCurrentOfferLoaded },
   nearbyOffersData: { nearbyOffers, isNearbyOffersLoaded },
   authorizationStatus,
-  postCommentStatus,
   commentsData: { comments, isCommentsLoaded } }: State) => ({
   currentOffer,
   nearbyOffers,
   comments,
   authorizationStatus,
-  postCommentStatus,
   isDataLoading: (() => (
     isCurrentOfferLoaded === LoadingStatus.Loading
       || isCurrentOfferLoaded === LoadingStatus.Idle
@@ -62,12 +58,6 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   deleteCommentsData() {
     dispatch(removeCommentsData());
   },
-  postComment(id: string, review: { comment: string, rating: string }) {
-    dispatch(postCommentAction(id, review));
-  },
-  setCommentStatus(status: PostCommentStatus) {
-    dispatch(setPostCommentStatus(status));
-  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -86,43 +76,21 @@ function PropertyScreen({
   deleteNearbyOffersData,
   fetchComments,
   deleteCommentsData,
-  postCommentStatus,
-  postComment,
-  setCommentStatus,
 }: PropsFromRedux): JSX.Element {
 
-  const { id: currentId = '' } = useParams();
-
-  const [userReview, setUserReview] = useState({ rating: '0', review: '' });
-
-  const onUserReviewChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setUserReview((prevUserReview) => ({
-      ...prevUserReview,
-      [evt.target.name]: evt.target.value,
-    }));
-  };
-
-  const onSubmitButton = (evt: FormEvent) => {
-    evt.preventDefault();
-    postComment(currentId, { comment: userReview.review, rating: userReview.rating });
-  };
-  const isSubmitButtonActive = userReview.review.length >= 50
-    && userReview.review.length <= 300
-    && Number(userReview.rating) > 0
-    && Number(userReview.rating) <= 5
-    && postCommentStatus !== PostCommentStatus.Posting;
+  const { id = '' } = useParams();
 
   useEffect(() => {
-    fetchCurrentOfferById(currentId);
-    fetchNearbyOffers(currentId);
-    fetchComments(currentId);
+    fetchCurrentOfferById(id);
+    fetchNearbyOffers(id);
+    fetchComments(id);
     return () => {
       deleteCurrentOfferData();
       deleteNearbyOffersData();
       deleteCommentsData();
     };
   }, [
-    currentId,
+    id,
     fetchCurrentOfferById,
     deleteCurrentOfferData,
     fetchNearbyOffers,
@@ -130,13 +98,6 @@ function PropertyScreen({
     fetchComments,
     deleteCommentsData,
   ]);
-
-  useEffect(() => {
-    if (postCommentStatus === PostCommentStatus.Success) {
-      setUserReview({ rating: '0', review: '' });
-      setCommentStatus(PostCommentStatus.Idle);
-    }
-  }, [postCommentStatus, setCommentStatus]);
 
   if (isDataLoading) {
     return <LoadingScreen />;
@@ -168,7 +129,7 @@ function PropertyScreen({
             <div className="property__gallery">
               {
                 images.slice(0, 6).map((src) => (
-                  <div key={`${currentId}-${src}`} className="property__image-wrapper">
+                  <div key={`${id}-${src}`} className="property__image-wrapper">
                     <img
                       className="property__image"
                       src={src}
@@ -227,7 +188,7 @@ function PropertyScreen({
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    goods.map((it) => <li key={`${currentId}-${it}`} className="property__inside-item">{it}</li>)
+                    goods.map((it) => <li key={`${id}-${it}`} className="property__inside-item">{it}</li>)
                   }
                 </ul>
               </div>
@@ -254,12 +215,12 @@ function PropertyScreen({
               </div>
               <section className="property__reviews reviews">
                 <ReviewList comments={comments} />
-                {isAuthorized && <ReviewForm comment={userReview} onCommentChange={onUserReviewChange} onSubmit={onSubmitButton} isSubmitButtonActive={isSubmitButtonActive} />}
+                {isAuthorized && <ReviewForm />}
               </section>
             </div>
           </div>
           <section className="property__map map" >
-            <Map offers={[currentOffer, ...nearbyOffers]} activeOfferId={currentId} city={city} />
+            <Map offers={[currentOffer, ...nearbyOffers]} activeOfferId={id} city={city} />
           </section>
         </section>
         <div className="container">
