@@ -76,3 +76,8 @@ export const setPostCommentStatus = (postCommentStatus: PostCommentStatus) => ({
   type: ActionType.SetPostCommentStatus,
   payload: postCommentStatus,
 } as const);
+
+export const updateOffer = (offer: Offer) => ({
+  type: ActionType.UpdateOffers,
+  payload: offer,
+} as const);

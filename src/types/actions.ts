@@ -1,6 +1,7 @@
 import {
   selectCity,
   loadOffers,
+  updateOffer,
   requireAuthorization,
   requireLogout,
   loadUserData,
@@ -23,6 +24,7 @@ import { State } from './state';
 export enum ActionType {
   SelectCity = 'main/SelectCity',
   LoadOffers = 'main/LoadOffers',
+  UpdateOffers = 'main/UpdateOffers',
   LoadOfferById = 'property/LoadOfferById',
   RemoveCurrentOfferData = 'property/RemoveCurrentOfferData',
   SetCurrentOfferDataNotFoundStatus = 'property/SetCurrentOfferDataNotFoundStatus',
@@ -42,6 +44,7 @@ export enum ActionType {
 export type Actions =
   | ReturnType<typeof selectCity>
   | ReturnType<typeof loadOffers>
+  | ReturnType<typeof updateOffer>
   | ReturnType<typeof loadOfferById>
   | ReturnType<typeof removeCurrentOfferData>
   | ReturnType<typeof setCurrentOfferDataNotFoundStatus>

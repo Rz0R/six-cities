@@ -1,6 +1,7 @@
 import { Actions, ActionType } from '../types/actions';
 import { State } from '../types/state';
 import { AuthorizationStatus, Cities, LoadingStatus, PostCommentStatus } from '../const';
+import { replaceOffer } from '../utils/common';
 
 const initialState: State = {
   selectedCity: Cities.Paris,
@@ -29,6 +30,11 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, selectedCity: action.payload };
     case ActionType.LoadOffers:
       return { ...state, offers: action.payload };
+    case ActionType.UpdateOffers:
+      return {
+        ...state,
+        offers: replaceOffer(state.offers, action.payload),
+      };
     case ActionType.LoadOfferById:
       return {
         ...state,

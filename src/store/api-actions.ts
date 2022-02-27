@@ -1,6 +1,7 @@
 import { ThunkActionResult } from '../types/actions';
 import {
   loadOffers,
+  updateOffer,
   requireAuthorization,
   requireLogout,
   loadUserData,
@@ -100,4 +101,12 @@ export const postCommentAction = (id: string, review: { comment: string, rating:
       toast.info(POST_COMMENT_FAIL_MESSAGE);
       dispatch(setPostCommentStatus(PostCommentStatus.Idle));
     }
+  };
+
+
+export const toggleIsFavoriteAction = (id: string, favoriteStatus: number): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const { data } = await api.post<BackendOffer>(`${APIRoute.Favorite}/${id}/${favoriteStatus}`);
+    // console.log(data);
+    dispatch(updateOffer(adaptOfferToClient(data)));
   };

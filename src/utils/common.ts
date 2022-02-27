@@ -1,5 +1,5 @@
 import { STARS_NUMBER, Cities, SortTypes } from '../const';
-import { Offers } from '../types/offer';
+import { Offer, Offers } from '../types/offer';
 
 export const getRatingStyle = (rating: number) => ({ width: `${100 / STARS_NUMBER * rating}%` });
 
@@ -12,6 +12,16 @@ export const getOfferById = (offers: Offers, id: string) => offers.find((offer) 
 export const citiesList: Cities[] = Object.entries(Cities).map(([_, value]) => value);
 
 export const sortTypesList: SortTypes[] = Object.entries(SortTypes).map(([_, value]) => value);
+
+export const replaceOffer = (offers: Offers, updatedOffer: Offer) =>
+  offers.map((offer) => {
+    if (offer.id === updatedOffer.id) {
+      return updatedOffer;
+    } else {
+      return offer;
+    }
+  });
+
 
 export const getSortedOffers = {
   [SortTypes.POPULAR]: (offers: Offers) => offers,

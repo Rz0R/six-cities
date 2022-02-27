@@ -7,7 +7,7 @@ export const adaptOfferToClient = (backendOffer: BackendOffer): Offer => {
     ...backendOffer,
     id: backendOffer.id.toString(),
     previewImage: backendOffer.preview_image,
-    isFavorite: backendOffer.is_premium,
+    isFavorite: backendOffer.is_favorite,
     isPremium: backendOffer.is_premium,
     maxAdults: backendOffer.max_adults,
     host: {

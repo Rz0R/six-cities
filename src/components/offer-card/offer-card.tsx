@@ -2,7 +2,13 @@ import { Offer, Id } from '../../types/offer';
 import { Container } from '../../const';
 import { Link } from 'react-router-dom';
 import { RoutePaths } from '../../const';
+import { ThunkAppDispatch } from '../../types/actions';
+import { State } from '../../types/state';
+import { toggleIsFavoriteAction } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../const';
+
 import classNames from 'classnames';
+import { connect, ConnectedProps } from 'react-redux';
 
 import { getRatingStyle } from '../../utils/common';
 
@@ -12,9 +18,28 @@ type OfferCardType = {
   setAciveCard?: React.Dispatch<React.SetStateAction<Id>>,
 };
 
-function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Element {
+const mapStateToProps = ({ authorizationStatus }: State) => ({
+  isAuthorized: authorizationStatus === AuthorizationStatus.Auth,
+});
 
-  const { title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  toggleFavorite(id: string, isFavorite: boolean) {
+    let status = 1;
+    if (isFavorite) {
+      status = 0;
+    }
+    dispatch(toggleIsFavoriteAction(id, status));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & OfferCardType;
+
+function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorite }: ConnectedComponentProps): JSX.Element {
+
+  const { id, title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
   const raitingStyle = getRatingStyle(rating);
 
   return (
@@ -57,6 +82,7 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
           <button
             className={classNames('place-card__bookmark-button', 'button', { 'place-card__bookmark-button--active': isFavorite })}
             type="button"
+            onClick={() => isAuthorized && toggleFavorite(id, isFavorite)}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
@@ -78,5 +104,5 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
     </article>
   );
 }
-
-export default OfferCard;
+export { OfferCard };
+export default connector(OfferCard);
