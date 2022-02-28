@@ -9,6 +9,7 @@ import {
   loadOfferById,
   setCurrentOfferDataNotFoundStatus,
   loadNearbyOffers,
+  updateNearbyOffers,
   setNearbyOffersDataNotFound,
   loadComments,
   setCommentsDataNotFoundStatus,
@@ -107,6 +108,8 @@ export const postCommentAction = (id: string, review: { comment: string, rating:
 export const toggleIsFavoriteAction = (id: string, favoriteStatus: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     const { data } = await api.post<BackendOffer>(`${APIRoute.Favorite}/${id}/${favoriteStatus}`);
-    // console.log(data);
-    dispatch(updateOffer(adaptOfferToClient(data)));
+    const adaptedData = adaptOfferToClient(data);
+    dispatch(updateOffer(adaptedData));
+    dispatch(loadOfferById(adaptedData));
+    dispatch(updateNearbyOffers(adaptedData));
   };

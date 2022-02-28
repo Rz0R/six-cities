@@ -12,7 +12,8 @@ import { ThunkAppDispatch } from '../../types/actions';
 import {
   fetchOfferByIdAction,
   fetchNearbyOffersAction,
-  fetchCommentsAction
+  fetchCommentsAction,
+  toggleIsFavoriteAction
 } from '../../store/api-actions';
 import { removeCurrentOfferData, removeNearbyOffersData, removeCommentsData } from '../../store/actions';
 import Logo from '../logo/logo';
@@ -58,6 +59,13 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   deleteCommentsData() {
     dispatch(removeCommentsData());
   },
+  toggleFavorite(id: string, isFavorite: boolean) {
+    let status = 1;
+    if (isFavorite) {
+      status = 0;
+    }
+    dispatch(toggleIsFavoriteAction(id, status));
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -76,6 +84,7 @@ function PropertyScreen({
   deleteNearbyOffersData,
   fetchComments,
   deleteCommentsData,
+  toggleFavorite,
 }: PropsFromRedux): JSX.Element {
 
   const { id = '' } = useParams();
@@ -155,6 +164,7 @@ function PropertyScreen({
                 <button
                   className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`}
                   type="button"
+                  onClick={() => isAuthorized && toggleFavorite(id, isFavorite)}
                 >
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />

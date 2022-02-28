@@ -10,6 +10,7 @@ import {
   removeCurrentOfferData,
   setCurrentOfferDataNotFoundStatus,
   loadNearbyOffers,
+  updateNearbyOffers,
   removeNearbyOffersData,
   setNearbyOffersDataNotFound,
   loadComments,
@@ -29,6 +30,7 @@ export enum ActionType {
   RemoveCurrentOfferData = 'property/RemoveCurrentOfferData',
   SetCurrentOfferDataNotFoundStatus = 'property/SetCurrentOfferDataNotFoundStatus',
   LoadNearbyOffers = 'property/LoadNearbyOffers',
+  UpdateNearbyOffers = 'property/UpdateNearbyOffers',
   RemoveNearbyOffersData = 'propery/RemoveNearbyOffersData',
   SetNearbyOffersDataNotFound = 'property/SetNearbyOffersDataNotFound',
   RequireAuthorization = 'user/requireAuthorization',
@@ -49,6 +51,7 @@ export type Actions =
   | ReturnType<typeof removeCurrentOfferData>
   | ReturnType<typeof setCurrentOfferDataNotFoundStatus>
   | ReturnType<typeof loadNearbyOffers>
+  | ReturnType<typeof updateNearbyOffers>
   | ReturnType<typeof removeNearbyOffersData>
   | ReturnType<typeof setNearbyOffersDataNotFound>
   | ReturnType<typeof requireAuthorization>

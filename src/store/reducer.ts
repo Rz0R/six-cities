@@ -67,6 +67,14 @@ const reducer = (state: State = initialState, action: Actions): State => {
           isNearbyOffersLoaded: LoadingStatus.Success,
         },
       };
+    case ActionType.UpdateNearbyOffers:
+      return {
+        ...state,
+        nearbyOffersData: {
+          ...state.nearbyOffersData,
+          nearbyOffers: replaceOffer(state.nearbyOffersData.nearbyOffers, action.payload),
+        },
+      };
     case ActionType.RemoveNearbyOffersData:
       return {
         ...state,

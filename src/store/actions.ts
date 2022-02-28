@@ -81,3 +81,8 @@ export const updateOffer = (offer: Offer) => ({
   type: ActionType.UpdateOffers,
   payload: offer,
 } as const);
+
+export const updateNearbyOffers = (offer: Offer) => ({
+  type: ActionType.UpdateNearbyOffers,
+  payload: offer,
+} as const);
