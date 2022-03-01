@@ -51,6 +51,8 @@ export const loginAction = ({ login: email, password }: AuthData): ThunkActionRe
     saveToken(data.token);
     dispatch(loadUserData(adaptUserDataToClient(data)));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    const { data: offersData } = await api.get<BackendOffer[]>(APIRoute.Offers);
+    dispatch(loadOffers(adaptOffersToClient(offersData)));
   };
 
 export const logoutAction = (): ThunkActionResult =>
@@ -59,6 +61,8 @@ export const logoutAction = (): ThunkActionResult =>
     dropToken();
     dispatch(removeUserData());
     dispatch(requireLogout(AuthorizationStatus.NoAuth));
+    const { data: offersData } = await api.get<BackendOffer[]>(APIRoute.Offers);
+    dispatch(loadOffers(adaptOffersToClient(offersData)));
   };
 
 export const fetchOfferByIdAction = (id: string): ThunkActionResult =>
