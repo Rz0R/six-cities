@@ -1,11 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
 import ReviewForm from './review-form/review-form';
 import Map from '../map/map';
 import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
-import { Container, LoadingStatus, AuthorizationStatus } from '../../const';
+import { Container, LoadingStatus, AuthorizationStatus, RoutePaths } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkAppDispatch } from '../../types/actions';
@@ -88,6 +88,7 @@ function PropertyScreen({
 }: PropsFromRedux): JSX.Element {
 
   const { id = '' } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCurrentOfferById(id);
@@ -119,6 +120,14 @@ function PropertyScreen({
   const { title, isFavorite, isPremium, images, type, rating, bedrooms, maxAdults, price, goods, host, description, city } = currentOffer;
 
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
+  const onFavoriteClick = () => {
+    if (isAuthorized) {
+      toggleFavorite(id, isFavorite);
+    } else {
+      navigate(RoutePaths.SignIn);
+    }
+  };
 
   return (
     <div className="page">
@@ -164,7 +173,7 @@ function PropertyScreen({
                 <button
                   className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`}
                   type="button"
-                  onClick={() => isAuthorized && toggleFavorite(id, isFavorite)}
+                  onClick={onFavoriteClick}
                 >
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />

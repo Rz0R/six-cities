@@ -1,6 +1,6 @@
 import { Offer, Id } from '../../types/offer';
 import { Container } from '../../const';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../../const';
 import { ThunkAppDispatch } from '../../types/actions';
 import { State } from '../../types/state';
@@ -39,8 +39,19 @@ type ConnectedComponentProps = PropsFromRedux & OfferCardType;
 
 function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorite }: ConnectedComponentProps): JSX.Element {
 
+  const navigate = useNavigate();
+
   const { id, title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
   const raitingStyle = getRatingStyle(rating);
+
+
+  const onFavoriteClick = () => {
+    if (isAuthorized) {
+      toggleFavorite(id, isFavorite);
+    } else {
+      navigate(RoutePaths.SignIn);
+    }
+  };
 
   return (
     <article
@@ -82,7 +93,7 @@ function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorit
           <button
             className={classNames('place-card__bookmark-button', 'button', { 'place-card__bookmark-button--active': isFavorite })}
             type="button"
-            onClick={() => isAuthorized && toggleFavorite(id, isFavorite)}
+            onClick={onFavoriteClick}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
