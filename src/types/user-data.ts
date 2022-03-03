@@ -1,3 +1,5 @@
+import { AuthorizationStatus } from '../const';
+
 export type User = {
   avatarUrl: string,
   email: string,
@@ -14,6 +16,11 @@ export type BackendUser = {
   is_pro: boolean,
   name: string,
   token: string,
+}
+
+export type UserState = {
+  userData: UserData,
+  authorizationStatus: AuthorizationStatus,
 }
 
 export type UserData = User | null;

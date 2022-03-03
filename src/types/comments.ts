@@ -1,4 +1,5 @@
 import { User, BackendUser } from './offer';
+import { LoadingStatus, PostCommentStatus } from '../const';
 
 type Comment = {
   id: string,
@@ -16,6 +17,12 @@ type BackendComment = {
   date: string,
 }
 
-export type { Comment, BackendComment };
+type CommentsData = {
+  comments: Comments,
+  isCommentsLoaded: LoadingStatus,
+  postCommentStatus: PostCommentStatus,
+}
+
+export type { Comment, BackendComment, CommentsData };
 export type Comments = Comment[];
 export type BackendComments = BackendComment[];

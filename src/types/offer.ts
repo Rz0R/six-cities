@@ -65,6 +65,11 @@ type BackendOffer = {
   id: string,
 }
 
+export type OffersData = {
+  offers: Offers,
+  isOffersDataLoaded: boolean,
+}
+
 export type Offers = Offer[];
 export type BackendOffers = BackendOffer[];
 export type { Offer, BackendOffer };
