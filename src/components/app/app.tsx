@@ -16,7 +16,7 @@ type AppScreenProps = {
   offerCardsCount: number,
 }
 
-const mapStateToProps = ({ isDataLoaded }: State) => ({ isDataLoaded });
+const mapStateToProps = ({ OFFERS }: State) => ({ isDataLoaded: OFFERS.isOffersDataLoaded });
 
 const connector = connect(mapStateToProps);
 

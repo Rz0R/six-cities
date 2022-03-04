@@ -22,23 +22,24 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
 
 const mapStateToProps = ({
-  currentOfferData: { currentOffer, isCurrentOfferLoaded },
-  nearbyOffersData: { nearbyOffers, isNearbyOffersLoaded },
-  authorizationStatus,
-  commentsData: { comments, isCommentsLoaded } }: State) => ({
-  currentOffer,
-  nearbyOffers,
-  comments,
-  authorizationStatus,
-  isDataLoading: (() => (
-    isCurrentOfferLoaded === LoadingStatus.Loading
-      || isCurrentOfferLoaded === LoadingStatus.Idle
-      || isNearbyOffersLoaded === LoadingStatus.Loading
-      || isNearbyOffersLoaded === LoadingStatus.Idle
-      || isCommentsLoaded === LoadingStatus.Idle
-      || isCommentsLoaded === LoadingStatus.Loading
-  ))(),
-});
+  CURRENT_OFFER,
+  NEARBY_OFFERS,
+  USER,
+  COMMENTS }: State) =>
+  ({
+    currentOffer: CURRENT_OFFER.currentOffer,
+    nearbyOffers: NEARBY_OFFERS.nearbyOffers,
+    comments: COMMENTS.comments,
+    authorizationStatus: USER.authorizationStatus,
+    isDataLoading: (() => (
+      CURRENT_OFFER.isCurrentOfferLoaded === LoadingStatus.Loading
+    || CURRENT_OFFER.isCurrentOfferLoaded === LoadingStatus.Idle
+    || NEARBY_OFFERS.isNearbyOffersLoaded === LoadingStatus.Loading
+    || NEARBY_OFFERS.isNearbyOffersLoaded === LoadingStatus.Idle
+    || COMMENTS.isCommentsLoaded === LoadingStatus.Idle
+    || COMMENTS.isCommentsLoaded === LoadingStatus.Loading
+    ))(),
+  });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   fetchCurrentOfferById(id: string) {

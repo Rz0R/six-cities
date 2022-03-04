@@ -18,9 +18,9 @@ type MainScreenProps = {
   offerCardsCount: number,
 }
 
-const mapStateToProps = ({ offers, selectedCity }: State) => ({
-  offers: getSelectedCityOffers(offers, selectedCity),
-  selectedCity: selectedCity,
+const mapStateToProps = ({ OFFERS, APP }: State) => ({
+  offers: getSelectedCityOffers(OFFERS.offers, APP.selectedCity),
+  selectedCity: APP.selectedCity,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

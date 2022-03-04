@@ -5,7 +5,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 
-const mapStateToProps = ({ offers }: State) => ({ offers: offers });
+const mapStateToProps = ({ OFFERS }: State) => ({ offers: OFFERS.offers });
 
 const connector = connect(mapStateToProps);
 

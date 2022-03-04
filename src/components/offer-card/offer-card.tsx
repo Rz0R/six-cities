@@ -18,8 +18,8 @@ type OfferCardType = {
   setAciveCard?: React.Dispatch<React.SetStateAction<Id>>,
 };
 
-const mapStateToProps = ({ authorizationStatus }: State) => ({
-  isAuthorized: authorizationStatus === AuthorizationStatus.Auth,
+const mapStateToProps = ({ USER }: State) => ({
+  isAuthorized: USER.authorizationStatus === AuthorizationStatus.Auth,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -108,7 +108,7 @@ function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorit
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={`${RoutePaths.Room}/${offer.id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
