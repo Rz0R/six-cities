@@ -1,10 +1,8 @@
 import React from 'react';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 import { createAPI } from './services/api';
 import { Provider } from 'react-redux';
 import { rootReducer } from './store/root-reducer';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { requireAuthorization } from './store/actions';
@@ -16,7 +14,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)));
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }),
+});
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchOfferAction());
