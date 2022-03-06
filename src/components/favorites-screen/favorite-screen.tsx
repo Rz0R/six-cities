@@ -4,8 +4,9 @@ import { Container } from '../../const';
 import { connect, ConnectedProps } from 'react-redux';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
+import { getOffers } from '../../store/offers-data/selectors';
 
-const mapStateToProps = ({ OFFERS }: State) => ({ offers: OFFERS.offers });
+const mapStateToProps = (state: State) => ({ offers: getOffers(state) });
 
 const connector = connect(mapStateToProps);
 

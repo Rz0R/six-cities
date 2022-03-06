@@ -12,11 +12,13 @@ import { RoutePaths } from '../../const';
 import { State } from '../../types/state';
 import PrivateRoute from '../private-route/private-route';
 
+import { getOffersLoadingStatus } from '../../store/offers-data/selectors';
+
 type AppScreenProps = {
   offerCardsCount: number,
 }
 
-const mapStateToProps = ({ OFFERS }: State) => ({ isDataLoaded: OFFERS.isOffersDataLoaded });
+const mapStateToProps = (state: State) => ({ isDataLoaded: getOffersLoadingStatus(state) });
 
 const connector = connect(mapStateToProps);
 

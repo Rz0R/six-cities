@@ -8,8 +8,9 @@ import { State } from '../../types/state';
 import { AuthorizationStatus, RoutePaths } from '../../const';
 import { Navigate } from 'react-router-dom';
 import Logo from '../logo/logo';
+import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
-const mapStateToProps = ({ USER }: State) => ({ authorizationStatus: USER.authorizationStatus });
+const mapStateToProps = (state: State) => ({ authorizationStatus: getAuthorizationStatus(state) });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {

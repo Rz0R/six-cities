@@ -6,6 +6,7 @@ import { ThunkAppDispatch } from '../../types/actions';
 import { State } from '../../types/state';
 import { toggleIsFavoriteAction } from '../../store/api-actions';
 import { AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
 import classNames from 'classnames';
 import { connect, ConnectedProps } from 'react-redux';
@@ -18,8 +19,8 @@ type OfferCardType = {
   setAciveCard?: React.Dispatch<React.SetStateAction<Id>>,
 };
 
-const mapStateToProps = ({ USER }: State) => ({
-  isAuthorized: USER.authorizationStatus === AuthorizationStatus.Auth,
+const mapStateToProps = (state: State) => ({
+  isAuthorized: getAuthorizationStatus(state) === AuthorizationStatus.Auth,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

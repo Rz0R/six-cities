@@ -13,14 +13,16 @@ import { getSelectedCityOffers, sortTypesList, getSortedOffers } from '../../uti
 import { Id } from '../../types/offer';
 import { useState } from 'react';
 import Logo from '../logo/logo';
+import { getOffers } from '../../store/offers-data/selectors';
+import { getSelectedCity } from '../../store/app-state/selectors';
 
 type MainScreenProps = {
   offerCardsCount: number,
 }
 
-const mapStateToProps = ({ OFFERS, APP }: State) => ({
-  offers: getSelectedCityOffers(OFFERS.offers, APP.selectedCity),
-  selectedCity: APP.selectedCity,
+const mapStateToProps = (state: State) => ({
+  offers: getSelectedCityOffers(getOffers(state), getSelectedCity(state)),
+  selectedCity: getSelectedCity(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

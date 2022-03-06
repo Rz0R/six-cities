@@ -2,14 +2,15 @@ import { Navigate, useLocation } from 'react-router';
 import { connect, ConnectedProps } from 'react-redux';
 import { AuthorizationStatus, RoutePaths } from '../../const';
 import { State } from '../../types/state';
+import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
 export type PrivateRouterProps = {
   authenticationPath: RoutePaths;
   element: JSX.Element;
 };
 
-const mapStateToProps = ({ USER }: State) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state: State) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const connector = connect(mapStateToProps);

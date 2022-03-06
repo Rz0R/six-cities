@@ -20,24 +20,25 @@ import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
+import { getCurentOffer, getCurentOfferLoadingStatus } from '../../store/current-offer-data/selectors';
+import { getNearbyOffers, getNearbyOffersLoadingStatus } from '../../store/nearby-offers-data/selectors';
+import { getComments, getComentsLoadingStatus } from '../../store/comments-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
-const mapStateToProps = ({
-  CURRENT_OFFER,
-  NEARBY_OFFERS,
-  USER,
-  COMMENTS }: State) =>
+const mapStateToProps = (state: State) =>
+
   ({
-    currentOffer: CURRENT_OFFER.currentOffer,
-    nearbyOffers: NEARBY_OFFERS.nearbyOffers,
-    comments: COMMENTS.comments,
-    authorizationStatus: USER.authorizationStatus,
+    currentOffer: getCurentOffer(state),
+    nearbyOffers: getNearbyOffers(state),
+    comments: getComments(state),
+    authorizationStatus: getAuthorizationStatus(state),
     isDataLoading: (() => (
-      CURRENT_OFFER.isCurrentOfferLoaded === LoadingStatus.Loading
-    || CURRENT_OFFER.isCurrentOfferLoaded === LoadingStatus.Idle
-    || NEARBY_OFFERS.isNearbyOffersLoaded === LoadingStatus.Loading
-    || NEARBY_OFFERS.isNearbyOffersLoaded === LoadingStatus.Idle
-    || COMMENTS.isCommentsLoaded === LoadingStatus.Idle
-    || COMMENTS.isCommentsLoaded === LoadingStatus.Loading
+      getCurentOfferLoadingStatus(state) === LoadingStatus.Loading
+    || getCurentOfferLoadingStatus(state) === LoadingStatus.Idle
+    || getNearbyOffersLoadingStatus(state) === LoadingStatus.Loading
+    || getNearbyOffersLoadingStatus(state) === LoadingStatus.Idle
+    || getComentsLoadingStatus(state) === LoadingStatus.Idle
+    || getComentsLoadingStatus(state) === LoadingStatus.Loading
     ))(),
   });
 
