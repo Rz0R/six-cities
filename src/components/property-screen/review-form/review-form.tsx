@@ -7,8 +7,9 @@ import { postCommentAction } from '../../../store/api-actions';
 import { setPostCommentStatus } from '../../../store/actions';
 import ReviewRatingStars from './review-rating-stars/review-rating-stars';
 import { PostCommentStatus } from '../../../const';
+import { getPostCommentStatus } from '../../../store/comments-data/selectors';
 
-const mapStateToProps = ({ COMMENTS }: State) => ({ postCommentStatus: COMMENTS.postCommentStatus });
+const mapStateToProps = (state: State) => ({ postCommentStatus: getPostCommentStatus(state) });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   postComment(id: string, review: { comment: string, rating: string }) {

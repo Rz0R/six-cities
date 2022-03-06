@@ -1,6 +1,5 @@
 import { Offer, Id } from '../../types/offer';
 import { Container } from '../../const';
-import { Link, useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../../const';
 import { ThunkAppDispatch } from '../../types/actions';
 import { State } from '../../types/state';
@@ -10,6 +9,8 @@ import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
 import classNames from 'classnames';
 import { connect, ConnectedProps } from 'react-redux';
+import { MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { getRatingStyle } from '../../utils/common';
 
@@ -46,12 +47,18 @@ function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorit
   const raitingStyle = getRatingStyle(rating);
 
 
-  const onFavoriteClick = () => {
+  const onFavoriteClick = (evt: MouseEvent<HTMLElement>) => {
+    evt.stopPropagation();
     if (isAuthorized) {
       toggleFavorite(id, isFavorite);
     } else {
       navigate(RoutePaths.SignIn);
     }
+  };
+
+  const onCardClick = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    navigate(`${RoutePaths.Room}/${offer.id}`);
   };
 
   return (
@@ -64,6 +71,7 @@ function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorit
       )}
       onMouseOver={() => setAciveCard && setAciveCard(offer.id)}
       onMouseLeave={() => setAciveCard && setAciveCard(null)}
+      onClick={onCardClick}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div
@@ -73,7 +81,7 @@ function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorit
           { 'near-places__image-wrapper': container === Container.Properties },
         )}
       >
-        <Link to={`${RoutePaths.Room}/${offer.id}`}>
+        <div>
           <img
             className="place-card__image"
             src={previewImage}
@@ -81,7 +89,7 @@ function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorit
             height={container === Container.Favorites ? 100 : 200}
             alt={title}
           />
-        </Link>
+        </div>
       </div>
       <div
         className={classNames('place-card__info', { 'favorites__card-info': container === Container.Favorites })}
@@ -109,7 +117,7 @@ function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorit
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${RoutePaths.Room}/${offer.id}`}>{title}</Link>
+          <div>{title}</div>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
