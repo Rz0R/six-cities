@@ -3,86 +3,95 @@ import { ActionType } from '../types/actions';
 import { Comments } from '../types/comments';
 import { Offers, Offer } from '../types/offer';
 import { UserData } from '../types/user-data';
+import { createAction } from '@reduxjs/toolkit';
 
-export const selectCity = (city: Cities) => ({
-  type: ActionType.SelectCity,
-  payload: city,
-} as const);
+export const selectCity = createAction(
+  ActionType.SelectCity,
+  (city: Cities) => ({
+    payload: city,
+  }),
+);
 
-export const loadOffers = (offers: Offers) => ({
-  type: ActionType.LoadOffers,
-  payload: offers,
-} as const);
+export const loadOffers = createAction(
+  ActionType.LoadOffers,
+  (offers: Offers) => ({
+    payload: offers,
+  }),
+);
 
-export const loadOfferById = (offer: Offer) => ({
-  type: ActionType.LoadOfferById,
-  payload: offer,
-} as const);
+export const loadOfferById = createAction(
+  ActionType.LoadOfferById,
+  (offer: Offer) => ({
+    payload: offer,
+  }),
+);
 
-export const removeCurrentOfferData = () => ({
-  type: ActionType.RemoveCurrentOfferData,
-} as const);
+export const removeCurrentOfferData = createAction(ActionType.RemoveCurrentOfferData);
 
-export const setCurrentOfferDataNotFoundStatus = () => ({
-  type: ActionType.SetCurrentOfferDataNotFoundStatus,
-} as const);
+export const setCurrentOfferDataNotFoundStatus = createAction(ActionType.SetCurrentOfferDataNotFoundStatus);
 
-export const loadNearbyOffers = (offers: Offers) => ({
-  type: ActionType.LoadNearbyOffers,
-  payload: offers,
-} as const);
+export const loadNearbyOffers = createAction(
+  ActionType.LoadNearbyOffers,
+  (offers: Offers) => ({
+    payload: offers,
+  }),
+);
 
-export const removeNearbyOffersData = () => ({
-  type: ActionType.RemoveNearbyOffersData,
-} as const);
+export const removeNearbyOffersData = createAction(ActionType.RemoveNearbyOffersData);
 
-export const setNearbyOffersDataNotFound = () => ({
-  type: ActionType.SetNearbyOffersDataNotFound,
-} as const);
+export const setNearbyOffersDataNotFound = createAction(ActionType.SetNearbyOffersDataNotFound);
 
-export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
-  type: ActionType.RequireAuthorization,
-  payload: authStatus,
-} as const);
+export const requireAuthorization = createAction(
+  ActionType.RequireAuthorization,
+  (authStatus: AuthorizationStatus) => ({
+    payload: authStatus,
+  }),
+);
 
-export const requireLogout = (authStatus: AuthorizationStatus) => ({
-  type: ActionType.RequireLogout,
-  payload: authStatus,
-} as const);
+export const requireLogout = createAction(
+  ActionType.RequireLogout,
+  (authStatus: AuthorizationStatus) => ({
+    payload: authStatus,
+  }),
+);
 
-export const loadUserData = (userData: UserData) => ({
-  type: ActionType.LoadUserData,
-  payload: userData,
-} as const);
+export const loadUserData = createAction(
+  ActionType.LoadUserData,
+  (userData: UserData) => ({
+    payload: userData,
+  }),
+);
 
-export const removeUserData = () => ({
-  type: ActionType.RemoveUserData,
-} as const);
+export const removeUserData = createAction(ActionType.RemoveUserData);
 
-export const loadComments = (comments: Comments) => ({
-  type: ActionType.LoadComments,
-  payload: comments,
-} as const);
+export const loadComments = createAction(
+  ActionType.LoadComments,
+  (comments: Comments) => ({
+    payload: comments,
+  }),
+);
 
-export const removeCommentsData = () => ({
-  type: ActionType.RemoveCommentsData,
-} as const);
+export const removeCommentsData = createAction(ActionType.RemoveCommentsData);
 
-export const setCommentsDataNotFoundStatus = () => ({
-  type: ActionType.SetCommentsDataNotFoundStatus,
-} as const);
+export const setCommentsDataNotFoundStatus = createAction(ActionType.SetCommentsDataNotFoundStatus);
 
-export const setPostCommentStatus = (postCommentStatus: PostCommentStatus) => ({
-  type: ActionType.SetPostCommentStatus,
-  payload: postCommentStatus,
-} as const);
+export const setPostCommentStatus = createAction(
+  ActionType.SetPostCommentStatus,
+  (postCommentStatus: PostCommentStatus) => ({
+    payload: postCommentStatus,
+  }),
+);
 
-export const updateOffer = (offer: Offer) => ({
-  type: ActionType.UpdateOffers,
-  payload: offer,
-} as const);
+export const updateOffer = createAction(
+  ActionType.UpdateOffers,
+  (offer: Offer) => ({
+    payload: offer,
+  }),
+);
 
-export const updateNearbyOffers = (offer: Offer) => ({
-  type: ActionType.UpdateNearbyOffers,
-  payload: offer,
-} as const);
+export const updateNearbyOffers = createAction(
+  ActionType.UpdateNearbyOffers,
+  (offer: Offer) => ({
+    payload: offer,
+  }),
+);

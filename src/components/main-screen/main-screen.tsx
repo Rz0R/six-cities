@@ -8,7 +8,6 @@ import Auth from '../auth/auth';
 import { Cities, Container, SortTypes, CITY_LOCATIONS } from '../../const';
 import { State } from '../../types/state';
 import { selectCity } from '../../store/actions';
-import { Actions } from '../../types/actions';
 import { getSelectedCityOffers, sortTypesList, getSortedOffers } from '../../utils/common';
 import { Id } from '../../types/offer';
 import { useState } from 'react';
@@ -25,7 +24,7 @@ const mapStateToProps = (state: State) => ({
   selectedCity: getSelectedCity(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCityChange(city: Cities) {
     dispatch(selectCity(city));
   },
