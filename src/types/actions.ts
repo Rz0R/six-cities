@@ -1,26 +1,7 @@
-import {
-  selectCity,
-  loadOffers,
-  updateOffer,
-  requireAuthorization,
-  requireLogout,
-  loadUserData,
-  removeUserData,
-  loadOfferById,
-  removeCurrentOfferData,
-  setCurrentOfferDataNotFoundStatus,
-  loadNearbyOffers,
-  updateNearbyOffers,
-  removeNearbyOffersData,
-  setNearbyOffersDataNotFound,
-  loadComments,
-  removeCommentsData,
-  setCommentsDataNotFoundStatus,
-  setPostCommentStatus
-} from '../store/actions';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
 import { State } from './state';
+import { Action } from 'redux';
 
 export enum ActionType {
   SelectCity = 'APP/SelectCity',
@@ -43,26 +24,6 @@ export enum ActionType {
   SetPostCommentStatus = 'COMMENTS/SetPostCommentStatus',
 }
 
-export type Actions =
-  | ReturnType<typeof selectCity>
-  | ReturnType<typeof loadOffers>
-  | ReturnType<typeof updateOffer>
-  | ReturnType<typeof loadOfferById>
-  | ReturnType<typeof removeCurrentOfferData>
-  | ReturnType<typeof setCurrentOfferDataNotFoundStatus>
-  | ReturnType<typeof loadNearbyOffers>
-  | ReturnType<typeof updateNearbyOffers>
-  | ReturnType<typeof removeNearbyOffersData>
-  | ReturnType<typeof setNearbyOffersDataNotFound>
-  | ReturnType<typeof requireAuthorization>
-  | ReturnType<typeof requireLogout>
-  | ReturnType<typeof loadUserData>
-  | ReturnType<typeof removeUserData>
-  | ReturnType<typeof loadComments>
-  | ReturnType<typeof removeCommentsData>
-  | ReturnType<typeof setCommentsDataNotFoundStatus>
-  | ReturnType<typeof setPostCommentStatus>;
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;
 
-export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
-
-export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Action>;

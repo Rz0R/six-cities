@@ -1,6 +1,7 @@
 import { CommentsData } from '../../types/comments';
 import { LoadingStatus, PostCommentStatus } from '../../const';
-import { Actions, ActionType } from '../../types/actions';
+import { createReducer } from '@reduxjs/toolkit';
+import { loadComments, removeCommentsData, setCommentsDataNotFoundStatus } from '../actions';
 
 const initialState: CommentsData = {
   comments: [],
@@ -8,28 +9,18 @@ const initialState: CommentsData = {
   postCommentStatus: PostCommentStatus.Idle,
 };
 
-export const commentsData = (state = initialState, action: Actions): CommentsData => {
-  switch (action.type) {
-    case ActionType.LoadComments:
-      return {
-        ...state,
-        comments: action.payload,
-        isCommentsLoaded: LoadingStatus.Success,
-
-      };
-    case ActionType.RemoveCommentsData:
-      return {
-        ...state,
-        comments: [],
-        isCommentsLoaded: LoadingStatus.Idle,
-      };
-    case ActionType.SetCommentsDataNotFoundStatus:
-      return {
-        ...state,
-        comments: [],
-        isCommentsLoaded: LoadingStatus.NotFound,
-      };
-    default:
-      return state;
-  }
-};
+export const commentsData = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+      state.isCommentsLoaded = LoadingStatus.Success;
+    })
+    .addCase(removeCommentsData, (state) => {
+      state.comments = [];
+      state.isCommentsLoaded = LoadingStatus.Idle;
+    })
+    .addCase(setCommentsDataNotFoundStatus, (state) => {
+      state.comments = [];
+      state.isCommentsLoaded = LoadingStatus.NotFound;
+    });
+});

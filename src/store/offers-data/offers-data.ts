@@ -1,26 +1,20 @@
 import { OffersData } from '../../types/offer';
-import { Actions, ActionType } from '../../types/actions';
 import { replaceOffer } from '../../utils/common';
+import { createReducer } from '@reduxjs/toolkit';
+import { loadOffers, updateOffer } from '../actions';
 
 const initialState: OffersData = {
   offers: [],
   isOffersDataLoaded: false,
 };
 
-export const offersData = (state = initialState, action: Actions): OffersData => {
-  switch (action.type) {
-    case ActionType.LoadOffers:
-      return {
-        ...state,
-        offers: action.payload,
-        isOffersDataLoaded: true,
-      };
-    case ActionType.UpdateOffers:
-      return {
-        ...state,
-        offers: replaceOffer(state.offers, action.payload),
-      };
-    default:
-      return state;
-  }
-};
+export const offersData = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+      state.isOffersDataLoaded = true;
+    })
+    .addCase(updateOffer, (state, action) => {
+      state.offers = replaceOffer(state.offers, action.payload);
+    });
+});
