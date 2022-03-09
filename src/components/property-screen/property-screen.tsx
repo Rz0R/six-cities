@@ -1,4 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
 import ReviewForm from './review-form/review-form';
@@ -6,109 +8,50 @@ import Map from '../map/map';
 import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import { Container, LoadingStatus, AuthorizationStatus, RoutePaths } from '../../const';
-import { State } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
-import { ThunkAppDispatch } from '../../types/actions';
 import {
   fetchOfferByIdAction,
   fetchNearbyOffersAction,
   fetchCommentsAction,
   toggleIsFavoriteAction
 } from '../../store/api-actions';
-import { removeCurrentOfferData, removeNearbyOffersData, removeCommentsData } from '../../store/actions';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useEffect } from 'react';
 import { getCurentOffer, getCurentOfferLoadingStatus } from '../../store/current-offer-data/selectors';
 import { getNearbyOffers, getNearbyOffersLoadingStatus } from '../../store/nearby-offers-data/selectors';
 import { getComments, getComentsLoadingStatus } from '../../store/comments-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
-const mapStateToProps = (state: State) =>
-
-  ({
-    currentOffer: getCurentOffer(state),
-    nearbyOffers: getNearbyOffers(state),
-    comments: getComments(state),
-    authorizationStatus: getAuthorizationStatus(state),
-    isDataLoading: (() => (
-      getCurentOfferLoadingStatus(state) === LoadingStatus.Loading
-    || getCurentOfferLoadingStatus(state) === LoadingStatus.Idle
-    || getNearbyOffersLoadingStatus(state) === LoadingStatus.Loading
-    || getNearbyOffersLoadingStatus(state) === LoadingStatus.Idle
-    || getComentsLoadingStatus(state) === LoadingStatus.Idle
-    || getComentsLoadingStatus(state) === LoadingStatus.Loading
-    ))(),
-  });
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  fetchCurrentOfferById(id: string) {
-    dispatch(fetchOfferByIdAction(id));
-  },
-  deleteCurrentOfferData() {
-    dispatch(removeCurrentOfferData());
-  },
-  fetchNearbyOffers(id: string) {
-    dispatch(fetchNearbyOffersAction(id));
-  },
-  deleteNearbyOffersData() {
-    dispatch(removeNearbyOffersData());
-  },
-  fetchComments(id: string) {
-    dispatch(fetchCommentsAction(id));
-  },
-  deleteCommentsData() {
-    dispatch(removeCommentsData());
-  },
-  toggleFavorite(id: string, isFavorite: boolean) {
-    let status = 1;
-    if (isFavorite) {
-      status = 0;
-    }
-    dispatch(toggleIsFavoriteAction(id, status));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function PropertyScreen({
-  comments,
-  currentOffer,
-  nearbyOffers,
-  isDataLoading,
-  authorizationStatus,
-  fetchCurrentOfferById,
-  deleteCurrentOfferData,
-  fetchNearbyOffers,
-  deleteNearbyOffersData,
-  fetchComments,
-  deleteCommentsData,
-  toggleFavorite,
-}: PropsFromRedux): JSX.Element {
+function PropertyScreen(): JSX.Element {
 
   const { id = '' } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const currentOffer = useSelector(getCurentOffer);
+  const nearbyOffers = useSelector(getNearbyOffers);
+  const comments = useSelector(getComments);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  const curentOfferLoadingStatus = useSelector(getCurentOfferLoadingStatus);
+  const nearbyOffersLoadingStatus = useSelector(getNearbyOffersLoadingStatus);
+  const comentsLoadingStatus = useSelector(getComentsLoadingStatus);
+
+  const isDataLoading = curentOfferLoadingStatus === LoadingStatus.Loading
+    || curentOfferLoadingStatus === LoadingStatus.Idle
+    || nearbyOffersLoadingStatus === LoadingStatus.Loading
+    || nearbyOffersLoadingStatus === LoadingStatus.Idle
+    || comentsLoadingStatus === LoadingStatus.Idle
+    || comentsLoadingStatus === LoadingStatus.Loading;
 
   useEffect(() => {
-    fetchCurrentOfferById(id);
-    fetchNearbyOffers(id);
-    fetchComments(id);
-    return () => {
-      deleteCurrentOfferData();
-      deleteNearbyOffersData();
-      deleteCommentsData();
-    };
+    dispatch(fetchOfferByIdAction(id));
+    dispatch(fetchNearbyOffersAction(id));
+    dispatch(fetchCommentsAction(id));
   }, [
     id,
-    fetchCurrentOfferById,
-    deleteCurrentOfferData,
-    fetchNearbyOffers,
-    deleteNearbyOffersData,
-    fetchComments,
-    deleteCommentsData,
+    dispatch,
+    isDataLoading,
   ]);
 
   if (isDataLoading) {
@@ -123,9 +66,17 @@ function PropertyScreen({
 
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
+  const toggleFavorite = () => {
+    let status = 1;
+    if (isFavorite) {
+      status = 0;
+    }
+    dispatch(toggleIsFavoriteAction(id, status));
+  };
+
   const onFavoriteClick = () => {
     if (isAuthorized) {
-      toggleFavorite(id, isFavorite);
+      toggleFavorite();
     } else {
       navigate(RoutePaths.SignIn);
     }
@@ -259,5 +210,4 @@ function PropertyScreen({
   );
 }
 
-export { PropertyScreen };
-export default connector(PropertyScreen);
+export default PropertyScreen;

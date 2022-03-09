@@ -1,14 +1,12 @@
 import { Offer, Id } from '../../types/offer';
 import { Container } from '../../const';
 import { RoutePaths } from '../../const';
-import { ThunkAppDispatch } from '../../types/actions';
-import { State } from '../../types/state';
 import { toggleIsFavoriteAction } from '../../store/api-actions';
 import { AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
 import classNames from 'classnames';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,37 +18,28 @@ type OfferCardType = {
   setAciveCard?: React.Dispatch<React.SetStateAction<Id>>,
 };
 
-const mapStateToProps = (state: State) => ({
-  isAuthorized: getAuthorizationStatus(state) === AuthorizationStatus.Auth,
-});
+function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Element {
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  toggleFavorite(id: string, isFavorite: boolean) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { id, title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
+  const raitingStyle = getRatingStyle(rating);
+
+  const isAuthorized = useSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
+
+  const toggleFavorite = () => {
     let status = 1;
     if (isFavorite) {
       status = 0;
     }
     dispatch(toggleIsFavoriteAction(id, status));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & OfferCardType;
-
-function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorite }: ConnectedComponentProps): JSX.Element {
-
-  const navigate = useNavigate();
-
-  const { id, title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
-  const raitingStyle = getRatingStyle(rating);
-
+  };
 
   const onFavoriteClick = (evt: MouseEvent<HTMLElement>) => {
     evt.stopPropagation();
     if (isAuthorized) {
-      toggleFavorite(id, isFavorite);
+      toggleFavorite();
     } else {
       navigate(RoutePaths.SignIn);
     }
@@ -124,5 +113,5 @@ function OfferCard({ offer, container, setAciveCard, isAuthorized, toggleFavorit
     </article>
   );
 }
-export { OfferCard };
-export default connector(OfferCard);
+
+export default OfferCard;

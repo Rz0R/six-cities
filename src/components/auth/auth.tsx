@@ -1,35 +1,22 @@
 import { MouseEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
-import { ThunkAppDispatch } from '../../types/actions';
+import { useSelector, useDispatch } from 'react-redux';
 import { logoutAction } from '../../store/api-actions';
-import { State } from '../../types/state';
 import { AuthorizationStatus, RoutePaths } from '../../const';
 import { getUserData, getAuthorizationStatus } from '../../store/user-state/selectors';
 
-const mapStateToProps = (state: State) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-  userData: getUserData(state),
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSignOut() {
-    dispatch(logoutAction());
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Auth({ authorizationStatus, userData, onSignOut }: PropsFromRedux): JSX.Element {
+function Auth(): JSX.Element {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const userData = useSelector(getUserData);
 
   const signHandler = (evt: MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
 
     if (authorizationStatus === AuthorizationStatus.Auth) {
-      onSignOut();
+      dispatch(logoutAction());
     } else {
       navigate(RoutePaths.SignIn);
     }
@@ -61,5 +48,4 @@ function Auth({ authorizationStatus, userData, onSignOut }: PropsFromRedux): JSX
   );
 }
 
-export { Auth };
-export default connector(Auth);
+export default Auth;

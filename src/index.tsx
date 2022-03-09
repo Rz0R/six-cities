@@ -30,9 +30,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <App
-        offerCardsCount={6}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

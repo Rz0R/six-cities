@@ -1,32 +1,18 @@
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
-import { ThunkAppDispatch } from '../../../types/actions';
-import { State } from '../../../types/state';
+import { useSelector, useDispatch } from 'react-redux';
 import { postCommentAction } from '../../../store/api-actions';
 import { setPostCommentStatus } from '../../../store/actions';
 import ReviewRatingStars from './review-rating-stars/review-rating-stars';
 import { PostCommentStatus } from '../../../const';
 import { getPostCommentStatus } from '../../../store/comments-data/selectors';
 
-const mapStateToProps = (state: State) => ({ postCommentStatus: getPostCommentStatus(state) });
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  postComment(id: string, review: { comment: string, rating: string }) {
-    dispatch(postCommentAction(id, review));
-  },
-  setCommentStatus(status: PostCommentStatus) {
-    dispatch(setPostCommentStatus(status));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function ReviewForm({ postCommentStatus, postComment, setCommentStatus }: PropsFromRedux): JSX.Element {
+function ReviewForm(): JSX.Element {
 
   const { id = '' } = useParams();
+  const dispatch = useDispatch();
+
+  const postCommentStatus = useSelector(getPostCommentStatus);
 
   const [userReview, setUserReview] = useState({ rating: '0', review: '' });
   const { rating, review } = userReview;
@@ -46,15 +32,15 @@ function ReviewForm({ postCommentStatus, postComment, setCommentStatus }: PropsF
 
   const onSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    postComment(id, { comment: review, rating });
+    dispatch(postCommentAction(id, { comment: review, rating }));
   };
 
   useEffect(() => {
     if (postCommentStatus === PostCommentStatus.Success) {
       setUserReview({ rating: '0', review: '' });
-      setCommentStatus(PostCommentStatus.Idle);
+      dispatch(setPostCommentStatus(PostCommentStatus.Idle));
     }
-  }, [postCommentStatus, setCommentStatus]);
+  }, [postCommentStatus, dispatch]);
 
   return (
     <form
@@ -93,5 +79,4 @@ function ReviewForm({ postCommentStatus, postComment, setCommentStatus }: PropsF
   );
 }
 
-export { ReviewForm };
-export default connector(ReviewForm);
+export default ReviewForm;

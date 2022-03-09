@@ -1,7 +1,6 @@
 import { Navigate, useLocation } from 'react-router';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AuthorizationStatus, RoutePaths } from '../../const';
-import { State } from '../../types/state';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
 export type PrivateRouterProps = {
@@ -9,16 +8,10 @@ export type PrivateRouterProps = {
   element: JSX.Element;
 };
 
-const mapStateToProps = (state: State) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & PrivateRouterProps;
-
-function PrivateRoute({ authorizationStatus, authenticationPath, element }: ConnectedComponentProps): JSX.Element {
+function PrivateRoute({ authenticationPath, element }: PrivateRouterProps): JSX.Element {
   const location = useLocation();
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return element;
@@ -27,5 +20,4 @@ function PrivateRoute({ authorizationStatus, authenticationPath, element }: Conn
   }
 }
 
-export { PrivateRoute };
-export default connector(PrivateRoute);
+export default PrivateRoute;

@@ -1,12 +1,10 @@
-import { Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import Map from '../map/map';
 import Locations from './locations/locations';
 import PlacesSort from './places-sort/places-sort';
 import Auth from '../auth/auth';
 import { Cities, Container, SortTypes, CITY_LOCATIONS } from '../../const';
-import { State } from '../../types/state';
 import { selectCity } from '../../store/actions';
 import { getSelectedCityOffers, sortTypesList, getSortedOffers } from '../../utils/common';
 import { Id } from '../../types/offer';
@@ -15,27 +13,17 @@ import Logo from '../logo/logo';
 import { getOffers } from '../../store/offers-data/selectors';
 import { getSelectedCity } from '../../store/app-state/selectors';
 
-type MainScreenProps = {
-  offerCardsCount: number,
-}
+function MainScreen(): JSX.Element {
 
-const mapStateToProps = (state: State) => ({
-  offers: getSelectedCityOffers(getOffers(state), getSelectedCity(state)),
-  selectedCity: getSelectedCity(state),
-});
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCityChange(city: Cities) {
+  const allOffers = useSelector(getOffers);
+  const selectedCity = useSelector(getSelectedCity);
+  const offers = getSelectedCityOffers(allOffers, selectedCity);
+
+  const onCityChange = (city: Cities) => {
     dispatch(selectCity(city));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
-
-function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: ConnectedComponentProps): JSX.Element {
+  };
 
   const [sortMenuActive, setSortMenuActive] = useState(false);
   const [currentSortType, setCurrentSortType] = useState<SortTypes>(SortTypes.POPULAR);
@@ -97,5 +85,4 @@ function MainScreen({ offerCardsCount, offers, selectedCity, onCityChange }: Con
   );
 }
 
-export { MainScreen };
-export default connector(MainScreen);
+export default MainScreen;

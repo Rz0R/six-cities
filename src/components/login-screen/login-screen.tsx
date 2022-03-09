@@ -1,31 +1,20 @@
 import { FormEvent, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/actions';
-import { AuthData } from '../../types/auth-data';
-import { State } from '../../types/state';
 import { AuthorizationStatus, RoutePaths } from '../../const';
 import { Navigate } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
-const mapStateToProps = (state: State) => ({ authorizationStatus: getAuthorizationStatus(state) });
+function LoginScreen(): JSX.Element {
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthData) {
-    dispatch(loginAction(authData));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function LoginScreen({ authorizationStatus, onSubmit }: PropsFromRedux): JSX.Element {
   const location = useLocation();
   const state = location.state as { from?: string };
   const from = state?.from || RoutePaths.Root;
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -34,10 +23,12 @@ function LoginScreen({ authorizationStatus, onSubmit }: PropsFromRedux): JSX.Ele
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
+      const authData = {
         login: loginRef.current.value,
         password: passwordRef.current.value,
-      });
+      };
+
+      dispatch(loginAction(authData));
     }
   };
 
@@ -84,6 +75,7 @@ function LoginScreen({ authorizationStatus, onSubmit }: PropsFromRedux): JSX.Ele
                   type="password"
                   name="password"
                   placeholder="Password"
+                  autoComplete="off"
                   required
                 />
               </div>
@@ -109,5 +101,4 @@ function LoginScreen({ authorizationStatus, onSubmit }: PropsFromRedux): JSX.Ele
 
 }
 
-export { LoginScreen };
-export default connector(LoginScreen);
+export default LoginScreen;

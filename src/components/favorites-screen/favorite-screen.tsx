@@ -1,19 +1,14 @@
 import OfferCardList from '../offer-card-list/offer-card-list';
-import { State } from '../../types/state';
 import { Container } from '../../const';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import { getOffers } from '../../store/offers-data/selectors';
 
-const mapStateToProps = (state: State) => ({ offers: getOffers(state) });
+function FavoriteScreen(): JSX.Element {
 
-const connector = connect(mapStateToProps);
+  const offers = useSelector(getOffers);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux;
-
-function FavoriteScreen({ offers }: ConnectedComponentProps): JSX.Element {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const allCities = [...new Set(favoriteOffers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
 
@@ -72,5 +67,4 @@ function FavoriteScreen({ offers }: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export { FavoriteScreen };
-export default connector(FavoriteScreen);
+export default FavoriteScreen;

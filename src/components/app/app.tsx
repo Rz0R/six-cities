@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import MainScreen from '../main-screen/main-screen';
 import FavoriteScreen from '../favorites-screen/favorite-screen';
@@ -9,23 +9,13 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 import { RoutePaths } from '../../const';
-import { State } from '../../types/state';
 import PrivateRoute from '../private-route/private-route';
 
 import { getOffersLoadingStatus } from '../../store/offers-data/selectors';
 
-type AppScreenProps = {
-  offerCardsCount: number,
-}
+function App(): JSX.Element {
 
-const mapStateToProps = (state: State) => ({ isDataLoaded: getOffersLoadingStatus(state) });
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = AppScreenProps & PropsFromRedux;
-
-function App({ offerCardsCount, isDataLoaded }: ConnectedComponentProps): JSX.Element {
+  const isDataLoaded = useSelector(getOffersLoadingStatus);
 
   if (!isDataLoaded) {
     return <LoadingScreen />;
@@ -34,7 +24,7 @@ function App({ offerCardsCount, isDataLoaded }: ConnectedComponentProps): JSX.El
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={RoutePaths.Root} element={<MainScreen offerCardsCount={offerCardsCount} />} />
+        <Route path={RoutePaths.Root} element={<MainScreen />} />
         <Route
           path={RoutePaths.Favorites}
           element={
@@ -52,5 +42,4 @@ function App({ offerCardsCount, isDataLoaded }: ConnectedComponentProps): JSX.El
   );
 }
 
-export { App };
-export default connector(App);
+export default App;
