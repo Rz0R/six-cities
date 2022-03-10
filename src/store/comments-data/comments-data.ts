@@ -1,7 +1,7 @@
 import { CommentsData } from '../../types/comments';
 import { LoadingStatus, PostCommentStatus } from '../../const';
 import { createReducer } from '@reduxjs/toolkit';
-import { loadComments, removeCommentsData, setCommentsDataNotFoundStatus } from '../actions';
+import { loadComments, removeCommentsData, setCommentsDataNotFoundStatus, setPostCommentStatus } from '../actions';
 
 const initialState: CommentsData = {
   comments: [],
@@ -22,5 +22,8 @@ export const commentsData = createReducer(initialState, (builder) => {
     .addCase(setCommentsDataNotFoundStatus, (state) => {
       state.comments = [];
       state.isCommentsLoaded = LoadingStatus.NotFound;
+    })
+    .addCase(setPostCommentStatus, (state, action) => {
+      state.postCommentStatus = action.payload;
     });
 });

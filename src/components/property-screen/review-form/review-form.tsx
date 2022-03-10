@@ -4,8 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postCommentAction } from '../../../store/api-actions';
 import { setPostCommentStatus } from '../../../store/actions';
 import ReviewRatingStars from './review-rating-stars/review-rating-stars';
-import { PostCommentStatus } from '../../../const';
+import { PostCommentStatus, ReviewFormSettings } from '../../../const';
 import { getPostCommentStatus } from '../../../store/comments-data/selectors';
+
+const initialUserReviewState = { rating: '0', review: '' };
 
 function ReviewForm(): JSX.Element {
 
@@ -14,13 +16,13 @@ function ReviewForm(): JSX.Element {
 
   const postCommentStatus = useSelector(getPostCommentStatus);
 
-  const [userReview, setUserReview] = useState({ rating: '0', review: '' });
+  const [userReview, setUserReview] = useState(initialUserReviewState);
   const { rating, review } = userReview;
 
-  const isSubmitButtonActive = userReview.review.length >= 50
-    && userReview.review.length <= 300
-    && Number(userReview.rating) > 0
-    && Number(userReview.rating) <= 5
+  const isSubmitButtonActive = userReview.review.length >= ReviewFormSettings.MIN_LENGTH
+    && userReview.review.length <= ReviewFormSettings.MAX_LENGTH
+    && Number(userReview.rating) >= ReviewFormSettings.MIN_RATING
+    && Number(userReview.rating) <= ReviewFormSettings.MAX_RATING
     && postCommentStatus !== PostCommentStatus.Posting;
 
   const onUserReviewChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -37,7 +39,7 @@ function ReviewForm(): JSX.Element {
 
   useEffect(() => {
     if (postCommentStatus === PostCommentStatus.Success) {
-      setUserReview({ rating: '0', review: '' });
+      setUserReview(initialUserReviewState);
       dispatch(setPostCommentStatus(PostCommentStatus.Idle));
     }
   }, [postCommentStatus, dispatch]);

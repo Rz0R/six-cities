@@ -64,6 +64,13 @@ export enum Cities {
   Dusseldorf = 'Dusseldorf',
 }
 
+export enum ReviewFormSettings {
+  MAX_LENGTH = 300,
+  MIN_LENGTH = 50,
+  MIN_RATING = 1,
+  MAX_RATING = 5,
+}
+
 export enum SortTypes {
   POPULAR = 'Popular',
   PRICE_LOW_TO_HIGH = 'Price: low to high',
