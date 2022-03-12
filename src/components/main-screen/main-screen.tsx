@@ -9,20 +9,18 @@ import PlacesSort from './places-sort/places-sort';
 import Auth from '../auth/auth';
 import { Cities, Container, SortTypes, CITY_LOCATIONS } from '../../const';
 import { selectCity } from '../../store/actions';
-import { getSelectedCityOffers, sortTypesList, getSortedOffers } from '../../utils/common';
+import { sortTypesList, getSortedOffers } from '../../utils/common';
 import { Id } from '../../types/offer';
 import Logo from '../logo/logo';
-import { getOffers } from '../../store/offers-data/selectors';
+import { getFilteredOffers } from '../../store/offers-data/selectors';
 import { getSelectedCity } from '../../store/app-state/selectors';
 
 function MainScreen(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const allOffers = useSelector(getOffers);
   const selectedCity = useSelector(getSelectedCity);
-  const offers = getSelectedCityOffers(allOffers, selectedCity);
-  const isAnyOffers = offers.length > 0;
+  const offers = useSelector(getFilteredOffers);
 
   const onCityChange = (city: Cities) => {
     dispatch(selectCity(city));
@@ -35,6 +33,7 @@ function MainScreen(): JSX.Element {
   const sortedOffers = getSortedOffers[currentSortType]([...offers]);
 
   const placeCounter = offers.length;
+  const isAnyOffers = offers.length > 0;
 
   const hideSortMenu = () => setSortMenuActive(false);
 
