@@ -3,7 +3,7 @@ import { AppState } from '../../types/app-state';
 import { createReducer } from '@reduxjs/toolkit';
 import { selectCity } from '../actions';
 
-const initialState: AppState = {
+export const initialState: AppState = {
   selectedCity: Cities.Paris,
 };
 
