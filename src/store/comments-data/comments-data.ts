@@ -3,7 +3,7 @@ import { LoadingStatus, PostCommentStatus } from '../../const';
 import { createReducer } from '@reduxjs/toolkit';
 import { loadComments, removeCommentsData, setCommentsDataNotFoundStatus, setPostCommentStatus } from '../actions';
 
-const initialState: CommentsData = {
+export const initialState: CommentsData = {
   comments: [],
   isCommentsLoaded: LoadingStatus.Idle,
   postCommentStatus: PostCommentStatus.Idle,
