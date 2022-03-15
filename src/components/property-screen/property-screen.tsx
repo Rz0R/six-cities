@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from './review-list/review-list';
 import ReviewForm from './review-form/review-form';
@@ -8,25 +8,35 @@ import Map from '../map/map';
 import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import { Container, LoadingStatus, AuthorizationStatus, RoutePaths } from '../../const';
-import {
-  fetchOfferByIdAction,
-  fetchNearbyOffersAction,
-  fetchCommentsAction,
-  toggleIsFavoriteAction
-} from '../../store/api-actions';
+import { fetchOfferByIdAction, fetchNearbyOffersAction, fetchCommentsAction, toggleIsFavoriteAction } from '../../store/api-actions';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { removeCurrentOfferData, removeNearbyOffersData, removeCommentsData } from '../../store/actions';
 import { getCurentOffer, getCurentOfferLoadingStatus } from '../../store/current-offer-data/selectors';
 import { getNearbyOffers, getNearbyOffersLoadingStatus } from '../../store/nearby-offers-data/selectors';
 import { getComments, getComentsLoadingStatus } from '../../store/comments-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
 function PropertyScreen(): JSX.Element {
-
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const getData = useCallback(
+    (currentId) => {
+      dispatch(fetchOfferByIdAction(currentId));
+      dispatch(fetchNearbyOffersAction(currentId));
+      dispatch(fetchCommentsAction(currentId));
+    },
+    [dispatch],
+  );
+
+  const clearData = useCallback(() => {
+    dispatch(removeCurrentOfferData());
+    dispatch(removeNearbyOffersData());
+    dispatch(removeCommentsData());
+  }, [dispatch]);
 
   const currentOffer = useSelector(getCurentOffer);
   const nearbyOffers = useSelector(getNearbyOffers);
@@ -45,14 +55,9 @@ function PropertyScreen(): JSX.Element {
     || comentsLoadingStatus === LoadingStatus.Loading;
 
   useEffect(() => {
-    dispatch(fetchOfferByIdAction(id));
-    dispatch(fetchNearbyOffersAction(id));
-    dispatch(fetchCommentsAction(id));
-  }, [
-    id,
-    dispatch,
-    isDataLoading,
-  ]);
+    getData(id);
+    return clearData;
+  }, [id, getData, clearData]);
 
   if (isDataLoading) {
     return <LoadingScreen />;
@@ -98,17 +103,11 @@ function PropertyScreen(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {
-                images.slice(0, 6).map((src) => (
-                  <div key={`${id}-${src}`} className="property__image-wrapper">
-                    <img
-                      className="property__image"
-                      src={src}
-                      alt={type}
-                    />
-                  </div>
-                ))
-              }
+              {images.slice(0, 6).map((src) => (
+                <div key={`${id}-${src}`} className="property__image-wrapper">
+                  <img className="property__image" src={src} alt={type} />
+                </div>
+              ))}
             </div>
           </div>
           <div className="property__container container">
@@ -120,9 +119,7 @@ function PropertyScreen(): JSX.Element {
               )}
 
               <div className="property__name-wrapper">
-                <h1 className="property__name">
-                  {title}
-                </h1>
+                <h1 className="property__name">{title}</h1>
                 <button
                   className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`}
                   type="button"
@@ -142,15 +139,9 @@ function PropertyScreen(): JSX.Element {
                 <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  {`${type[0].toLocaleUpperCase() + type.slice(1)}`}
-                </li>
-                <li className="property__feature property__feature--bedrooms">
-                  {bedrooms} Bedrooms
-                </li>
-                <li className="property__feature property__feature--adults">
-                  Max {maxAdults} adults
-                </li>
+                <li className="property__feature property__feature--entire">{`${type[0].toLocaleUpperCase() + type.slice(1)}`}</li>
+                <li className="property__feature property__feature--bedrooms">{bedrooms} Bedrooms</li>
+                <li className="property__feature property__feature--adults">Max {maxAdults} adults</li>
               </ul>
               <div className="property__price">
                 <b className="property__price-value">€{price}</b>
@@ -159,30 +150,24 @@ function PropertyScreen(): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {
-                    goods.map((it) => <li key={`${id}-${it}`} className="property__inside-item">{it}</li>)
-                  }
+                  {goods.map((it) => (
+                    <li key={`${id}-${it}`} className="property__inside-item">
+                      {it}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className={`property__avatar-wrapper user__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro' : ''}`}>
-                    <img
-                      className="property__avatar user__avatar"
-                      src={host.avatarUrl}
-                      width={74}
-                      height={74}
-                      alt="Host avatar"
-                    />
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width={74} height={74} alt="Host avatar" />
                   </div>
                   <span className="property__user-name">{host.name}</span>
                   {host.isPro && <span className="property__user-status">Pro</span>}
                 </div>
                 <div className="property__description">
-                  <p className="property__text">
-                    {description}
-                  </p>
+                  <p className="property__text">{description}</p>
                 </div>
               </div>
               <section className="property__reviews reviews">
@@ -191,18 +176,14 @@ function PropertyScreen(): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map" >
+          <section className="property__map map">
             <Map offers={[currentOffer, ...nearbyOffers]} activeOfferId={id} city={city} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-            <div className="near-places__list places__list">
-              {<OfferCardList offers={nearbyOffers} container={Container.Properties} />}
-            </div>
+            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <div className="near-places__list places__list">{<OfferCardList offers={nearbyOffers} container={Container.Properties} />}</div>
           </section>
         </div>
       </main>
