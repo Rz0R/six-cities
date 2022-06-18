@@ -1,6 +1,10 @@
 function LoadingScreen(): JSX.Element {
   return (
-    <p>Loading...</p>
+    <main className="loader">
+      <div className="container loader__container">
+        <div className="spinner"></div>
+      </div>
+    </main>
   );
 }
 
