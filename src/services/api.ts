@@ -27,7 +27,7 @@ export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance =
       }
 
       return Promise.reject(error);
-    }
+    },
   );
 
   api.interceptors.request.use((config: AxiosRequestConfig) => {
