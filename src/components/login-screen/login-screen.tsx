@@ -98,7 +98,6 @@ function LoginScreen(): JSX.Element {
       </main>
     </div>
   );
-
 }
 
 export default LoginScreen;

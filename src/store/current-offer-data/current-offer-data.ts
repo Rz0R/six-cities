@@ -1,7 +1,11 @@
 import { CurrentOfferData } from '../../types/current-offer-data';
 import { LoadingStatus } from '../../const';
 import { createReducer } from '@reduxjs/toolkit';
-import { loadOfferById, removeCurrentOfferData, setCurrentOfferDataNotFoundStatus } from '../actions';
+import {
+  loadOfferById,
+  removeCurrentOfferData,
+  setCurrentOfferDataNotFoundStatus,
+} from '../actions';
 
 const initialState: CurrentOfferData = {
   currentOffer: null,

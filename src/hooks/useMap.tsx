@@ -3,12 +3,11 @@ import { Map, TileLayer } from 'leaflet';
 import { City } from '../types/offer';
 
 type useMapProps = {
-  mapRef: MutableRefObject<HTMLElement | null>,
-  city: City,
-}
+  mapRef: MutableRefObject<HTMLElement | null>;
+  city: City;
+};
 
 function useMap({ mapRef, city }: useMapProps) {
-
   const [map, setMap] = useState<Map | null>(null);
   const [currentCity, setCurrentCity] = useState<City | null>(null);
 
@@ -35,7 +34,12 @@ function useMap({ mapRef, city }: useMapProps) {
 
       setMap(instance);
       setCurrentCity(city);
-    } else if (mapRef.current && map && currentCity && currentCity.name !== city.name) {
+    } else if (
+      mapRef.current &&
+      map &&
+      currentCity &&
+      currentCity.name !== city.name
+    ) {
       const { latitude: lat, longitude: lng, zoom } = city.location;
 
       map.setView([lat, lng], zoom);

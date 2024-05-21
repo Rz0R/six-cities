@@ -14,7 +14,6 @@ import PrivateRoute from '../private-route/private-route';
 import { getOffersLoadingStatus } from '../../store/offers-data/selectors';
 
 function App(): JSX.Element {
-
   const isDataLoaded = useSelector(getOffersLoadingStatus);
 
   if (!isDataLoaded) {

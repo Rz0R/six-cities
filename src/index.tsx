@@ -11,7 +11,9 @@ import { AuthorizationStatus } from './const';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)));
+const api = createAPI(() =>
+  store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
+);
 
 const store = configureStore({
   reducer: rootReducer,
@@ -33,4 +35,5 @@ ReactDOM.render(
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root'));
+  document.getElementById('root'),
+);

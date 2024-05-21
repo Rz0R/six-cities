@@ -16,7 +16,6 @@ import { getFilteredOffers } from '../../store/offers-data/selectors';
 import { getSelectedCity } from '../../store/app-state/selectors';
 
 function MainScreen(): JSX.Element {
-
   const dispatch = useDispatch();
 
   const selectedCity = useSelector(getSelectedCity);
@@ -27,7 +26,9 @@ function MainScreen(): JSX.Element {
   };
 
   const [sortMenuActive, setSortMenuActive] = useState(false);
-  const [currentSortType, setCurrentSortType] = useState<SortTypes>(SortTypes.POPULAR);
+  const [currentSortType, setCurrentSortType] = useState<SortTypes>(
+    SortTypes.POPULAR,
+  );
   const [cardId, setCardId] = useState<Id>(null);
 
   const sortedOffers = getSortedOffers[currentSortType]([...offers]);
@@ -37,13 +38,12 @@ function MainScreen(): JSX.Element {
 
   const hideSortMenu = () => setSortMenuActive(false);
 
-  const currentCity = (CITY_LOCATIONS.find((city) => city.name === selectedCity)) || CITY_LOCATIONS[0];
+  const currentCity =
+    CITY_LOCATIONS.find((city) => city.name === selectedCity) ||
+    CITY_LOCATIONS[0];
 
   return (
-    <div
-      className="page page--gray page--main"
-      onClick={hideSortMenu}
-    >
+    <div className="page page--gray page--main" onClick={hideSortMenu}>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -58,16 +58,18 @@ function MainScreen(): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <Locations selectedCity={selectedCity} onCiyChange={onCityChange} />
         <div className="cities">
-          <div className={classNames(
-            'cities__places-container container',
-            { 'cities__places-container--empty': isAnyOffers },
-          )}
+          <div
+            className={classNames('cities__places-container container', {
+              'cities__places-container--empty': isAnyOffers,
+            })}
           >
             {!isAnyOffers && <NoPlaces selectedCity={selectedCity} />}
             {isAnyOffers && (
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{placeCounter} places to stay in {selectedCity}</b>
+                <b className="places__found">
+                  {placeCounter} places to stay in {selectedCity}
+                </b>
                 <PlacesSort
                   isMenuActive={sortMenuActive}
                   currentSortType={currentSortType}
@@ -80,17 +82,22 @@ function MainScreen(): JSX.Element {
                   offers={sortedOffers}
                   setCardId={setCardId}
                 />
-              </section>)}
+              </section>
+            )}
 
             <div className="cities__right-section">
-              <section className='map cities__map'>
-                <Map offers={offers} activeOfferId={cardId} city={currentCity} />
+              <section className="map cities__map">
+                <Map
+                  offers={offers}
+                  activeOfferId={cardId}
+                  city={currentCity}
+                />
               </section>
             </div>
           </div>
         </div>
-      </main >
-    </div >
+      </main>
+    </div>
   );
 }
 

@@ -1,12 +1,16 @@
 import { Cities } from '../../../const';
 
 type LocationItemProps = {
-  city: Cities,
-  selectedCity: string,
-  onCityChange: (city: Cities) => void,
-}
+  city: Cities;
+  selectedCity: string;
+  onCityChange: (city: Cities) => void;
+};
 
-function LocationItem({ city, selectedCity, onCityChange }: LocationItemProps): JSX.Element {
+function LocationItem({
+  city,
+  selectedCity,
+  onCityChange,
+}: LocationItemProps): JSX.Element {
   const classes = `${city === selectedCity ? 'tabs__item--active' : ''} locations__item-link tabs__item tabs`;
 
   const onItemClick = (evt: React.MouseEvent<HTMLLIElement>) => {
@@ -15,17 +19,12 @@ function LocationItem({ city, selectedCity, onCityChange }: LocationItemProps): 
   };
 
   return (
-    <li
-      className="locations__item"
-      onClick={onItemClick}
-    >
-      <a
-        className={classes}
-        href="/"
-      >
+    <li className="locations__item" onClick={onItemClick}>
+      <a className={classes} href="/">
         <span>{city}</span>
       </a>
-    </li>);
+    </li>
+  );
 }
 
 export default LocationItem;

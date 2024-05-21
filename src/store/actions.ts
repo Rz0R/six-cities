@@ -26,9 +26,13 @@ export const loadOfferById = createAction(
   }),
 );
 
-export const removeCurrentOfferData = createAction(ActionType.RemoveCurrentOfferData);
+export const removeCurrentOfferData = createAction(
+  ActionType.RemoveCurrentOfferData,
+);
 
-export const setCurrentOfferDataNotFoundStatus = createAction(ActionType.SetCurrentOfferDataNotFoundStatus);
+export const setCurrentOfferDataNotFoundStatus = createAction(
+  ActionType.SetCurrentOfferDataNotFoundStatus,
+);
 
 export const loadNearbyOffers = createAction(
   ActionType.LoadNearbyOffers,
@@ -37,9 +41,13 @@ export const loadNearbyOffers = createAction(
   }),
 );
 
-export const removeNearbyOffersData = createAction(ActionType.RemoveNearbyOffersData);
+export const removeNearbyOffersData = createAction(
+  ActionType.RemoveNearbyOffersData,
+);
 
-export const setNearbyOffersDataNotFound = createAction(ActionType.SetNearbyOffersDataNotFound);
+export const setNearbyOffersDataNotFound = createAction(
+  ActionType.SetNearbyOffersDataNotFound,
+);
 
 export const requireAuthorization = createAction(
   ActionType.RequireAuthorization,
@@ -73,7 +81,9 @@ export const loadComments = createAction(
 
 export const removeCommentsData = createAction(ActionType.RemoveCommentsData);
 
-export const setCommentsDataNotFoundStatus = createAction(ActionType.SetCommentsDataNotFoundStatus);
+export const setCommentsDataNotFoundStatus = createAction(
+  ActionType.SetCommentsDataNotFoundStatus,
+);
 
 export const setPostCommentStatus = createAction(
   ActionType.SetPostCommentStatus,

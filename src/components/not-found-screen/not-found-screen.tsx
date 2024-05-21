@@ -23,7 +23,13 @@ function NotFoundScreen(): JSX.Element {
             <div className="not-found__status-wrapper">
               <div className="not-found__status">
                 <b>404</b>
-                <svg width="28" height="43" viewBox="0 0 28 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="28"
+                  height="43"
+                  viewBox="0 0 28 43"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -34,7 +40,11 @@ function NotFoundScreen(): JSX.Element {
                 <span className="not-found__status">Page not found</span>
               </div>
               <p className="not-found__status-description">
-                <Link className="not-found__link" to={RoutePaths.Root} title="Main Page">
+                <Link
+                  className="not-found__link"
+                  to={RoutePaths.Root}
+                  title="Main Page"
+                >
                   Back to main page
                 </Link>
               </p>

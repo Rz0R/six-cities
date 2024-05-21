@@ -6,11 +6,16 @@ import Auth from '../auth/auth';
 import { getOffers } from '../../store/offers-data/selectors';
 
 function FavoriteScreen(): JSX.Element {
-
   const offers = useSelector(getOffers);
 
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-  const allCities = [...new Set(favoriteOffers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
+  const allCities = [
+    ...new Set(
+      favoriteOffers
+        .filter((offer) => offer.isFavorite)
+        .map((offer) => offer.city.name),
+    ),
+  ];
 
   return (
     <div className="page">
@@ -29,24 +34,27 @@ function FavoriteScreen(): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {
-                allCities.map((city) => (
-                  <li key={city} className="favorites__locations-items">
-                    <div className="favorites__locations locations locations--current">
-                      <div className="locations__item">
-                        <a className="locations__item-link" href="/">
-                          <span>{city}</span>
-                        </a>
-                      </div>
+              {allCities.map((city) => (
+                <li key={city} className="favorites__locations-items">
+                  <div className="favorites__locations locations locations--current">
+                    <div className="locations__item">
+                      <a className="locations__item-link" href="/">
+                        <span>{city}</span>
+                      </a>
                     </div>
-                    <div className="favorites__places">
-                      {
-                        <OfferCardList offers={favoriteOffers.filter((offer) => offer.city.name === city)} container={Container.Favorites} />
-                      }
-                    </div>
-                  </li>
-                ))
-              }
+                  </div>
+                  <div className="favorites__places">
+                    {
+                      <OfferCardList
+                        offers={favoriteOffers.filter(
+                          (offer) => offer.city.name === city,
+                        )}
+                        container={Container.Favorites}
+                      />
+                    }
+                  </div>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
@@ -63,7 +71,6 @@ function FavoriteScreen(): JSX.Element {
         </a>
       </footer>
     </div>
-
   );
 }
 

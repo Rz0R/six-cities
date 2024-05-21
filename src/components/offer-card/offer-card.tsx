@@ -13,20 +13,33 @@ import { useNavigate } from 'react-router-dom';
 import { getRatingStyle } from '../../utils/common';
 
 type OfferCardType = {
-  offer: Offer,
-  container: Container,
-  setAciveCard?: React.Dispatch<React.SetStateAction<Id>>,
+  offer: Offer;
+  container: Container;
+  setAciveCard?: React.Dispatch<React.SetStateAction<Id>>;
 };
 
-function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Element {
-
+function OfferCard({
+  offer,
+  container,
+  setAciveCard,
+}: OfferCardType): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { id, title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
+  const {
+    id,
+    title,
+    previewImage,
+    price,
+    type,
+    isFavorite,
+    isPremium,
+    rating,
+  } = offer;
   const raitingStyle = getRatingStyle(rating);
 
-  const isAuthorized = useSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
+  const isAuthorized =
+    useSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
 
   const toggleFavorite = () => {
     let status = 1;
@@ -62,9 +75,14 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
       onMouseLeave={() => setAciveCard && setAciveCard(null)}
       onClick={onCardClick}
     >
-      {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
+      {isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
       <div
-        className={classNames('place-card__image-wrapper',
+        className={classNames(
+          'place-card__image-wrapper',
           { 'cities__image-wrapper': container === Container.Main },
           { 'favorites__image-wrapper': container === Container.Favorites },
           { 'near-places__image-wrapper': container === Container.Properties },
@@ -81,7 +99,9 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
         </div>
       </div>
       <div
-        className={classNames('place-card__info', { 'favorites__card-info': container === Container.Favorites })}
+        className={classNames('place-card__info', {
+          'favorites__card-info': container === Container.Favorites,
+        })}
       >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
@@ -89,7 +109,9 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
-            className={classNames('place-card__bookmark-button', 'button', { 'place-card__bookmark-button--active': isFavorite })}
+            className={classNames('place-card__bookmark-button', 'button', {
+              'place-card__bookmark-button--active': isFavorite,
+            })}
             type="button"
             onClick={onFavoriteClick}
           >

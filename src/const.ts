@@ -8,7 +8,7 @@ export enum RoutePaths {
   SignIn = '/login',
   Favorites = '/favorites',
   Room = '/offer',
-  NotFound = '*'
+  NotFound = '*',
 }
 
 export enum APIRoute {

@@ -9,7 +9,9 @@ function Logo(): JSX.Element {
 
   return (
     <Link
-      className={classNames('header__logo-link', { 'header__logo-link--active': isRootPage })}
+      className={classNames('header__logo-link', {
+        'header__logo-link--active': isRootPage,
+      })}
       to="/"
     >
       <img

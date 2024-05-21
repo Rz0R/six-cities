@@ -2,15 +2,20 @@ import { MouseEvent, Dispatch, SetStateAction } from 'react';
 import { SortTypes } from '../../../const';
 
 type PlacesSortProps = {
-  isMenuActive: boolean,
-  currentSortType: SortTypes,
-  sortTypesList: SortTypes[],
-  onSortMenuClick: Dispatch<SetStateAction<boolean>>,
-  onSortMenuItemClick: Dispatch<SetStateAction<SortTypes>>,
-}
+  isMenuActive: boolean;
+  currentSortType: SortTypes;
+  sortTypesList: SortTypes[];
+  onSortMenuClick: Dispatch<SetStateAction<boolean>>;
+  onSortMenuItemClick: Dispatch<SetStateAction<SortTypes>>;
+};
 
-function PlacesSort({ isMenuActive, currentSortType, sortTypesList, onSortMenuClick, onSortMenuItemClick }: PlacesSortProps): JSX.Element {
-
+function PlacesSort({
+  isMenuActive,
+  currentSortType,
+  sortTypesList,
+  onSortMenuClick,
+  onSortMenuItemClick,
+}: PlacesSortProps): JSX.Element {
   const menuClasses = `${isMenuActive ? 'places__options--opened' : ''} places__options places__options--custom`;
 
   const onMenuClick = (evt: MouseEvent<HTMLFormElement>) => {
@@ -19,10 +24,7 @@ function PlacesSort({ isMenuActive, currentSortType, sortTypesList, onSortMenuCl
   };
 
   return (
-    <form
-      className="places__sorting"
-      onClick={onMenuClick}
-    >
+    <form className="places__sorting" onClick={onMenuClick}>
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
         {currentSortType}
@@ -30,30 +32,26 @@ function PlacesSort({ isMenuActive, currentSortType, sortTypesList, onSortMenuCl
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul
-        className={menuClasses}
-      >
-        {
-          sortTypesList.map((item) => {
-            const onClick = (evt: MouseEvent<HTMLLIElement>) => {
-              evt.stopPropagation();
-              onSortMenuItemClick(item);
-              onSortMenuClick(false);
-            };
-            return (
-              <li
-                key={item}
-                className={`places__option ${currentSortType === item ? 'places__option--active' : ''}`}
-                tabIndex={0}
-                onClick={onClick}
-              >
-                {item}
-              </li>
-            );
-          })
-        }
+      <ul className={menuClasses}>
+        {sortTypesList.map((item) => {
+          const onClick = (evt: MouseEvent<HTMLLIElement>) => {
+            evt.stopPropagation();
+            onSortMenuItemClick(item);
+            onSortMenuClick(false);
+          };
+          return (
+            <li
+              key={item}
+              className={`places__option ${currentSortType === item ? 'places__option--active' : ''}`}
+              tabIndex={0}
+              onClick={onClick}
+            >
+              {item}
+            </li>
+          );
+        })}
       </ul>
-    </form >
+    </form>
   );
 }
 

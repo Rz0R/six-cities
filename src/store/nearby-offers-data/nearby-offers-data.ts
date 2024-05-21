@@ -2,7 +2,12 @@ import { NearbyOffersData } from '../../types/nearby-offers-data';
 import { LoadingStatus } from '../../const';
 import { replaceOffer } from '../../utils/common';
 import { createReducer } from '@reduxjs/toolkit';
-import { loadNearbyOffers, updateNearbyOffers, removeNearbyOffersData, setNearbyOffersDataNotFound } from '../actions';
+import {
+  loadNearbyOffers,
+  updateNearbyOffers,
+  removeNearbyOffersData,
+  setNearbyOffersDataNotFound,
+} from '../actions';
 
 const initialState: NearbyOffersData = {
   nearbyOffers: [],

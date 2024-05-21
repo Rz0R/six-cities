@@ -8,8 +8,7 @@ export const initialState: AppState = {
 };
 
 export const appState = createReducer(initialState, (builder) => {
-  builder
-    .addCase(selectCity, (state, action) => {
-      state.selectedCity = action.payload;
-    });
+  builder.addCase(selectCity, (state, action) => {
+    state.selectedCity = action.payload;
+  });
 });

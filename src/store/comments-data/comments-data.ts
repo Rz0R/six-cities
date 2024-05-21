@@ -1,7 +1,12 @@
 import { CommentsData } from '../../types/comments';
 import { LoadingStatus, PostCommentStatus } from '../../const';
 import { createReducer } from '@reduxjs/toolkit';
-import { loadComments, removeCommentsData, setCommentsDataNotFoundStatus, setPostCommentStatus } from '../actions';
+import {
+  loadComments,
+  removeCommentsData,
+  setCommentsDataNotFoundStatus,
+  setPostCommentStatus,
+} from '../actions';
 
 export const initialState: CommentsData = {
   comments: [],

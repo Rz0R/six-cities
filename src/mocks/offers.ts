@@ -48,7 +48,8 @@ export const offers: Offers = [
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg',
     },
-    description: 'I am happy to welcome you to my apartment in the city center! Three words: location, cosy and chic!',
+    description:
+      'I am happy to welcome you to my apartment in the city center! Three words: location, cosy and chic!',
     location: {
       latitude: 51.222402,
       longitude: 6.786314,
@@ -108,7 +109,8 @@ export const offers: Offers = [
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg',
     },
-    description: 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
+    description:
+      'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
     location: {
       latitude: 48.85761,
       longitude: 2.358499,
@@ -162,7 +164,8 @@ export const offers: Offers = [
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg',
     },
-    description: 'This is a place for dreamers to reset, reflect, and create. Designed with a \'slow\' pace in mind, our hope is that you enjoy every part of your stay; from making local coffee by drip in the morning, choosing the perfect record to put on as the sun sets.',
+    description:
+      "This is a place for dreamers to reset, reflect, and create. Designed with a 'slow' pace in mind, our hope is that you enjoy every part of your stay; from making local coffee by drip in the morning, choosing the perfect record to put on as the sun sets.",
     location: {
       latitude: 50.957361,
       longitude: 6.9509739999999995,
@@ -204,18 +207,15 @@ export const offers: Offers = [
     bedrooms: 3,
     maxAdults: 7,
     price: 295,
-    goods: [
-      'Breakfast',
-      'Washer',
-      'Laptop friendly workspace',
-    ],
+    goods: ['Breakfast', 'Washer', 'Laptop friendly workspace'],
     host: {
       id: '25',
       name: 'Angelina',
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg',
     },
-    description: 'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
+    description:
+      'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
     location: {
       latitude: 51.248402000000006,
       longitude: 6.763314,
@@ -270,7 +270,8 @@ export const offers: Offers = [
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg',
     },
-    description: 'This is a place for dreamers to reset, reflect, and create. Designed with a \'slow\' pace in mind, our hope is that you enjoy every part of your stay; from making local coffee by drip in the morning, choosing the perfect record to put on as the sun sets.',
+    description:
+      "This is a place for dreamers to reset, reflect, and create. Designed with a 'slow' pace in mind, our hope is that you enjoy every part of your stay; from making local coffee by drip in the morning, choosing the perfect record to put on as the sun sets.",
     location: {
       latitude: 52.385540000000006,
       longitude: 4.902976,
@@ -325,7 +326,8 @@ export const offers: Offers = [
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg',
     },
-    description: 'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
+    description:
+      'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
     location: {
       latitude: 52.37454,
       longitude: 4.881976,
@@ -383,7 +385,8 @@ export const offers: Offers = [
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg',
     },
-    description: 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
+    description:
+      'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
     location: {
       latitude: 52.37154,
       longitude: 4.889976,
