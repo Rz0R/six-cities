@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { getToken } from './token';
 
-const BACKEND_URL = 'https://11.design.htmlacademy.pro/six-cities';
+const BACKEND_URL = 'https://12.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 10000;
 
 enum HttpCode {
