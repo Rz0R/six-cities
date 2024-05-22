@@ -40,11 +40,7 @@ function NotFoundScreen(): JSX.Element {
                 <span className="not-found__status">Page not found</span>
               </div>
               <p className="not-found__status-description">
-                <Link
-                  className="not-found__link"
-                  to={RoutePaths.Root}
-                  title="Main Page"
-                >
+                <Link className="not-found__link" to={RoutePaths.Root} title="Main Page">
                   Back to main page
                 </Link>
               </p>

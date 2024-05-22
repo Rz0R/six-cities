@@ -36,12 +36,7 @@ export const offers: Offers = [
     bedrooms: 1,
     maxAdults: 2,
     price: 153,
-    goods: [
-      'Breakfast',
-      'Washer',
-      'Air conditioning',
-      'Laptop friendly workspace',
-    ],
+    goods: ['Breakfast', 'Washer', 'Air conditioning', 'Laptop friendly workspace'],
     host: {
       id: '25',
       name: 'Angelina',
@@ -152,15 +147,10 @@ export const offers: Offers = [
     bedrooms: 4,
     maxAdults: 8,
     price: 272,
-    goods: [
-      'Laptop friendly workspace',
-      'Washer',
-      'Air conditioning',
-      'Breakfast',
-    ],
+    goods: ['Laptop friendly workspace', 'Washer', 'Air conditioning', 'Breakfast'],
     host: {
       id: '25',
-      'name': 'Angelina',
+      name: 'Angelina',
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg',
     },
@@ -257,13 +247,7 @@ export const offers: Offers = [
     bedrooms: 1,
     maxAdults: 1,
     price: 271,
-    goods: [
-      'Washer',
-      'Breakfast',
-      'Air conditioning',
-      'Baby seat',
-      'Laptop friendly workspace',
-    ],
+    goods: ['Washer', 'Breakfast', 'Air conditioning', 'Baby seat', 'Laptop friendly workspace'],
     host: {
       id: '25',
       name: 'Angelina',
@@ -313,13 +297,7 @@ export const offers: Offers = [
     bedrooms: 3,
     maxAdults: 5,
     price: 198,
-    goods: [
-      'Laptop friendly workspace',
-      'Breakfast',
-      'Washer',
-      'Air conditioning',
-      'Baby seat',
-    ],
+    goods: ['Laptop friendly workspace', 'Breakfast', 'Washer', 'Air conditioning', 'Baby seat'],
     host: {
       id: '25',
       name: 'Angelina',

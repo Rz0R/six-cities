@@ -34,12 +34,7 @@ function useMap({ mapRef, city }: useMapProps) {
 
       setMap(instance);
       setCurrentCity(city);
-    } else if (
-      mapRef.current &&
-      map &&
-      currentCity &&
-      currentCity.name !== city.name
-    ) {
+    } else if (mapRef.current && map && currentCity && currentCity.name !== city.name) {
       const { latitude: lat, longitude: lng, zoom } = city.location;
 
       map.setView([lat, lng], zoom);

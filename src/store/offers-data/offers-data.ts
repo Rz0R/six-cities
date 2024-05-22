@@ -1,6 +1,6 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { OffersData } from '../../types/offer';
 import { replaceOffer } from '../../utils/common';
-import { createReducer } from '@reduxjs/toolkit';
 import { loadOffers, updateOffer } from '../actions';
 
 const initialState: OffersData = {

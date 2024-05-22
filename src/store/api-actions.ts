@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { ThunkActionResult } from '../types/actions';
 import {
   loadOffers,
@@ -20,7 +21,6 @@ import { APIRoute, AuthorizationStatus, PostCommentStatus } from '../const';
 import { Offers, Offer } from '../types/offer';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
-import { toast } from 'react-toastify';
 import { Comments } from '../types/comments';
 
 const AUTH_FAIL_MESSAGE = "Don't forget to login";
@@ -60,15 +60,14 @@ export const loginAction =
     dispatch(loadOffers(offersData));
   };
 
-export const logoutAction =
-  (): ThunkActionResult => async (dispatch, _getState, api) => {
-    api.delete(APIRoute.Logout);
-    dropToken();
-    dispatch(removeUserData());
-    dispatch(requireLogout(AuthorizationStatus.NoAuth));
-    const { data: offersData } = await api.get<Offers>(APIRoute.Offers);
-    dispatch(loadOffers(offersData));
-  };
+export const logoutAction = (): ThunkActionResult => async (dispatch, _getState, api) => {
+  api.delete(APIRoute.Logout);
+  dropToken();
+  dispatch(removeUserData());
+  dispatch(requireLogout(AuthorizationStatus.NoAuth));
+  const { data: offersData } = await api.get<Offers>(APIRoute.Offers);
+  dispatch(loadOffers(offersData));
+};
 
 export const fetchOfferByIdAction =
   (id: string): ThunkActionResult =>
@@ -104,17 +103,11 @@ export const fetchCommentsAction =
   };
 
 export const postCommentAction =
-  (
-    id: string,
-    review: { comment: string; rating: string },
-  ): ThunkActionResult =>
+  (id: string, review: { comment: string; rating: string }): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       dispatch(setPostCommentStatus(PostCommentStatus.Posting));
-      const { data } = await api.post<Comments>(
-        `${APIRoute.Comments}/${id}`,
-        review,
-      );
+      const { data } = await api.post<Comments>(`${APIRoute.Comments}/${id}`, review);
       dispatch(loadComments(data));
       dispatch(setPostCommentStatus(PostCommentStatus.Success));
     } catch {
@@ -126,9 +119,7 @@ export const postCommentAction =
 export const toggleIsFavoriteAction =
   (id: string, favoriteStatus: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const { data } = await api.post<Offer>(
-      `${APIRoute.Favorite}/${id}/${favoriteStatus}`,
-    );
+    const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${id}/${favoriteStatus}`);
     dispatch(updateOffer(data));
     dispatch(loadOfferById(data));
     dispatch(updateNearbyOffers(data));

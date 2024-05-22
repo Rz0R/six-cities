@@ -1,5 +1,5 @@
-import { Comments } from '../../../types/comments';
 import dayjs from 'dayjs';
+import { Comments } from '../../../types/comments';
 import { getRatingStyle } from '../../../utils/common';
 
 type ReviewListPops = {
@@ -38,10 +38,7 @@ function ReviewList({ comments }: ReviewListPops): JSX.Element {
                   </div>
                 </div>
                 <p className="reviews__text">{comment}</p>
-                <time
-                  className="reviews__time"
-                  dateTime={dayjs(date).format('YYYY-MM-DD')}
-                >
+                <time className="reviews__time" dateTime={dayjs(date).format('YYYY-MM-DD')}>
                   {dayjs(date).format('MMMM YYYY')}
                 </time>
               </div>

@@ -27,10 +27,7 @@ function App(): JSX.Element {
         <Route
           path={RoutePaths.Favorites}
           element={
-            <PrivateRoute
-              authenticationPath={RoutePaths.SignIn}
-              element={<FavoriteScreen />}
-            />
+            <PrivateRoute authenticationPath={RoutePaths.SignIn} element={<FavoriteScreen />} />
           }
         />
         <Route path={`${RoutePaths.Room}/:id`} element={<PropertyScreen />} />

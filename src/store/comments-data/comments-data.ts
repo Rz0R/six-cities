@@ -1,6 +1,6 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { CommentsData } from '../../types/comments';
 import { LoadingStatus, PostCommentStatus } from '../../const';
-import { createReducer } from '@reduxjs/toolkit';
 import {
   loadComments,
   removeCommentsData,

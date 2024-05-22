@@ -1,9 +1,8 @@
 import { FormEvent, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
 import { AuthorizationStatus, RoutePaths } from '../../const';
-import { Navigate } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
@@ -51,11 +50,7 @@ function LoginScreen(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form
-              className="login__form form"
-              action=""
-              onSubmit={handleSubmit}
-            >
+            <form className="login__form form" action="" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -79,10 +74,7 @@ function LoginScreen(): JSX.Element {
                   required
                 />
               </div>
-              <button
-                className="login__submit form__submit button"
-                type="submit"
-              >
+              <button className="login__submit form__submit button" type="submit">
                 Sign in
               </button>
             </form>

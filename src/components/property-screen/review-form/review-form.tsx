@@ -25,9 +25,7 @@ function ReviewForm(): JSX.Element {
     Number(userReview.rating) <= ReviewFormSettings.MAX_RATING &&
     postCommentStatus !== PostCommentStatus.Posting;
 
-  const onUserReviewChange = (
-    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const onUserReviewChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setUserReview((prevUserReview) => ({
       ...prevUserReview,
       [evt.target.name]: evt.target.value,
@@ -52,10 +50,7 @@ function ReviewForm(): JSX.Element {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        <ReviewRatingStars
-          rating={rating}
-          onRatingChange={onUserReviewChange}
-        />
+        <ReviewRatingStars rating={rating} onRatingChange={onUserReviewChange} />
       </div>
       <textarea
         className="reviews__textarea form__textarea"
@@ -67,9 +62,8 @@ function ReviewForm(): JSX.Element {
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set{' '}
-          <span className="reviews__star">rating</span> and describe your stay
-          with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and
+          describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"

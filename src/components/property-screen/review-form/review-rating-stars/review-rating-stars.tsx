@@ -4,17 +4,12 @@ import { ratingValues } from '../../../../utils/common';
 
 type ReviewRatingStarsProps = {
   rating: string;
-  onRatingChange: (
-    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void;
+  onRatingChange: (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
-function ReviewRatingStars({
-  rating,
-  onRatingChange,
-}: ReviewRatingStarsProps): JSX.Element {
+function ReviewRatingStars({ rating, onRatingChange }: ReviewRatingStarsProps): JSX.Element {
   return (
-    <Fragment>
+    <>
       {ratingValues.map((rank) => (
         <Fragment key={rank}>
           <input
@@ -24,9 +19,7 @@ function ReviewRatingStars({
             id={`${rank}-stars`}
             type="radio"
             checked={rank === Number(rating)}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) =>
-              onRatingChange(evt)
-            }
+            onChange={(evt: ChangeEvent<HTMLInputElement>) => onRatingChange(evt)}
           />
           <label
             htmlFor={`${rank}-stars`}
@@ -39,7 +32,7 @@ function ReviewRatingStars({
           </label>
         </Fragment>
       ))}
-    </Fragment>
+    </>
   );
 }
 

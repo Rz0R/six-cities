@@ -1,7 +1,7 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { NearbyOffersData } from '../../types/nearby-offers-data';
 import { LoadingStatus } from '../../const';
 import { replaceOffer } from '../../utils/common';
-import { createReducer } from '@reduxjs/toolkit';
 import {
   loadNearbyOffers,
   updateNearbyOffers,

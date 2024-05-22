@@ -8,24 +8,15 @@ export type PrivateRouterProps = {
   element: JSX.Element;
 };
 
-function PrivateRoute({
-  authenticationPath,
-  element,
-}: PrivateRouterProps): JSX.Element {
+function PrivateRoute({ authenticationPath, element }: PrivateRouterProps): JSX.Element {
   const location = useLocation();
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return element;
-  } else {
-    return (
-      <Navigate
-        to={{ pathname: authenticationPath }}
-        state={{ from: location.pathname }}
-      />
-    );
   }
+  return <Navigate to={{ pathname: authenticationPath }} state={{ from: location.pathname }} />;
 }
 
 export default PrivateRoute;

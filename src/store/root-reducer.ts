@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { appState } from '../store/app-state/app-state';
+import { appState } from './app-state/app-state';
 import { commentsData } from './comments-data/comments-data';
 import { nearbyOffersData } from './nearby-offers-data/nearby-offers-data';
 import { offersData } from './offers-data/offers-data';

@@ -5,8 +5,7 @@ import { Offers } from '../../types/offer';
 import { getSelectedCity } from '../app-state/selectors';
 import { getSelectedCityOffers } from '../../utils/common';
 
-export const getOffers = (state: State): Offers =>
-  state[NameSpace.offers].offers;
+export const getOffers = (state: State): Offers => state[NameSpace.offers].offers;
 export const getOffersLoadingStatus = (state: State): boolean =>
   state[NameSpace.offers].isOffersDataLoaded;
 

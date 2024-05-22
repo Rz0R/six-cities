@@ -24,17 +24,14 @@ function Map({ offers, activeOfferId, city }: MapProps): JSX.Element {
           lng,
         });
 
-        const icon =
-          activeOfferId === offer.id
-            ? CURRENT_CUSTOM_ICON
-            : DEFAULT_CUSTOM_ICON;
+        const icon = activeOfferId === offer.id ? CURRENT_CUSTOM_ICON : DEFAULT_CUSTOM_ICON;
 
         marker.setIcon(icon).addTo(map);
       });
     }
   }, [map, offers, activeOfferId]);
 
-  return <div style={{ height: '100%' }} ref={mapRef}></div>;
+  return <div style={{ height: '100%' }} ref={mapRef} />;
 }
 
 export default Map;

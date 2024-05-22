@@ -1,6 +1,6 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { CurrentOfferData } from '../../types/current-offer-data';
 import { LoadingStatus } from '../../const';
-import { createReducer } from '@reduxjs/toolkit';
 import {
   loadOfferById,
   removeCurrentOfferData,

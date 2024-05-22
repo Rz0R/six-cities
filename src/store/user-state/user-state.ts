@@ -1,12 +1,7 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { UserState } from '../../types/user-data';
 import { AuthorizationStatus } from '../../const';
-import { createReducer } from '@reduxjs/toolkit';
-import {
-  requireAuthorization,
-  requireLogout,
-  loadUserData,
-  removeUserData,
-} from '../actions';
+import { requireAuthorization, requireLogout, loadUserData, removeUserData } from '../actions';
 
 const initialState: UserState = {
   userData: null,

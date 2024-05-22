@@ -1,6 +1,6 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { Cities } from '../../const';
 import { AppState } from '../../types/app-state';
-import { createReducer } from '@reduxjs/toolkit';
 import { selectCity } from '../actions';
 
 export const initialState: AppState = {

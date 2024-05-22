@@ -1,6 +1,6 @@
+import { useSelector } from 'react-redux';
 import OfferCardList from '../offer-card-list/offer-card-list';
 import { Container } from '../../const';
-import { useSelector } from 'react-redux';
 import Logo from '../logo/logo';
 import Auth from '../auth/auth';
 import { getOffers } from '../../store/offers-data/selectors';
@@ -10,11 +10,7 @@ function FavoriteScreen(): JSX.Element {
 
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const allCities = [
-    ...new Set(
-      favoriteOffers
-        .filter((offer) => offer.isFavorite)
-        .map((offer) => offer.city.name),
-    ),
+    ...new Set(favoriteOffers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name)),
   ];
 
   return (
@@ -44,14 +40,10 @@ function FavoriteScreen(): JSX.Element {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {
-                      <OfferCardList
-                        offers={favoriteOffers.filter(
-                          (offer) => offer.city.name === city,
-                        )}
-                        container={Container.Favorites}
-                      />
-                    }
+                    <OfferCardList
+                      offers={favoriteOffers.filter((offer) => offer.city.name === city)}
+                      container={Container.Favorites}
+                    />
                   </div>
                 </li>
               ))}

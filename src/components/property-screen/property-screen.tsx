@@ -7,12 +7,7 @@ import ReviewForm from './review-form/review-form';
 import Map from '../map/map';
 import { getRatingStyle } from '../../utils/common';
 import OfferCardList from '../offer-card-list/offer-card-list';
-import {
-  Container,
-  LoadingStatus,
-  AuthorizationStatus,
-  RoutePaths,
-} from '../../const';
+import { Container, LoadingStatus, AuthorizationStatus, RoutePaths } from '../../const';
 import {
   fetchOfferByIdAction,
   fetchNearbyOffersAction,
@@ -35,10 +30,7 @@ import {
   getNearbyOffers,
   getNearbyOffersLoadingStatus,
 } from '../../store/nearby-offers-data/selectors';
-import {
-  getComments,
-  getComentsLoadingStatus,
-} from '../../store/comments-data/selectors';
+import { getComments, getComentsLoadingStatus } from '../../store/comments-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
 function PropertyScreen(): JSX.Element {
@@ -163,11 +155,7 @@ function PropertyScreen(): JSX.Element {
                   type="button"
                   onClick={onFavoriteClick}
                 >
-                  <svg
-                    className="property__bookmark-icon"
-                    width={31}
-                    height={33}
-                  >
+                  <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -178,9 +166,7 @@ function PropertyScreen(): JSX.Element {
                   <span style={getRatingStyle(rating)} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">
-                  {rating}
-                </span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">{`${type[0].toLocaleUpperCase() + type.slice(1)}`}</li>
@@ -220,9 +206,7 @@ function PropertyScreen(): JSX.Element {
                     />
                   </div>
                   <span className="property__user-name">{host.name}</span>
-                  {host.isPro && (
-                    <span className="property__user-status">Pro</span>
-                  )}
+                  {host.isPro && <span className="property__user-status">Pro</span>}
                 </div>
                 <div className="property__description">
                   <p className="property__text">{description}</p>
@@ -235,25 +219,14 @@ function PropertyScreen(): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map
-              offers={[currentOffer, ...nearbyOffers]}
-              activeOfferId={id}
-              city={city}
-            />
+            <Map offers={[currentOffer, ...nearbyOffers]} activeOfferId={id} city={city} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
+            <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {
-                <OfferCardList
-                  offers={nearbyOffers}
-                  container={Container.Properties}
-                />
-              }
+              <OfferCardList offers={nearbyOffers} container={Container.Properties} />
             </div>
           </section>
         </div>

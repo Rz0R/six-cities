@@ -9,12 +9,7 @@ type LocationsProps = {
 
 function Locations({ selectedCity, onCiyChange }: LocationsProps): JSX.Element {
   const locationItems = citiesList.map((city) => (
-    <LocationItem
-      key={city}
-      city={city}
-      selectedCity={selectedCity}
-      onCityChange={onCiyChange}
-    />
+    <LocationItem key={city} city={city} selectedCity={selectedCity} onCityChange={onCiyChange} />
   ));
 
   return (

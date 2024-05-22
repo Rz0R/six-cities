@@ -6,11 +6,7 @@ type LocationItemProps = {
   onCityChange: (city: Cities) => void;
 };
 
-function LocationItem({
-  city,
-  selectedCity,
-  onCityChange,
-}: LocationItemProps): JSX.Element {
+function LocationItem({ city, selectedCity, onCityChange }: LocationItemProps): JSX.Element {
   const classes = `${city === selectedCity ? 'tabs__item--active' : ''} locations__item-link tabs__item tabs`;
 
   const onItemClick = (evt: React.MouseEvent<HTMLLIElement>) => {

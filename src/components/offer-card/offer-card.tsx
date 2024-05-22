@@ -1,14 +1,11 @@
-import { Offer, Id } from '../../types/offer';
-import { Container } from '../../const';
-import { RoutePaths } from '../../const';
-import { toggleIsFavoriteAction } from '../../store/api-actions';
-import { AuthorizationStatus } from '../../const';
-import { getAuthorizationStatus } from '../../store/user-state/selectors';
-
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Offer, Id } from '../../types/offer';
+import { Container, RoutePaths, AuthorizationStatus } from '../../const';
+import { toggleIsFavoriteAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
 import { getRatingStyle } from '../../utils/common';
 
@@ -18,28 +15,14 @@ type OfferCardType = {
   setAciveCard?: React.Dispatch<React.SetStateAction<Id>>;
 };
 
-function OfferCard({
-  offer,
-  container,
-  setAciveCard,
-}: OfferCardType): JSX.Element {
+function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {
-    id,
-    title,
-    previewImage,
-    price,
-    type,
-    isFavorite,
-    isPremium,
-    rating,
-  } = offer;
+  const { id, title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
   const raitingStyle = getRatingStyle(rating);
 
-  const isAuthorized =
-    useSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
+  const isAuthorized = useSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
 
   const toggleFavorite = () => {
     let status = 1;
@@ -68,7 +51,7 @@ function OfferCard({
       className={classNames(
         'place-card',
         { 'cities__place-card': container === Container.Main },
-        { 'favorites__card': container === Container.Favorites },
+        { favorites__card: container === Container.Favorites },
         { 'near-places__card': container === Container.Properties },
       )}
       onMouseOver={() => setAciveCard && setAciveCard(offer.id)}

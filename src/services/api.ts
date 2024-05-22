@@ -1,9 +1,4 @@
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-} from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { getToken } from './token';
 
 const BACKEND_URL = 'https://12.design.htmlacademy.pro/six-cities';
@@ -15,9 +10,7 @@ enum HttpCode {
 
 type UnauthorizedCallback = () => void;
 
-export const createAPI = (
-  onUnauthorized: UnauthorizedCallback,
-): AxiosInstance => {
+export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
@@ -38,13 +31,14 @@ export const createAPI = (
   );
 
   api.interceptors.request.use((config: AxiosRequestConfig) => {
+    const newConfig = { ...config };
     const token = getToken();
 
     if (token && config.headers) {
-      config.headers['x-token'] = token;
+      newConfig.headers['x-token'] = token;
     }
 
-    return config;
+    return newConfig;
   });
 
   return api;
