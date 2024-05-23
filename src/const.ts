@@ -12,10 +12,10 @@ export enum RoutePaths {
 }
 
 export enum APIRoute {
-  Offers = '/hotels',
+  Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
-  Hotels = '/hotels',
+  Hotels = '/offers',
   Comments = '/comments',
   Favorite = '/favorite',
 }

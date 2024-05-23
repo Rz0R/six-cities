@@ -1,28 +1,23 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosError } from 'axios';
 import { getToken } from './token';
-
-const BACKEND_URL = 'https://12.design.htmlacademy.pro/six-cities';
-const REQUEST_TIMEOUT = 10000;
-
-enum HttpCode {
-  Unauthorized = 401,
-}
+import { StatusCodes } from 'http-status-codes';
 
 type UnauthorizedCallback = () => void;
 
+const BASE_URL = 'https://15.design.htmlacademy.pro/six-cities';
+
+const TIMEOUT_DURATION = 5000;
+
 export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance => {
   const api = axios.create({
-    baseURL: BACKEND_URL,
-    timeout: REQUEST_TIMEOUT,
+    baseURL: BASE_URL,
+    timeout: TIMEOUT_DURATION,
   });
 
   api.interceptors.response.use(
-    (response: AxiosResponse) => response,
-
+    (response) => response,
     (error: AxiosError) => {
-      const { response } = error;
-
-      if (response?.status === HttpCode.Unauthorized) {
+      if (error.response?.status == StatusCodes.UNAUTHORIZED) {
         return onUnauthorized();
       }
 
@@ -30,7 +25,7 @@ export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance =
     },
   );
 
-  api.interceptors.request.use((config: AxiosRequestConfig) => {
+  api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const newConfig = { ...config };
     const token = getToken();
 

@@ -7,10 +7,11 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
-    "axios": "^0.21.1",
+    "axios": "1.5.1",
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
     "history": "^5.2.0",
+    "http-status-codes": "^2.3.0",
     "leaflet": "^1.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
