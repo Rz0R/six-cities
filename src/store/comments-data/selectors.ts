@@ -4,7 +4,7 @@ import { Comments } from '../../types/comments';
 import { LoadingStatus, PostCommentStatus } from '../../const';
 
 export const getComments = (state: State): Comments => state[NameSpace.comments].comments;
-export const getComentsLoadingStatus = (state: State): LoadingStatus =>
+export const getCommentsLoadingStatus = (state: State): LoadingStatus =>
   state[NameSpace.comments].isCommentsLoaded;
 export const getPostCommentStatus = (state: State): PostCommentStatus =>
   state[NameSpace.comments].postCommentStatus;

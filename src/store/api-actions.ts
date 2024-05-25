@@ -24,7 +24,8 @@ import { APIRoute, AuthorizationStatus, PostCommentStatus } from '../const';
 import { Offers, Offer } from '../types/offer';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
-import { Comments } from '../types/comments';
+import { Comments, Comment } from '../types/comments';
+import { NameSpace } from './root-reducer';
 
 type DetailMessageType = {
   type: string;
@@ -135,16 +136,18 @@ export const fetchCommentsAction =
   };
 
 export const postCommentAction =
-  (id: string, review: { comment: string; rating: string }): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
+  (id: string, review: { comment: string; rating: number }): ThunkActionResult =>
+  async (dispatch, getState, api) => {
+    dispatch(setPostCommentStatus(PostCommentStatus.Posting));
     try {
-      dispatch(setPostCommentStatus(PostCommentStatus.Posting));
-      const { data } = await api.post<Comments>(`${APIRoute.Comments}/${id}`, review);
-      dispatch(loadComments(data));
+      const oldComments = getState()[NameSpace.comments].comments;
+      const { data } = await api.post<Comment>(`${APIRoute.Comments}/${id}`, review);
+      dispatch(loadComments([...oldComments, data]));
       dispatch(setPostCommentStatus(PostCommentStatus.Success));
     } catch (err) {
-      dispatch(setPostCommentStatus(PostCommentStatus.Idle));
       errorHandler(err as AxiosError<DetailMessageType>);
+    } finally {
+      dispatch(setPostCommentStatus(PostCommentStatus.Idle));
     }
   };
 

@@ -3,7 +3,7 @@ import { State } from '../../types/state';
 import { Offer } from '../../types/offer';
 import { LoadingStatus } from '../../const';
 
-export const getCurentOffer = (state: State): Offer | null =>
+export const getCurrentOffer = (state: State): Offer | null =>
   state[NameSpace.currentOffer].currentOffer;
-export const getCurentOfferLoadingStatus = (state: State): LoadingStatus =>
+export const getCurrentOfferLoadingStatus = (state: State): LoadingStatus =>
   state[NameSpace.currentOffer].isCurrentOfferLoaded;

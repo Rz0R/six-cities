@@ -7,7 +7,7 @@ import ReviewRatingStars from './review-rating-stars/review-rating-stars';
 import { PostCommentStatus, ReviewFormSettings } from '../../../const';
 import { getPostCommentStatus } from '../../../store/comments-data/selectors';
 
-const initialUserReviewState = { rating: '0', review: '' };
+const initialUserReviewState = { rating: 0, review: '' };
 
 function ReviewForm(): JSX.Element {
   const { id = '' } = useParams();
@@ -34,7 +34,7 @@ function ReviewForm(): JSX.Element {
 
   const onSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    dispatch(postCommentAction(id, { comment: review, rating }));
+    dispatch(postCommentAction(id, { comment: review, rating: Number(rating) }));
   };
 
   useEffect(() => {

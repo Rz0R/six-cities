@@ -3,7 +3,7 @@ import { RatingNames } from '../../../../const';
 import { ratingValues } from '../../../../utils/common';
 
 type ReviewRatingStarsProps = {
-  rating: string;
+  rating: number;
   onRatingChange: (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 

@@ -23,14 +23,14 @@ import {
   removeCommentsData,
 } from '../../store/actions';
 import {
-  getCurentOffer,
-  getCurentOfferLoadingStatus,
+  getCurrentOffer,
+  getCurrentOfferLoadingStatus,
 } from '../../store/current-offer-data/selectors';
 import {
   getNearbyOffers,
   getNearbyOffersLoadingStatus,
 } from '../../store/nearby-offers-data/selectors';
-import { getComments, getComentsLoadingStatus } from '../../store/comments-data/selectors';
+import { getComments, getCommentsLoadingStatus } from '../../store/comments-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';
 
 function PropertyScreen(): JSX.Element {
@@ -53,22 +53,22 @@ function PropertyScreen(): JSX.Element {
     dispatch(removeCommentsData());
   }, [dispatch]);
 
-  const currentOffer = useSelector(getCurentOffer);
+  const currentOffer = useSelector(getCurrentOffer);
   const nearbyOffers = useSelector(getNearbyOffers);
   const comments = useSelector(getComments);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
-  const curentOfferLoadingStatus = useSelector(getCurentOfferLoadingStatus);
+  const currentOfferLoadingStatus = useSelector(getCurrentOfferLoadingStatus);
   const nearbyOffersLoadingStatus = useSelector(getNearbyOffersLoadingStatus);
-  const comentsLoadingStatus = useSelector(getComentsLoadingStatus);
+  const commentsLoadingStatus = useSelector(getCommentsLoadingStatus);
 
   const isDataLoading =
-    curentOfferLoadingStatus === LoadingStatus.Loading ||
-    curentOfferLoadingStatus === LoadingStatus.Idle ||
+    currentOfferLoadingStatus === LoadingStatus.Loading ||
+    currentOfferLoadingStatus === LoadingStatus.Idle ||
     nearbyOffersLoadingStatus === LoadingStatus.Loading ||
     nearbyOffersLoadingStatus === LoadingStatus.Idle ||
-    comentsLoadingStatus === LoadingStatus.Idle ||
-    comentsLoadingStatus === LoadingStatus.Loading;
+    commentsLoadingStatus === LoadingStatus.Idle ||
+    commentsLoadingStatus === LoadingStatus.Loading;
 
   useEffect(() => {
     getData(id);
@@ -224,7 +224,7 @@ function PropertyScreen(): JSX.Element {
         </section>
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <h2 className="near-places__title">Other places in the neighborhood</h2>
             <div className="near-places__list places__list">
               <OfferCardList offers={nearbyOffers} container={Container.Properties} />
             </div>
