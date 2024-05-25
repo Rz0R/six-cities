@@ -11,7 +11,7 @@ type OfferCardListProps = {
 
 function OfferCardList({ offers, container, setCardId }: OfferCardListProps): JSX.Element {
   const offerComponents = offers.map((offer: Offer) => (
-    <OfferCard key={offer.id} offer={offer} container={container} setAciveCard={setCardId} />
+    <OfferCard key={offer.id} offer={offer} container={container} setActiveCard={setCardId} />
   ));
 
   return (

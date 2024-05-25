@@ -12,15 +12,15 @@ import { getRatingStyle } from '../../utils/common';
 type OfferCardType = {
   offer: Offer;
   container: Container;
-  setAciveCard?: React.Dispatch<React.SetStateAction<Id>>;
+  setActiveCard?: React.Dispatch<React.SetStateAction<Id>>;
 };
 
-function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Element {
+function OfferCard({ offer, container, setActiveCard }: OfferCardType): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { id, title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
-  const raitingStyle = getRatingStyle(rating);
+  const ratingStyle = getRatingStyle(rating);
 
   const isAuthorized = useSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
 
@@ -54,8 +54,8 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
         { favorites__card: container === Container.Favorites },
         { 'near-places__card': container === Container.Properties },
       )}
-      onMouseOver={() => setAciveCard && setAciveCard(offer.id)}
-      onMouseLeave={() => setAciveCard && setAciveCard(null)}
+      onMouseOver={() => setActiveCard && setActiveCard(offer.id)}
+      onMouseLeave={() => setActiveCard && setActiveCard(null)}
       onClick={onCardClick}
     >
       {isPremium && (
@@ -106,7 +106,7 @@ function OfferCard({ offer, container, setAciveCard }: OfferCardType): JSX.Eleme
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={raitingStyle} />
+            <span style={ratingStyle} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
