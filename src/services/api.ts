@@ -18,10 +18,9 @@ export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance =
     (response) => response,
     (error: AxiosError) => {
       if (error.response?.status == StatusCodes.UNAUTHORIZED) {
-        return onUnauthorized();
+        onUnauthorized();
       }
-
-      return Promise.reject(error);
+      throw error as AxiosError;
     },
   );
 
