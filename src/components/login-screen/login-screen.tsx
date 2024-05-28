@@ -1,13 +1,23 @@
-import { FormEvent, useRef } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
 import { loginAction } from '../../store/api-actions';
 import { AuthorizationStatus, RoutePaths } from '../../const';
 import Logo from '../logo/logo';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';
+import { AuthData } from '../../types/auth-data';
+
+import './login-screen.css';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AuthData>({ mode: 'all' });
 
   const location = useLocation();
   const state = location.state as { from?: string };
@@ -15,20 +25,9 @@ function LoginScreen(): JSX.Element {
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      const authData = {
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      };
-
-      dispatch(loginAction(authData));
-    }
+  const handleFormSubmit: SubmitHandler<AuthData> = (data, evt) => {
+    evt?.preventDefault();
+    dispatch(loginAction(data));
   };
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -50,27 +49,42 @@ function LoginScreen(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="" onSubmit={handleSubmit}>
+            <form className="login__form form" action="" onSubmit={handleSubmit(handleFormSubmit)}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
+                {errors.login && <p className="login__error">{errors.login.message}</p>}
                 <input
-                  ref={loginRef}
                   className="login__input form__input"
-                  type="email"
-                  name="email"
+                  type="text"
+                  {...register('login', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: 'Invalid email address',
+                    },
+                  })}
                   placeholder="Email"
                   required
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
+                {errors.password && <p className="login__error">{errors.password.message}</p>}
                 <input
-                  ref={passwordRef}
                   className="login__input form__input"
                   type="password"
-                  name="password"
                   placeholder="Password"
-                  autoComplete="off"
+                  {...register('password', {
+                    required: 'Password is required',
+                    minLength: {
+                      value: 2,
+                      message: 'Password must be at least 2 characters long',
+                    },
+                    pattern: {
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$/,
+                      message: 'Password must contain at least one letter and one number',
+                    },
+                  })}
                   required
                 />
               </div>
