@@ -1,7 +1,7 @@
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import { createAPI } from './services/api';
 import { rootReducer } from './store/root-reducer';
@@ -26,12 +26,11 @@ const store = configureStore({
 store.dispatch(checkAuthAction());
 store.dispatch(fetchOfferAction());
 
-ReactDOM.render(
+createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root'),
 );

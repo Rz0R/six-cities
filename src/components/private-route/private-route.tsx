@@ -1,4 +1,4 @@
-import { Navigate, useLocation } from 'react-router';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AuthorizationStatus, RoutePaths } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-state/selectors';

@@ -39,7 +39,7 @@ function PropertyScreen(): JSX.Element {
   const dispatch = useDispatch();
 
   const getData = useCallback(
-    (currentId) => {
+    (currentId: string) => {
       dispatch(fetchOfferByIdAction(currentId));
       dispatch(fetchNearbyOffersAction(currentId));
       dispatch(fetchCommentsAction(currentId));
