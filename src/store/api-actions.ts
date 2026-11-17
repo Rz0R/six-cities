@@ -5,6 +5,8 @@ import { StatusCodes } from 'http-status-codes';
 import { ThunkActionResult } from '../types/actions';
 import {
   loadOffers,
+  startOffersLoading,
+  failOffersLoading,
   updateOffer,
   requireAuthorization,
   requireLogout,
@@ -50,10 +52,12 @@ const errorHandler = (err: AxiosError<DetailMessageType>) => {
 export const fetchOfferAction =
   (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
+    dispatch(startOffersLoading());
     try {
       const { data } = await api.get<Offers>(APIRoute.Offers);
       dispatch(loadOffers(data));
     } catch (err) {
+      dispatch(failOffersLoading());
       errorHandler(err as AxiosError<DetailMessageType>);
     }
   };
@@ -65,8 +69,8 @@ export const checkAuthAction =
       const { data } = await api.get<UserData>(APIRoute.Login);
       dispatch(loadUserData(data));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch (err) {
-      errorHandler(err as AxiosError<DetailMessageType>);
+    } catch {
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   };
 
@@ -88,7 +92,7 @@ export const loginAction =
 
 export const logoutAction = (): ThunkActionResult => async (dispatch, _getState, api) => {
   try {
-    api.delete(APIRoute.Logout);
+    await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(removeUserData());
     dispatch(requireLogout(AuthorizationStatus.NoAuth));

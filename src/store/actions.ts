@@ -73,3 +73,6 @@ export const updateOffer = createAction(ActionType.UpdateOffers, (offer: Offer) 
 export const updateNearbyOffers = createAction(ActionType.UpdateNearbyOffers, (offer: Offer) => ({
   payload: offer,
 }));
+
+export const startOffersLoading = createAction('offers/startLoading');
+export const failOffersLoading = createAction('offers/failLoading');

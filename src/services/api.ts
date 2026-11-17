@@ -4,9 +4,9 @@ import { StatusCodes } from 'http-status-codes';
 
 type UnauthorizedCallback = () => void;
 
-const BASE_URL = 'https://15.design.htmlacademy.pro/six-cities';
+const BASE_URL = '/api';
 
-const TIMEOUT_DURATION = 5000;
+const TIMEOUT_DURATION = 15000;
 
 export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance => {
   const api = axios.create({
