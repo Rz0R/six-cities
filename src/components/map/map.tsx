@@ -17,7 +17,7 @@ function Map({ offers, activeOfferId, city }: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      offers.forEach((offer) => {
+      const markers = offers.map((offer) => {
         const { latitude: lat, longitude: lng } = offer.location;
         const marker = new Marker({
           lat,
@@ -27,7 +27,11 @@ function Map({ offers, activeOfferId, city }: MapProps): JSX.Element {
         const icon = activeOfferId === offer.id ? CURRENT_CUSTOM_ICON : DEFAULT_CUSTOM_ICON;
 
         marker.setIcon(icon).addTo(map);
+        return marker;
       });
+      return () => {
+        markers.forEach((marker) => marker.remove());
+      };
     }
   }, [map, offers, activeOfferId]);
 
