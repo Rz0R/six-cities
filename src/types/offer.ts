@@ -68,6 +68,7 @@ type BackendOffer = {
 export type OffersData = {
   offers: Offers;
   isOffersDataLoaded: boolean;
+  hasOffersLoadingError: boolean;
 };
 
 export type Offers = Offer[];

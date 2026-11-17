@@ -30,3 +30,11 @@ Use Node.js 24.15 or newer (Node.js 24 LTS is used in CI).
 The production host must serve `build/` and rewrite application routes to
 `index.html` for client-side routing. The app uses Vite instead of Create React App.
 Dependabot checks for updates weekly, and CI runs the dependency audit, tests and build.
+
+## API access
+
+The browser uses `/api` on the site's own origin. Vercel forwards these requests
+to `https://15.design.htmlacademy.pro/six-cities`; Vite provides the same proxy
+for development and preview. Keep the `/api/:path*` rewrite before the SPA rewrite.
+This avoids requiring visitors to connect directly to the Academy API host.
+An offers request failure shows a retry screen instead of an endless loader.

@@ -14,3 +14,6 @@ export const getFilteredOffers = createSelector(
   getSelectedCity,
   (offers, selectedCity) => getSelectedCityOffers(offers, selectedCity),
 );
+
+export const getOffersLoadingError = (state: State): boolean =>
+  state[NameSpace.offers].hasOffersLoadingError;

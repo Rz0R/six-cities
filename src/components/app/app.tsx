@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import MainScreen from '../main-screen/main-screen';
 import FavoriteScreen from '../favorites-screen/favorite-screen';
@@ -11,10 +11,26 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { RoutePaths } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 
-import { getOffersLoadingStatus } from '../../store/offers-data/selectors';
+import { getOffersLoadingStatus, getOffersLoadingError } from '../../store/offers-data/selectors';
+
+import { fetchOfferAction } from '../../store/api-actions';
 
 function App(): JSX.Element {
+  const dispatch = useDispatch();
+  const hasLoadingError = useSelector(getOffersLoadingError);
   const isDataLoaded = useSelector(getOffersLoadingStatus);
+
+  if (hasLoadingError) {
+    return (
+      <main className="page__main" style={{ padding: '48px', textAlign: 'center' }}>
+        <h1>Could not load places</h1>
+        <p>The server is unavailable. Please try again.</p>
+        <button className="button" type="button" onClick={() => dispatch(fetchOfferAction())}>
+          Try again
+        </button>
+      </main>
+    );
+  }
 
   if (!isDataLoaded) {
     return <LoadingScreen />;
