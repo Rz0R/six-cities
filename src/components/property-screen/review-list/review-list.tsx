@@ -1,3 +1,4 @@
+import { getImageUrl } from '../../../utils/image-url';
 import dayjs from 'dayjs';
 import { Comments } from '../../../types/comments';
 import { getRatingStyle } from '../../../utils/common';
@@ -22,7 +23,7 @@ function ReviewList({ comments }: ReviewListPops): JSX.Element {
                 <div className="reviews__avatar-wrapper user__avatar-wrapper">
                   <img
                     className="reviews__avatar user__avatar"
-                    src={user.avatarUrl}
+                    src={getImageUrl(user.avatarUrl)}
                     width={54}
                     height={54}
                     alt="Reviews avatar"
