@@ -4,6 +4,10 @@
   "outputDirectory": "build",
   "rewrites": [
     {
+      "source": "/media/:path*",
+      "destination": "https://15.design.htmlacademy.pro/static/:path*"
+    },
+    {
       "source": "/api/:path*",
       "destination": "https://15.design.htmlacademy.pro/six-cities/:path*"
     },

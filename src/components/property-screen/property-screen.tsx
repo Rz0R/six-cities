@@ -1,3 +1,4 @@
+import { getImageUrl } from '../../utils/image-url';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
@@ -135,7 +136,7 @@ function PropertyScreen(): JSX.Element {
             <div className="property__gallery">
               {images.slice(0, 6).map((src) => (
                 <div key={`${id}-${src}`} className="property__image-wrapper">
-                  <img className="property__image" src={src} alt={type} />
+                  <img className="property__image" src={getImageUrl(src)} alt={type} />
                 </div>
               ))}
             </div>
@@ -199,7 +200,7 @@ function PropertyScreen(): JSX.Element {
                   >
                     <img
                       className="property__avatar user__avatar"
-                      src={host.avatarUrl}
+                      src={getImageUrl(host.avatarUrl)}
                       width={74}
                       height={74}
                       alt="Host avatar"

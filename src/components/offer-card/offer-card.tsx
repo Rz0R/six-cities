@@ -1,3 +1,4 @@
+import { getImageUrl } from '../../utils/image-url';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { MouseEvent } from 'react';
@@ -74,7 +75,7 @@ function OfferCard({ offer, container, setActiveCard }: OfferCardType): JSX.Elem
         <div>
           <img
             className="place-card__image"
-            src={previewImage}
+            src={getImageUrl(previewImage)}
             width={container === Container.Favorites ? 150 : 260}
             height={container === Container.Favorites ? 100 : 200}
             alt={title}
