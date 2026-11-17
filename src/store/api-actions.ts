@@ -103,7 +103,7 @@ export const fetchOfferByIdAction =
   (id: string): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      const { data } = await api.get<Offer>(`${APIRoute.Hotels}/${id}`);
+      const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
       dispatch(loadOfferById(data));
     } catch (err) {
       dispatch(setCurrentOfferDataNotFoundStatus());
@@ -115,7 +115,7 @@ export const fetchNearbyOffersAction =
   (id: string): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      const { data } = await api.get<Offers>(`${APIRoute.Hotels}/${id}/nearby`);
+      const { data } = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
       dispatch(loadNearbyOffers(data));
     } catch (err) {
       dispatch(setNearbyOffersDataNotFound());
