@@ -1,3 +1,4 @@
+import type { ThunkAppDispatch } from '../../types/actions';
 import { MouseEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,7 +8,7 @@ import { getUserData, getAuthorizationStatus } from '../../store/user-state/sele
 
 function Auth(): JSX.Element {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkAppDispatch>();
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const userData = useSelector(getUserData);

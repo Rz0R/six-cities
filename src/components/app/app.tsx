@@ -1,3 +1,4 @@
+import type { ThunkAppDispatch } from '../../types/actions';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -16,7 +17,7 @@ import { getOffersLoadingStatus, getOffersLoadingError } from '../../store/offer
 import { fetchOfferAction } from '../../store/api-actions';
 
 function App(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkAppDispatch>();
   const hasLoadingError = useSelector(getOffersLoadingError);
   const isDataLoaded = useSelector(getOffersLoadingStatus);
 

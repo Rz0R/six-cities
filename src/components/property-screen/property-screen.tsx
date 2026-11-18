@@ -1,3 +1,4 @@
+import type { ThunkAppDispatch } from '../../types/actions';
 import { getImageUrl } from '../../utils/image-url';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,7 +38,7 @@ import { getAuthorizationStatus } from '../../store/user-state/selectors';
 function PropertyScreen(): JSX.Element {
   const { id = '' } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkAppDispatch>();
 
   const getData = useCallback(
     (currentId: string) => {

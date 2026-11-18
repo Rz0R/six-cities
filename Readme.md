@@ -29,7 +29,7 @@ Use Node.js 24.15 or newer (Node.js 24 LTS is used in CI).
 
 The production host must serve `build/` and rewrite application routes to
 `index.html` for client-side routing. The app uses Vite instead of Create React App.
-Dependabot checks for updates weekly, and CI runs the dependency audit, tests and build.
+CI runs the dependency audit, lint, tests and build.
 
 ## API access
 
