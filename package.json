@@ -59,7 +59,7 @@
     "@types/react-redux": "^7.1.22",
     "@typescript-eslint/eslint-plugin": "^8.72.2",
     "@typescript-eslint/parser": "^8.72.2",
-    "axios-mock-adapter": "^1.19.0",
+    "axios-mock-adapter": "^2.1.0",
     "eslint": "^8.29.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.26.0",
