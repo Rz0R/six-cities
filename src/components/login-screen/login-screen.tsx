@@ -1,3 +1,4 @@
+import type { ThunkAppDispatch } from '../../types/actions';
 import { useLocation, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -11,7 +12,7 @@ import { AuthData } from '../../types/auth-data';
 import './login-screen.css';
 
 function LoginScreen(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkAppDispatch>();
 
   const {
     register,

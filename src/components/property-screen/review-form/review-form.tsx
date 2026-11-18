@@ -1,3 +1,4 @@
+import type { ThunkAppDispatch } from '../../../types/actions';
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,7 +12,7 @@ const initialUserReviewState = { rating: 0, review: '' };
 
 function ReviewForm(): JSX.Element {
   const { id = '' } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkAppDispatch>();
 
   const postCommentStatus = useSelector(getPostCommentStatus);
 

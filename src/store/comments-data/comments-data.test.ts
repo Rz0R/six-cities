@@ -27,7 +27,7 @@ describe('Reducer: commentsData', () => {
       comments,
       isCommentsLoaded: LoadingStatus.Success,
     };
-    expect(commentsData(state, removeCommentsData)).toEqual(initialState);
+    expect(commentsData(state, removeCommentsData())).toEqual(initialState);
   });
 
   it('should set not found status', () => {
@@ -36,7 +36,7 @@ describe('Reducer: commentsData', () => {
       comments,
       isCommentsLoaded: LoadingStatus.Success,
     };
-    expect(commentsData(state, setCommentsDataNotFoundStatus)).toEqual({
+    expect(commentsData(state, setCommentsDataNotFoundStatus())).toEqual({
       ...state,
       comments: [],
       isCommentsLoaded: LoadingStatus.NotFound,

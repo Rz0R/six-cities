@@ -1,3 +1,4 @@
+import type { ThunkAppDispatch } from '../../types/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import classNames from 'classnames';
@@ -16,7 +17,7 @@ import { getFilteredOffers } from '../../store/offers-data/selectors';
 import { getSelectedCity } from '../../store/app-state/selectors';
 
 function MainScreen(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkAppDispatch>();
 
   const selectedCity = useSelector(getSelectedCity);
   const offers = useSelector(getFilteredOffers);

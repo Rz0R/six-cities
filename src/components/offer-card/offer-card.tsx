@@ -1,3 +1,4 @@
+import type { ThunkAppDispatch } from '../../types/actions';
 import { getImageUrl } from '../../utils/image-url';
 import classNames from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,7 +19,7 @@ type OfferCardType = {
 
 function OfferCard({ offer, container, setActiveCard }: OfferCardType): JSX.Element {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkAppDispatch>();
 
   const { id, title, previewImage, price, type, isFavorite, isPremium, rating } = offer;
   const ratingStyle = getRatingStyle(rating);
